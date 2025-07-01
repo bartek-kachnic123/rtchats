@@ -1,7 +1,10 @@
 plugins {
 	id 'java'
+	id 'pmd'
 	id 'org.springframework.boot' version '3.4.7'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'com.diffplug.spotless' version '7.0.4'
+	id 'com.github.spotbugs' version '6.2.1'
 }
 
 group = 'com.kachnic'
@@ -23,6 +26,10 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+    googleJavaFormatVersion = '1.17.0'
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -36,6 +43,36 @@ dependencies {
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+spotless {
+  ratchetFrom 'origin/main'
+
+  format 'misc', {
+    target '*.gradle', '.gitattributes', '.gitignore'
+
+    trimTrailingWhitespace()
+    leadingSpacesToTabs()
+    endWithNewline()
+  }
+  java {
+    googleJavaFormat(googleJavaFormatVersion).aosp().reflowLongStrings().skipJavadocFormatting()
+    formatAnnotations()
+  }
+}
+
+pmd {
+    toolVersion = "7.15.0"
+	consoleOutput = true
+	incrementalAnalysis = true
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.named('pmdMain') {
+    group = 'verification'
+}
+
+tasks.named('pmdTest') {
+    group = 'verification'
 }
