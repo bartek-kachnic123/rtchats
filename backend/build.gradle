@@ -76,3 +76,10 @@ tasks.named('pmdMain') {
 tasks.named('pmdTest') {
 	group = 'verification'
 }
+
+tasks.register('formatAndAnalyze') {
+	group = 'verification'
+	description = 'Apply Spotless formatting and run PMD and SpotBugs analysis.'
+
+	dependsOn 'spotlessApply', 'pmdMain', 'pmdTest', 'spotbugsMain', 'spotbugsTest'
+}

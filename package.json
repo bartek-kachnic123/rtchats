@@ -1,0 +1,23 @@
+{
+  "name": "rtchats",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "setup-git-hooks": "npx lefthook install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bartek-kachnic123/rtchats.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bartek-kachnic123/rtchats/issues"
+  },
+  "homepage": "https://github.com/bartek-kachnic123/rtchats#readme",
+  "description": "",
+  "devDependencies": {
+    "@commitlint/cli": "19.8.1",
+    "@commitlint/config-conventional": "19.8.1",
+    "lefthook": "1.11.14"
+  }
+}
