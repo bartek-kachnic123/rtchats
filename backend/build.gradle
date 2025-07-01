@@ -27,7 +27,7 @@ repositories {
 }
 
 ext {
-    googleJavaFormatVersion = '1.17.0'
+	googleJavaFormatVersion = '1.17.0'
 }
 
 dependencies {
@@ -44,23 +44,23 @@ dependencies {
 }
 
 spotless {
-  ratchetFrom 'origin/main'
+ratchetFrom 'origin/main'
 
-  format 'misc', {
-    target '*.gradle', '.gitattributes', '.gitignore'
+format 'misc', {
+	target '*.gradle', '.gitattributes', '.gitignore'
 
-    trimTrailingWhitespace()
-    leadingSpacesToTabs()
-    endWithNewline()
-  }
-  java {
-    googleJavaFormat(googleJavaFormatVersion).aosp().reflowLongStrings().skipJavadocFormatting()
-    formatAnnotations()
-  }
+	trimTrailingWhitespace()
+	leadingSpacesToTabs()
+	endWithNewline()
+}
+java {
+	googleJavaFormat(googleJavaFormatVersion).aosp().reflowLongStrings().skipJavadocFormatting()
+	formatAnnotations()
+}
 }
 
 pmd {
-    toolVersion = "7.15.0"
+	toolVersion = "7.15.0"
 	consoleOutput = true
 	incrementalAnalysis = true
 }
@@ -70,9 +70,9 @@ tasks.named('test') {
 }
 
 tasks.named('pmdMain') {
-    group = 'verification'
+	group = 'verification'
 }
 
 tasks.named('pmdTest') {
-    group = 'verification'
+	group = 'verification'
 }
