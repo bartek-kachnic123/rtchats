@@ -26,10 +26,6 @@ repositories {
 	mavenCentral()
 }
 
-ext {
-	googleJavaFormatVersion = '1.17.0'
-}
-
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -44,25 +40,26 @@ dependencies {
 }
 
 spotless {
-ratchetFrom 'origin/main'
+	ratchetFrom 'origin/main'
 
-format 'misc', {
-	target '*.gradle', '.gitattributes', '.gitignore'
+	format 'misc', {
+		target '*.gradle', '.gitattributes', '.gitignore'
 
-	trimTrailingWhitespace()
-	leadingSpacesToTabs()
-	endWithNewline()
-}
-java {
-	googleJavaFormat(googleJavaFormatVersion).aosp().reflowLongStrings().skipJavadocFormatting()
-	formatAnnotations()
-}
+		trimTrailingWhitespace()
+		leadingSpacesToTabs()
+		endWithNewline()
+	}
+	java {
+		palantirJavaFormat('2.70.0');
+	}
 }
 
 pmd {
 	toolVersion = "7.15.0"
 	consoleOutput = true
 	incrementalAnalysis = true
+	ruleSetFiles = files('config/pmd/ruleset.xml')
+	ruleSets = []
 }
 
 tasks.named('test') {

@@ -9,6 +9,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.EnumerablePropertySource;
+import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.util.PlaceholderResolutionException;
 
@@ -16,17 +17,15 @@ import org.springframework.util.PlaceholderResolutionException;
 public class EnvironmentPlaceholderPostProcessor implements EnvironmentPostProcessor {
 
     @Override
-    public void postProcessEnvironment(
-            ConfigurableEnvironment environment, SpringApplication application) {
-
-        List<String> propertyNames = getAllPropertyNames(environment);
+    public void postProcessEnvironment(final ConfigurableEnvironment environment, SpringApplication application) {
+        final List<String> propertyNames = getAllPropertyNames(environment.getPropertySources());
         validateEnvPlaceholders(environment, propertyNames);
     }
 
-    private List<String> getAllPropertyNames(ConfigurableEnvironment environment) {
-        List<String> propertyNames = new ArrayList<>();
+    private List<String> getAllPropertyNames(final MutablePropertySources propertySources) {
+        final List<String> propertyNames = new ArrayList<>();
 
-        for (PropertySource<?> propertySource : environment.getPropertySources()) {
+        for (final PropertySource<?> propertySource : propertySources) {
             if (propertySource instanceof EnumerablePropertySource<?> eps) {
 
                 propertyNames.addAll(Arrays.asList(eps.getPropertyNames()));
@@ -36,24 +35,23 @@ public class EnvironmentPlaceholderPostProcessor implements EnvironmentPostProce
         return propertyNames;
     }
 
-    private void validateEnvPlaceholders(
-            ConfigurableEnvironment environment, List<String> propertyNames) {
-        StringBuilder missingPlaceholderMessages = new StringBuilder();
+    private void validateEnvPlaceholders(final ConfigurableEnvironment environment, final List<String> propertyNames) {
+        final StringBuilder errorMessages = new StringBuilder();
         String message;
-        for (String propName : propertyNames) {
+
+        for (final String propName : propertyNames) {
             try {
                 environment.getProperty(propName);
 
             } catch (PlaceholderResolutionException exc) {
                 message = String.format("\t%s: %s%n", propName, exc.getMessage());
-                missingPlaceholderMessages.append(message);
+                errorMessages.append(message);
             }
         }
 
-        if (missingPlaceholderMessages.length() > 0) {
+        if (errorMessages.length() > 0) {
             throw new IllegalStateException(
-                    "Unresolved placeholders found in properties:\n"
-                            + missingPlaceholderMessages.toString());
+                    "Unresolved placeholders found in properties:\n" + errorMessages.toString());
         }
     }
 }
