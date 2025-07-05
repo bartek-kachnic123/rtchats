@@ -1,9 +1,9 @@
 'use client';
 
-import * as React from 'react';
 import { ClientOnly, IconButton, Skeleton, Span } from '@chakra-ui/react';
-import { LuMoon, LuSun } from 'react-icons/lu';
 import { ThemeProvider } from 'next-themes';
+import * as React from 'react';
+import { LuMoon, LuSun } from 'react-icons/lu';
 
 import { useColorMode } from '../hooks/useColorMode.js';
 

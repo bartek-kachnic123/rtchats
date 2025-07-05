@@ -7,5 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 class RtChatsApplicationTests {
 
     @Test
+    @SuppressWarnings("PMD.UnitTestShouldIncludeAssert")
     void contextLoads() {}
 }
