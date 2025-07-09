@@ -8,8 +8,17 @@
     </description>
 
     <rule ref="category/java/bestpractices.xml" />
-    <rule ref="category/java/errorprone.xml" />
+    
+    <rule ref="category/java/errorprone.xml">
+        <exclude name="TestClassWithoutTestCases"/>
+    </rule>
 
+    <rule ref="category/java/errorprone.xml/TestClassWithoutTestCases">
+        <properties>
+            <property name="testClassPattern" value="^(?:.*\.)?.*(Test|Tests|TestCase)$" />
+        </properties>
+    </rule>
+    
     <rule ref="category/java/design.xml">
         <exclude name="UseUtilityClass"/>
     </rule>
