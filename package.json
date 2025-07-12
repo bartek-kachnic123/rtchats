@@ -1,10 +1,15 @@
 {
   "name": "rtchats",
+  "workspaces": ["frontend"],
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "setup-git-hooks": "npx lefthook install"
+    "hooks:setup": "npx lefthook install",
+    "lint:check": "eslint",
+    "lint:fix": "eslint --fix",
+    "format:check": "prettier --check",
+    "format:write": "prettier --write"
   },
   "repository": {
     "type": "git",
@@ -18,6 +23,14 @@
   "devDependencies": {
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
-    "lefthook": "1.11.14"
+    "@eslint/js": "9.29.0",
+    "eslint": "9.29.0",
+    "eslint-config-prettier": "10.1.5",
+    "eslint-plugin-react-hooks": "5.2.0",
+    "eslint-plugin-react-refresh": "0.4.20",
+    "eslint-plugin-simple-import-sort": "12.1.1",
+    "globals": "16.2.0",
+    "lefthook": "1.11.14",
+    "prettier": "3.6.2"
   }
 }

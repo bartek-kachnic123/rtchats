@@ -2,16 +2,14 @@ pre-commit:
   parallel: true
   commands:
     frontend-lint-format-js:
-      root: "frontend/"
-      glob: "**/*.{js,jsx}"
+      glob: "frontend/*.{js,jsx}"
       run: |
         npm run lint:fix -- {staged_files} && \
         npm run format:write -- {staged_files}
       stage_fixed: true
 
-    fronted-format-html-css-json:
-      root: "frontend/"
-      glob: "**/*.{html,css,json}"
+    frontend-format-html-css-json:
+      glob: "frontend/*.{html,css,json}"
       run: npm run format:write -- {staged_files}
       stage_fixed: true
 
