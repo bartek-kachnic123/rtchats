@@ -8,7 +8,8 @@
     "build": "vite build --mode prod",
     "preview": "vite preview",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "dt": "devtools-cli"
   },
   "dependencies": {
     "@chakra-ui/react": "3.21.1",

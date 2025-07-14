@@ -1,36 +1,51 @@
+templates:
+  lint: npm run dt -- lint:fix
+  format: npm run dt -- format:fix {staged_files}
+
 pre-commit:
   parallel: true
+
   commands:
-    frontend-lint-format-js:
-      glob: 'frontend/*.{js,jsx}'
-      run: |
-        npm run lint:fix -- {staged_files} && \
-        npm run format:write -- {staged_files}
+    frontend-app-lint-format-js:
+      root: 'frontend/app/'
+      glob: '*.{js,jsx}'
+      run: '{lint} {staged_files} && {format} {staged_files}'
       stage_fixed: true
 
-    frontend-format-html-css-json:
-      glob: 'frontend/*.{html,css,json}'
-      run: npm run format:write -- {staged_files}
+    frontend-aoo-format-html-css-json:
+      root: 'frontend/app/'
+      glob: '*.{html,css,json}'
+      run: '{format} {staged_files}'
+      stage_fixed: true
+
+    frontend-devtools-lint-format-js:
+      root: 'frontend/devtools/'
+      glob: '*.js'
+      run: '{lint} {staged_files} && {format} {staged_files}'
+      stage_fixed: true
+
+    frontend-devtools-format-json:
+      root: 'frontend/devtools/'
+      glob: '*.json'
+      run: '{format} {staged_files}'
       stage_fixed: true
 
     root-lint-format-js:
       glob: '*.js'
       exclude:
         - '*/*'
-      run: |
-        npm run lint:fix -- {staged_files} && \
-        npm run format:write -- {staged_files}
+      run: '{lint} {staged_files} && {format} {staged_files}'
       stage_fixed: true
 
     root-format-json-yml:
       glob: '*.{json,yml}'
       exclude:
         - '*/*'
-      run: npm run format:write -- {staged_files}
+      run: '{format} {staged_files}'
       stage_fixed: true
 
-    backend-format-analyze:
-      root: 'backend/'
+    backend-app-format-analyze:
+      root: 'backend/app/'
       run: ./gradlew formatAndAnalyze
       stage_fixed: true
 

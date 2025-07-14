@@ -4,8 +4,8 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 
-export const frontendEslintConfig = {
-  files: ['frontend/**/*.js', 'frontend/**/*.jsx'],
+export const eslintAppConfig = {
+  files: ['frontend/app/**/*.{js,jsx}'],
   extends: [
     js.configs.recommended,
     reactHooks.configs['recommended-latest'],
@@ -20,6 +20,7 @@ export const frontendEslintConfig = {
   },
 };
 
-export const frontendIgnoredFiles = {
-  ignores: ['frontend/coverage/**', 'frontend/dist/**'],
-};
+export const appIgnoredFiles = [
+  'frontend/app/coverage/**',
+  'frontend/app/dist/**',
+];

@@ -1,4 +1,5 @@
-frontend/coverage
-frontend/dist
+frontend/app/coverage
+frontend/app/dist
 backend
 e2e
+.vscode

@@ -1,15 +1,27 @@
 import js from '@eslint/js';
-import { defineConfig } from 'eslint/config';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import prettier from 'eslint-config-prettier';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 
 import {
-  frontendEslintConfig,
-  frontendIgnoredFiles,
-} from './frontend/eslint-frontend.config.js';
+  appIgnoredFiles,
+  eslintAppConfig,
+} from './frontend/app/eslint-app.config.js';
+import { eslintDevtoolsConfig } from './frontend/devtools/eslint-devtools.config.js';
+
+const rootConfig = {
+  files: ['*.js'],
+  extends: [js.configs.recommended, prettier],
+};
 
 const sharedConfig = {
-  files: [],
+  files: Array.from(
+    new Set([
+      ...rootConfig.files,
+      ...eslintAppConfig.files,
+      ...eslintDevtoolsConfig.files,
+    ]),
+  ),
   languageOptions: {
     ecmaVersion: 2020,
     parserOptions: {
@@ -27,22 +39,10 @@ const sharedConfig = {
   },
 };
 
-const rootConfig = {
-  files: ['*.js'],
-  extends: [js.configs.recommended, prettier],
-};
-
-sharedConfig.files = Array.from(
-  new Set([
-    ...sharedConfig.files,
-    ...rootConfig.files,
-    ...frontendEslintConfig.files,
-  ]),
-);
-
 export default defineConfig([
-  frontendIgnoredFiles,
+  globalIgnores(appIgnoredFiles),
   sharedConfig,
   rootConfig,
-  frontendEslintConfig,
+  eslintAppConfig,
+  eslintDevtoolsConfig,
 ]);
