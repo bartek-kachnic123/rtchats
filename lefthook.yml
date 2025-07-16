@@ -45,7 +45,6 @@ pre-commit:
       stage_fixed: true
 
     backend-app-format-analyze:
-      root: 'backend/app/'
       run: ./gradlew formatAndAnalyze
       stage_fixed: true
 

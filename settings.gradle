@@ -1,0 +1,6 @@
+pluginManagement {
+    includeBuild 'gradle/build-logic'
+}
+
+rootProject.name = 'rtchats'
+include 'backend:app', 'e2e'
