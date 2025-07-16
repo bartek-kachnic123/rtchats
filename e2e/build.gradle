@@ -1,6 +1,6 @@
 plugins {
-	id 'com.kachnic.java-common-conventions'
-	id 'com.gradle.cucumber.companion' version '1.3.0'
+	alias(libs.plugins.java.conventions)
+	alias(libs.plugins.cucumber.companion)
 }
 
 group = 'com.kachnic'
@@ -11,28 +11,35 @@ repositories {
 }
 
 dependencies {
-	testImplementation(platform('io.rest-assured:rest-assured-bom:5.5.5'))
-	testImplementation(platform('org.junit:junit-bom:5.13.3'))
-	testImplementation(platform("org.assertj:assertj-bom:3.27.3"))
-	testImplementation(platform('io.cucumber:cucumber-bom:7.23.0'))
-	testImplementation(platform('org.seleniumhq.selenium:selenium-bom:4.34.0'))
+	testImplementation(platform(libs.restassured.bom))
+	testImplementation(platform(libs.junit.bom))
+	testImplementation(platform(libs.assertj.bom))
+	testImplementation(platform(libs.cucumber.bom))
+	testImplementation(platform(libs.selenium.bom))
 
+	testImplementation(libs.restassured)
 
-	testImplementation 'io.rest-assured:rest-assured'
+	testImplementation(libs.junit.jupiter)
+	testImplementation(libs.junit.platform.suite)
+	testImplementation(libs.assertj)
 
-	testImplementation 'org.junit.jupiter:junit-jupiter'
-	testImplementation 'org.junit.platform:junit-platform-suite'
-	testImplementation 'org.assertj:assertj-core'
+	testImplementation(libs.cucumber.java)
+	testImplementation(libs.cucumber.junit.platform.engine)
+	testImplementation(libs.cucumber.picocontainer)
 
+	testImplementation(libs.selenium.java)
+	testImplementation(libs.webdrivermanager)
 
-	testImplementation 'io.cucumber:cucumber-java'
-	testImplementation 'io.cucumber:cucumber-junit-platform-engine'
-	testImplementation 'io.cucumber:cucumber-picocontainer'
+	testRuntimeOnly(libs.junit.platform.launcher)
+}
 
-	testImplementation 'org.seleniumhq.selenium:selenium-java'
-	testImplementation 'io.github.bonigarcia:webdrivermanager:6.1.1'
-
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+configurations.configureEach {
+	resolutionStrategy.eachDependency {
+		if (requested.group == "org.apache.commons" && requested.name == "commons-lang3") {
+			useVersion(libs.versions.commonsLang3.get())
+			because("Force secure version due to CVE")
+		}
+	}
 }
 
 tasks.named('test') {

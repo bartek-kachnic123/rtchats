@@ -1,0 +1,10 @@
+plugins {
+    id 'com.diffplug.spotless'
+}
+
+spotless {
+    ratchetFrom 'origin/main'
+    java {
+        palantirJavaFormat(libs.versions.palantirJavaFormat.get())
+    }
+}

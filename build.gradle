@@ -1,0 +1,3 @@
+plugins {
+    id 'com.kachnic.root-conventions'
+}

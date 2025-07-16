@@ -1,8 +1,5 @@
 plugins {
     id 'java'
-    id 'pmd'
-    id 'com.diffplug.spotless'
-    id 'com.github.spotbugs'
 }
 
 repositories {
@@ -11,44 +8,6 @@ repositories {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+        languageVersion = JavaLanguageVersion.of(libs.versions.javaVersion.get())
     }
-}
-
-spotless {
-    ratchetFrom 'origin/main'
-
-    format 'misc', {
-        target '*.gradle', '.gitattributes', '.gitignore'
-
-        trimTrailingWhitespace()
-        leadingSpacesToTabs()
-        endWithNewline()
-    }
-    java {
-        palantirJavaFormat('2.70.0')
-    }
-}
-
-pmd {
-    toolVersion = "7.15.0"
-    consoleOutput = true
-    incrementalAnalysis = true
-    ruleSetConfig = resources.text.fromUri(this.class.getResource('pmd/ruleset.xml'))
-    ruleSets = []
-}
-
-tasks.named('pmdMain') {
-    group = 'verification'
-}
-
-tasks.named('pmdTest') {
-    group = 'verification'
-}
-
-tasks.register('formatAndAnalyze') {
-    group = 'verification'
-    description = 'Apply Spotless formatting and run PMD and SpotBugs analysis.'
-
-    dependsOn 'spotlessApply', 'pmdMain', 'pmdTest', 'spotbugsMain', 'spotbugsTest'
 }

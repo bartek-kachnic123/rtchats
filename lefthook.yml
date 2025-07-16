@@ -1,6 +1,6 @@
 templates:
   lint: npm run dt -- lint:fix
-  format: npm run dt -- format:fix {staged_files}
+  format: npm run dt -- format:fix
 
 pre-commit:
   parallel: true
@@ -44,8 +44,8 @@ pre-commit:
       run: '{format} {staged_files}'
       stage_fixed: true
 
-    backend-app-format-analyze:
-      run: ./gradlew formatAndAnalyze
+    java-projects-format-analyze:
+      run: ./gradlew formatAndAnalyze && ./gradlew :spotlessMiscApply
       stage_fixed: true
 
 commit-msg:

@@ -1,0 +1,3 @@
+plugins {
+    id 'com.kachnic.format-misc-conventions'
+}

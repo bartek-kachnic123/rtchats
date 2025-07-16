@@ -1,0 +1,15 @@
+#!/bin/sh
+
+DIR="$(cd "$(dirname "$0")/.." && pwd)"
+
+while [ "$DIR" != "/" ]; do
+  if [ -x "$DIR/gradlew" ]; then
+    cd "$DIR" || exit 1
+    "$DIR/gradlew" "$@"
+    exit $?
+  fi
+  DIR="$(cd "$DIR/.." && pwd)"
+done
+
+echo "No executable gradlew found in any parent directory."
+exit 1

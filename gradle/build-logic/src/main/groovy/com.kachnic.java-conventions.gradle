@@ -1,0 +1,30 @@
+plugins {
+    id 'com.kachnic.java-common-conventions'
+    id 'com.kachnic.format-java-conventions'
+    id 'com.kachnic.format-misc-conventions'
+    id 'pmd'
+    id 'com.github.spotbugs'
+}
+
+pmd {
+    toolVersion = libs.versions.pmd.get()
+    consoleOutput = true
+    incrementalAnalysis = true
+    ruleSetConfig = resources.text.fromUri(this.class.getResource('pmd/ruleset.xml'))
+    ruleSets = []
+}
+
+tasks.named('pmdMain') {
+    group = 'verification'
+}
+
+tasks.named('pmdTest') {
+    group = 'verification'
+}
+
+tasks.register('formatAndAnalyze') {
+    group = 'verification'
+    description = 'Apply Spotless formatting and run PMD and SpotBugs analysis.'
+
+    dependsOn 'spotlessApply', 'pmdMain', 'pmdTest', 'spotbugsMain', 'spotbugsTest'
+}
