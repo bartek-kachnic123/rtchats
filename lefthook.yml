@@ -6,27 +6,17 @@ pre-commit:
   parallel: true
 
   commands:
-    frontend-app-lint-format-js:
-      root: 'frontend/app/'
-      glob: '*.{js,jsx}'
+    frontend-lint-format-js:
+      glob:
+        - 'frontend/app/*.{js,jsx}'
+        - 'frontend/devtools/*.js'
       run: '{lint} {staged_files} && {format} {staged_files}'
       stage_fixed: true
 
-    frontend-aoo-format-html-css-json:
-      root: 'frontend/app/'
-      glob: '*.{html,css,json}'
-      run: '{format} {staged_files}'
-      stage_fixed: true
-
-    frontend-devtools-lint-format-js:
-      root: 'frontend/devtools/'
-      glob: '*.js'
-      run: '{lint} {staged_files} && {format} {staged_files}'
-      stage_fixed: true
-
-    frontend-devtools-format-json:
-      root: 'frontend/devtools/'
-      glob: '*.json'
+    frontend-format-html-css-json:
+      glob:
+        - 'frontend/app/*.{html,css,json}'
+        - 'frontend/devtools/*.json'
       run: '{format} {staged_files}'
       stage_fixed: true
 
