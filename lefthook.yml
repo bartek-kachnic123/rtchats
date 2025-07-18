@@ -34,8 +34,18 @@ pre-commit:
       run: '{format} {staged_files}'
       stage_fixed: true
 
-    java-projects-format-analyze:
-      run: ./gradlew formatAndAnalyze && ./gradlew :spotlessMiscApply
+    gradle-pipe:
+      run: 'LEFTHOOK_QUIET=meta,success lefthook run gradle-pipe'
+
+# noinspection YAMLSchemaValidation
+gradle-pipe:
+  piped: true
+  commands:
+    gradle-backend-e2e-format-analyze:
+      run: ./gradlew formatAndAnalyze
+      stage_fixed: true
+    gradle-root-misc-format:
+      run: ./gradlew :spotlessMiscApply
       stage_fixed: true
 
 commit-msg:
