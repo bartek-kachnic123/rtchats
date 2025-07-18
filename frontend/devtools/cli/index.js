@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { spawn } from 'child_process';
 
-import config from '../devtools.config.js';
+import config from '../config/devtools.config.js';
 
 function main() {
   const [, , command, ...args] = process.argv;

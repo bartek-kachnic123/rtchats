@@ -1,13 +1,12 @@
 import js from '@eslint/js';
+import { eslintDevtoolsConfig } from '@rtchats/devtools/config/eslint-devtools.config.js';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import prettier from 'eslint-config-prettier';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
-
 import {
   appIgnoredFiles,
   eslintAppConfig,
-} from './frontend/app/eslint-app.config.js';
-import { eslintDevtoolsConfig } from './frontend/devtools/eslint-devtools.config.js';
+} from 'frontend/config/eslint-app.config.js';
 
 const rootConfig = {
   files: ['*.js'],
