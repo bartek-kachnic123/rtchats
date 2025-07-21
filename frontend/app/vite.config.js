@@ -8,5 +8,5 @@ import vitestConfig from './config/vitest.config.js';
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), ValidateEnv(validateEnvConfig)],
-  vitestConfig,
+  ...vitestConfig,
 });

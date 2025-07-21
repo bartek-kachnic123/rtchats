@@ -9,4 +9,5 @@ repositories {
 dependencies {
     implementation libs.spotless.gradle
     implementation libs.spotbugs.gradle
+    implementation libs.sonarqube.gradle
 }

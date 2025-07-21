@@ -14,10 +14,13 @@ cucumber = "7.23.0"
 selenium = "4.34.0"
 webdrivermanager = "6.1.1"
 commonsLang3 = "3.18.0"
+jacoco = "0.8.13"
+sonarqube = "6.2.0.5505"
 
 [libraries]
 spotless-gradle = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
 spotbugs-gradle = { group = "com.github.spotbugs", name = "com.github.spotbugs.gradle.plugin", version.ref = "spotbugs" }
+sonarqube-gradle = { group = "org.sonarsource.scanner.gradle", name = "sonarqube-gradle-plugin", version.ref = "sonarqube" }
 
 spring-boot-starter-data-jpa = { group = "org.springframework.boot", name = "spring-boot-starter-data-jpa" }
 spring-boot-starter-security = { group = "org.springframework.boot", name = "spring-boot-starter-security" }
@@ -55,7 +58,9 @@ webdrivermanager = { group = "io.github.bonigarcia", name = "webdrivermanager", 
 
 [plugins]
 groovy-gradle = { id = "groovy-gradle-plugin" }
+root-conventions = { id = "com.kachnic.root-conventions"}
 java-conventions = { id = "com.kachnic.java-conventions" }
+test-coverage-conventions = { id = "com.kachnic.test-coverage-conventions" }
 spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
 spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
 
