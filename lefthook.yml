@@ -36,6 +36,7 @@ pre-commit:
 
     gradle-pipe:
       run: 'LEFTHOOK_QUIET=meta,success lefthook run gradle-pipe'
+      stage_fixed: true
 
 # noinspection YAMLSchemaValidation
 gradle-pipe:
@@ -43,10 +44,8 @@ gradle-pipe:
   commands:
     gradle-backend-e2e-format-analyze:
       run: ./gradlew formatAndAnalyze
-      stage_fixed: true
     gradle-root-misc-format:
       run: ./gradlew :spotlessMiscApply
-      stage_fixed: true
 
 commit-msg:
   commands:
