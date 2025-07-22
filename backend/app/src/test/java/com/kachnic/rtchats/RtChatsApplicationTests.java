@@ -11,5 +11,10 @@ class RtChatsApplicationTests {
 
     @Test
     @SuppressWarnings("PMD.UnitTestShouldIncludeAssert")
-    void contextLoads() {}
+    void contextLoads() {
+        /*
+         * Verifies that the Spring application context loads without errors.
+         * If the context fails to initialize, this test will fail automatically.
+         */
+    }
 }

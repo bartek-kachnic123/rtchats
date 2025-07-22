@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
-import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.EnumerablePropertySource;
@@ -13,7 +12,7 @@ import org.springframework.core.env.MutablePropertySources;
 import org.springframework.core.env.PropertySource;
 import org.springframework.util.PlaceholderResolutionException;
 
-@Order(Ordered.LOWEST_PRECEDENCE)
+@Order
 public class EnvironmentPlaceholderPostProcessor implements EnvironmentPostProcessor {
 
     @Override
@@ -49,9 +48,8 @@ public class EnvironmentPlaceholderPostProcessor implements EnvironmentPostProce
             }
         }
 
-        if (errorMessages.length() > 0) {
-            throw new IllegalStateException(
-                    "Unresolved placeholders found in properties:\n" + errorMessages.toString());
+        if (!errorMessages.isEmpty()) {
+            throw new IllegalStateException("Unresolved placeholders found in properties:\n" + errorMessages);
         }
     }
 }
