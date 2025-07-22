@@ -1,0 +1,63 @@
+import org.gradle.internal.os.OperatingSystem
+
+plugins {
+    id 'org.sonarqube'
+}
+
+tasks.named('sonar') {
+    dependsOn subprojects.collect { [it.tasks.withType(Test), it.tasks.withType(JacocoReport)] }
+    dependsOn 'npmCleanInstall', 'npmCoverage'
+}
+
+sonar {
+    properties {
+        def reportFile = file('build/reports/jacoco/test/jacocoTestReport.xml')
+        property 'sonar.coverage.jacoco.xmlReportPaths', reportFile.exists() ? reportFile.absolutePath : ''
+    }
+}
+
+project(':frontend') {
+    sonar {
+        properties {
+            def sourceDirs = []
+            def testDirs = []
+
+            def frontendDir = file('.')
+            if (frontendDir.exists() && frontendDir.isDirectory()) {
+                frontendDir.eachDir { dir ->
+                    def srcDir = new File(dir, 'src')
+                    def testDir = new File(dir, 'tests')
+
+                    if (srcDir.exists()) {
+                        sourceDirs << srcDir.path
+                    }
+
+                    if (testDir.exists()) {
+                        testDirs << testDir.path
+                    }
+                }
+            }
+
+            def lcovReports = fileTree('.') {
+                include '**/coverage/lcov.info'
+            }.files*.absolutePath.join(',')
+
+            property 'sonar.javascript.lcov.reportPaths', lcovReports
+            property 'sonar.sources', sourceDirs.join(',')
+            property 'sonar.tests', testDirs.join(',')
+        }
+    }}
+
+def currentOs = OperatingSystem.current()
+def npmCommand = currentOs.isWindows() ? 'npm.cmd' : 'npm'
+
+tasks.register('npmCleanInstall', Exec) {
+    executable = npmCommand
+    args = ['ci', '-ws', '--include-workspace-root']
+}
+
+tasks.register('npmCoverage', Exec) {
+    executable = npmCommand
+    args = ['run', 'coverage', '-ws', '--if-present']
+    dependsOn 'npmCleanInstall'
+}

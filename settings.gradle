@@ -3,4 +3,5 @@ pluginManagement {
 }
 
 rootProject.name = 'rtchats'
-include 'backend:app', 'e2e'
+include 'backend:app', 'e2e', 'frontend'
+
