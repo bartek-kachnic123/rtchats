@@ -7,16 +7,12 @@ pre-commit:
 
   commands:
     frontend-lint-format-js:
-      glob:
-        - 'frontend/app/*.{js,jsx}'
-        - 'frontend/devtools/*.js'
+      glob: 'frontend/*/*.{js,jsx}'
       run: '{lint} {staged_files} && {format} {staged_files}'
       stage_fixed: true
 
     frontend-format-html-css-json:
-      glob:
-        - 'frontend/app/*.{html,css,json}'
-        - 'frontend/devtools/*.json'
+      glob: 'frontend/*/*.{html,css,json}'
       run: '{format} {staged_files}'
       stage_fixed: true
 
