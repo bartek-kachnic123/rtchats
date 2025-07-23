@@ -34,6 +34,8 @@ spring-security-test = { group = "org.springframework.security", name = "spring-
 testcontainers-junit-jupiter = { group = "org.testcontainers", name = "junit-jupiter" }
 testcontainers-postgresql = { group = "org.testcontainers", name = "postgresql" }
 junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
+flyway-core = { group = "org.flywaydb", name = "flyway-core" }
+flyway-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql" }
 
 restassured-bom = { group = "io.rest-assured", name = "rest-assured-bom", version.ref = "restAssured" }
 junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }

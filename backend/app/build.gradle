@@ -18,6 +18,8 @@ dependencies {
 	implementation(libs.spring.boot.starter.data.jpa)
 	implementation(libs.spring.boot.starter.security)
 	implementation(libs.spring.boot.starter.web)
+	implementation(libs.flyway.core)
+	implementation(libs.flyway.postgresql)
 	compileOnly(libs.lombok)
 	developmentOnly(libs.spring.boot.devtools)
 	runtimeOnly(libs.postgresql)
