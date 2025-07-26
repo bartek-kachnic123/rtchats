@@ -10,6 +10,7 @@ sonar {
     properties {
         def reportFile = file('build/reports/jacoco/test/jacocoTestReport.xml')
         property 'sonar.coverage.jacoco.xmlReportPaths', reportFile.exists() ? reportFile.absolutePath : ''
+        property "sonar.organization", System.getenv("SONAR_ORGANIZATION")
     }
 }
 
