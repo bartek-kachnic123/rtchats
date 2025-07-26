@@ -30,6 +30,11 @@ pre-commit:
       run: '{format} {staged_files}'
       stage_fixed: true
 
+    workflow-format-yml:
+      glob: '.github/*.yml'
+      run: '{format} {staged_files}'
+      stage_fixed: true
+
     gradle-pipe:
       run: 'LEFTHOOK_QUIET=meta,success lefthook run gradle-pipe'
       stage_fixed: true

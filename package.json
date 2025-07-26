@@ -9,6 +9,7 @@
   "scripts": {
     "frontend:dev": "npm run dev -w frontend/app",
     "frontend:build": "npm run build -w frontend/app",
+    "frontend:ci": "npm run ci:build -w frontend/app",
     "hooks:setup": "lefthook install",
     "dt": "devtools-cli"
   },
