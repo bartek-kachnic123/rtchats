@@ -1,28 +1,26 @@
 plugins {
-    id 'jacoco'
+	id 'jacoco'
 }
 
 jacoco {
-    toolVersion = libs.versions.jacoco.get()
+	toolVersion = libs.versions.jacoco.get()
 }
 
 tasks.named('jacocoTestReport') {
-    dependsOn tasks.withType(Test)
+	dependsOn tasks.withType(Test)
 
-    reports {
-        html.required = true
-        xml.required = true
-    }
+	reports {
+		html.required = true
+		xml.required = true
+	}
 }
-
 
 tasks.named('jacocoTestCoverageVerification') {
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.8
-            }
-        }
-    }
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.8
+			}
+		}
+	}
 }
-

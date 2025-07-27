@@ -1,4 +1,14 @@
+import com.kachnic.gradle.format.SpotlessConfig
+
 plugins {
-    id 'com.kachnic.format-misc-conventions'
-    id 'com.kachnic.sonar-conventions'
+	id 'com.kachnic.format-common-conventions'
+	id 'com.kachnic.format-misc-conventions'
+	id 'com.kachnic.sonar-conventions'
+}
+
+spotless {
+	format('buildLogic') {
+		target 'gradle/build-logic/**/*.gradle'
+		SpotlessConfig.applyCommonFormatting(delegate)
+	}
 }

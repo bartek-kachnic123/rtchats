@@ -6,32 +6,13 @@ pre-commit:
   parallel: true
 
   commands:
-    frontend-lint-format-js:
-      glob: 'frontend/*/*.{js,jsx}'
+    project-lint-format-js:
+      glob: '*.{js,jsx}'
       run: '{lint} {staged_files} && {format} {staged_files}'
       stage_fixed: true
 
-    frontend-format-html-css-json:
-      glob: 'frontend/*/*.{html,css,json}'
-      run: '{format} {staged_files}'
-      stage_fixed: true
-
-    root-lint-format-js:
-      glob: '*.js'
-      exclude:
-        - '*/*'
-      run: '{lint} {staged_files} && {format} {staged_files}'
-      stage_fixed: true
-
-    root-format-json-yml:
-      glob: '*.{json,yml}'
-      exclude:
-        - '*/*'
-      run: '{format} {staged_files}'
-      stage_fixed: true
-
-    workflow-format-yml:
-      glob: '.github/*.yml'
+    project-format-html-css-json-yml:
+      glob: '*.{html,css,json,yml}'
       run: '{format} {staged_files}'
       stage_fixed: true
 
@@ -47,6 +28,8 @@ gradle-pipe:
       run: ./gradlew formatAndAnalyze
     gradle-root-misc-format:
       run: ./gradlew :spotlessMiscApply
+    gradle-build-logic-format:
+      run: ./gradlew :spotlessBuildLogicApply
 
 commit-msg:
   commands:
