@@ -1,14 +1,8 @@
-plugins {
-    id 'com.diffplug.spotless'
-}
+import com.kachnic.gradle.format.SpotlessConfig
 
 spotless {
-    ratchetFrom 'origin/main'
-    format 'misc', {
-        target '*.gradle', '.gitattributes', '.gitignore'
-
-        trimTrailingWhitespace()
-        leadingSpacesToTabs()
-        endWithNewline()
-    }
+	format 'misc', {
+		target '*.gradle', '.gitattributes', '.gitignore'
+		SpotlessConfig.applyCommonFormatting(delegate)
+	}
 }

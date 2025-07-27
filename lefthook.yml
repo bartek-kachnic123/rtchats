@@ -28,6 +28,8 @@ gradle-pipe:
       run: ./gradlew formatAndAnalyze
     gradle-root-misc-format:
       run: ./gradlew :spotlessMiscApply
+    gradle-build-logic-format:
+      run: ./gradlew :spotlessBuildLogicApply
 
 commit-msg:
   commands:
