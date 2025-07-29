@@ -16,6 +16,7 @@ webdrivermanager = "6.1.1"
 commonsLang3 = "3.18.0"
 jacoco = "0.8.13"
 sonarqube = "6.2.0.5505"
+springdoc = "2.8.9"
 
 [libraries]
 spotless-gradle = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
@@ -37,6 +38,9 @@ testcontainers-postgresql = { group = "org.testcontainers", name = "postgresql" 
 junit-platform-launcher = { group = "org.junit.platform", name = "junit-platform-launcher" }
 flyway-core = { group = "org.flywaydb", name = "flyway-core" }
 flyway-postgresql = { group = "org.flywaydb", name = "flyway-database-postgresql" }
+
+springdoc-bom = { group = "org.springdoc", name = "springdoc-openapi-bom", version.ref = "springdoc" }
+springdoc-openapi-starter-webmvc-ui = { group = "org.springdoc", name = "springdoc-openapi-starter-webmvc-ui" }
 
 restassured-bom = { group = "io.rest-assured", name = "rest-assured-bom", version.ref = "restAssured" }
 junit-bom = { group = "org.junit", name = "junit-bom", version.ref = "junit" }
@@ -64,6 +68,8 @@ groovy-gradle = { id = "groovy-gradle-plugin" }
 root-conventions = { id = "com.kachnic.root-conventions"}
 java-conventions = { id = "com.kachnic.java-conventions" }
 test-coverage-conventions = { id = "com.kachnic.test-coverage-conventions" }
+transitive-dependency-conventions = { id = "com.kachnic.transitive-dependency-conventions" }
+
 spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" }
 spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
 
