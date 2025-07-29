@@ -1,6 +1,7 @@
 plugins {
 	alias(libs.plugins.java.conventions)
 	alias(libs.plugins.cucumber.companion)
+	alias(libs.plugins.transitive.dependency.conventions)
 }
 
 group = 'com.kachnic'
@@ -31,15 +32,6 @@ dependencies {
 	testImplementation(libs.webdrivermanager)
 
 	testRuntimeOnly(libs.junit.platform.launcher)
-}
-
-configurations.configureEach {
-	resolutionStrategy.eachDependency {
-		if (requested.group == "org.apache.commons" && requested.name == "commons-lang3") {
-			useVersion(libs.versions.commonsLang3.get())
-			because("Force secure version due to CVE")
-		}
-	}
 }
 
 tasks.named('test') {
