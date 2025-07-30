@@ -16,20 +16,19 @@ pre-commit:
       run: '{format} {staged_files}'
       stage_fixed: true
 
-    gradle-pipe:
-      run: 'LEFTHOOK_QUIET=meta,success lefthook run gradle-pipe'
+    gradle-format-analyze:
+      run: './gradlew formatAndAnalyze :spotlessMiscApply :spotlessBuildLogicApply'
       stage_fixed: true
 
-# noinspection YAMLSchemaValidation
-gradle-pipe:
-  piped: true
+pre-push:
+  parallel: true
+
   commands:
-    gradle-backend-e2e-format-analyze:
-      run: ./gradlew formatAndAnalyze
-    gradle-root-misc-format:
-      run: ./gradlew :spotlessMiscApply
-    gradle-build-logic-format:
-      run: ./gradlew :spotlessBuildLogicApply
+    gradle-test-coverage:
+      run: ./gradlew jacocoTestReport
+
+    frontend-test-coverage:
+      run: npm run frontend-coverage
 
 commit-msg:
   commands:
