@@ -9,6 +9,6 @@ plugins {
 spotless {
 	format('buildLogic') {
 		target 'gradle/build-logic/**/*.gradle'
-		SpotlessConfig.applyCommonFormatting(delegate)
+		SpotlessConfig.applyCommonMiscFormatting(delegate)
 	}
 }

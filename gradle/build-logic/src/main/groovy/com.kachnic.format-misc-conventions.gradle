@@ -3,6 +3,6 @@ import com.kachnic.gradle.format.SpotlessConfig
 spotless {
 	format 'misc', {
 		target '*.gradle', '.gitattributes', '.gitignore'
-		SpotlessConfig.applyCommonFormatting(delegate)
+		SpotlessConfig.applyCommonMiscFormatting(delegate)
 	}
 }
