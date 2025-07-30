@@ -10,6 +10,7 @@
     "frontend:dev": "npm run dev -w frontend/app",
     "frontend:build": "npm run build -w frontend/app",
     "frontend:ci": "npm run ci:build -w frontend/app",
+    "frontend:coverage": "npm run coverage -w frontend/app",
     "hooks:setup": "lefthook install",
     "dt": "devtools-cli"
   },
