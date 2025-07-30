@@ -28,7 +28,7 @@ pre-push:
       run: ./gradlew jacocoTestReport
 
     frontend-test-coverage:
-      run: npm run frontend-coverage
+      run: npm run frontend:coverage
 
 commit-msg:
   commands:
