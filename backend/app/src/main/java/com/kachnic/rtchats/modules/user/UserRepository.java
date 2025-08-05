@@ -1,12 +1,11 @@
 package com.kachnic.rtchats.modules.user;
 
 import java.util.Optional;
-import java.util.UUID;
 
 interface UserRepository {
-    UUID nextId();
+    UserId nextId();
 
-    Optional<UserEntity> getByEmail(String email);
+    Optional<UserEntity> getByEmail(Email email);
 
-    boolean existsByEmail(String email);
+    boolean existsByEmail(Email email);
 }

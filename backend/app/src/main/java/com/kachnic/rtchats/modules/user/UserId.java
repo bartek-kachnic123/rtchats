@@ -6,6 +6,6 @@ import java.util.UUID;
 
 record UserId(UUID value) {
     UserId {
-        DomainValidate.ifNull(value).thenThrow(() -> new MissingArgumentException(UUID.class.getSimpleName()));
+        DomainValidate.ifNull(value).thenThrow(() -> new MissingArgumentException(UserId.class.getSimpleName()));
     }
 }
