@@ -3,7 +3,13 @@ package com.kachnic.rtchats.libs.ddd.specs;
 import com.kachnic.rtchats.libs.ddd.DomainValidate;
 import com.kachnic.rtchats.libs.ddd.exceptions.ArgumentOutOfRangeException;
 
-public record MaxLengthSpecification(int maxLength) implements Specification<String> {
+public final class MaxLengthSpecification implements Specification<String> {
+    private final int maxLength;
+
+    private MaxLengthSpecification(final int maxLength) {
+        this.maxLength = maxLength;
+    }
+
     public static MaxLengthSpecification of(final int maxLength) {
         return new MaxLengthSpecification(maxLength);
     }
