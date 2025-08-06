@@ -3,7 +3,14 @@ package com.kachnic.rtchats.libs.ddd.specs;
 import com.kachnic.rtchats.libs.ddd.DomainValidate;
 import com.kachnic.rtchats.libs.ddd.exceptions.ArgumentOutOfRangeException;
 
-public record BetweenLengthSpecification(int minLength, int maxLength) implements Specification<String> {
+public final class BetweenLengthSpecification implements Specification<String> {
+    private final int minLength;
+    private final int maxLength;
+
+    public BetweenLengthSpecification(final int minLength, final int maxLength) {
+        this.minLength = minLength;
+        this.maxLength = maxLength;
+    }
 
     public static BetweenLengthSpecification of(final int minLength, final int maxLength) {
         return new BetweenLengthSpecification(minLength, maxLength);
