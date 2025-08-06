@@ -1,9 +1,6 @@
 package com.kachnic.rtchats.modules.user;
 
-import com.kachnic.rtchats.libs.ddd.specs.BetweenLengthSpecification;
-import com.kachnic.rtchats.libs.ddd.specs.MatchesFormatSpecification;
-import com.kachnic.rtchats.libs.ddd.specs.NotBlankSpecification;
-import com.kachnic.rtchats.libs.ddd.specs.Specification;
+import com.kachnic.rtchats.libs.ddd.specs.*;
 import java.util.regex.Pattern;
 
 final class UsernameSpecification {
@@ -17,10 +14,11 @@ final class UsernameSpecification {
             [a-zA-Z0-9]*     # Following characters: letters and digits, zero or more
             $                 # End of string
             """);
+    private static final long TIME_LIMIT_MS = 50L;
 
     private static final Specification<String> DEFAULT = NotBlankSpecification.of()
             .and(BetweenLengthSpecification.of(MIN_LENGTH, MAX_LENGTH))
-            .and(MatchesFormatSpecification.of(VALID_PATTERN));
+            .and(TimeLimitSpecification.of(MatchesFormatSpecification.of(VALID_PATTERN), TIME_LIMIT_MS));
 
     private UsernameSpecification() {}
 

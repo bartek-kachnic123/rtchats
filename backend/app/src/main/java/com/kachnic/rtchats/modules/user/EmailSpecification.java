@@ -17,7 +17,7 @@ final class EmailSpecification {
             $               # End of string
             """,
             Pattern.CASE_INSENSITIVE);
-    private static final long TIME_LIMIT_MS = 10L;
+    private static final long TIME_LIMIT_MS = 50L;
 
     private static final Specification<String> DEFAULT = NotBlankSpecification.of()
             .and(MaxLengthSpecification.of(MAX_LENGTH))
