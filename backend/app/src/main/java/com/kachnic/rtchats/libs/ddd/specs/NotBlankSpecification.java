@@ -3,10 +3,8 @@ package com.kachnic.rtchats.libs.ddd.specs;
 import com.kachnic.rtchats.libs.ddd.DomainValidate;
 import com.kachnic.rtchats.libs.ddd.exceptions.MissingArgumentException;
 
-public final class NotBlankSpecification implements Specification<String> {
-    private static final NotBlankSpecification INSTANCE = new NotBlankSpecification();
-
-    private NotBlankSpecification() {}
+public enum NotBlankSpecification implements Specification<String> {
+    INSTANCE;
 
     public static NotBlankSpecification of() {
         return INSTANCE;
