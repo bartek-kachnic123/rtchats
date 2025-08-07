@@ -1,0 +1,25 @@
+package com.kachnic.rtchats.libs.ddd;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class AggregateRoot<T> extends BaseEntity<T> {
+    private final List<DomainEvent> domainEvents;
+
+    protected AggregateRoot(final T entityId) {
+        super(entityId);
+        this.domainEvents = new ArrayList<>();
+    }
+
+    protected List<DomainEvent> getDomainEvents() {
+        return List.copyOf(domainEvents);
+    }
+
+    protected void addEvent(final DomainEvent event) {
+        domainEvents.add(event);
+    }
+
+    protected void clearEvents() {
+        domainEvents.clear();
+    }
+}

@@ -1,14 +1,16 @@
 package com.kachnic.rtchats.modules.user;
 
-import com.kachnic.rtchats.libs.ddd.BaseEntity;
+import com.kachnic.rtchats.libs.ddd.AggregateRoot;
 import com.kachnic.rtchats.libs.ddd.DomainValidate;
 import com.kachnic.rtchats.libs.ddd.exceptions.MissingArgumentException;
 
-final class UserEntity extends BaseEntity<UserId> {
+final class UserEntity extends AggregateRoot<UserId> {
     private final UserInfo userInfo;
 
     /* package */ static UserEntity create(final UserId userId, final UserInfo userInfo) {
-        return new UserEntity(userId, userInfo);
+        final UserEntity user = new UserEntity(userId, userInfo);
+        user.addEvent(new UserCreatedEvent(user.getEntityId(), user.userInfo.email()));
+        return user;
     }
 
     private UserEntity(final UserId userId, final UserInfo userInfo) {
