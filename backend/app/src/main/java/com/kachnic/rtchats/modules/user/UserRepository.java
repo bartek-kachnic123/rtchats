@@ -1,11 +1,14 @@
 package com.kachnic.rtchats.modules.user;
 
+import com.kachnic.rtchats.modules.user.infrastructure.UserDto;
 import java.util.Optional;
 
-interface UserRepository {
+public interface UserRepository {
     UserId nextId();
 
-    Optional<UserEntity> getByEmail(Email email);
+    Optional<UserDto> findByEmail(Email email);
+
+    void save(UserEntity entity);
 
     boolean existsByEmail(Email email);
 }

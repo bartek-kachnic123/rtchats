@@ -29,6 +29,9 @@ springdoc = "2.8.9"
 # Transitive deps
 commonsLang3 = "3.18.0"
 
+# Annotation processor
+mapstruct = "1.6.3"
+
 [libraries]
 # Convention plugins deps
 sonarqube-gradle = { group = "org.sonarsource.scanner.gradle", name = "sonarqube-gradle-plugin", version.ref = "sonarqube" }
@@ -52,6 +55,9 @@ postgresql = { group = "org.postgresql", name = "postgresql" }
 
 # Annotation processor
 lombok = { group = "org.projectlombok", name = "lombok" }
+mapstruct = { group = "org.mapstruct", name = "mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { group = "org.mapstruct", name = "mapstruct-processor", version.ref = "mapstruct" }
+
 
 # Testing Boms
 assertj-bom = { group = "org.assertj", name = "assertj-bom", version.ref = "assertj" }
