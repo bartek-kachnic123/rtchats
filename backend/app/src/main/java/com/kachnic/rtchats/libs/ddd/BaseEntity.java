@@ -1,6 +1,6 @@
 package com.kachnic.rtchats.libs.ddd;
 
-import com.kachnic.rtchats.libs.ddd.exceptions.MissingArgumentException;
+import com.kachnic.rtchats.libs.exceptions.MissingArgumentException;
 import java.lang.reflect.ParameterizedType;
 import java.util.Objects;
 

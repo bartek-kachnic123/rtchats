@@ -1,6 +1,6 @@
 package com.kachnic.rtchats.libs.ddd;
 
-import com.kachnic.rtchats.libs.ddd.exceptions.DomainException;
+import com.kachnic.rtchats.libs.exceptions.DomainException;
 import java.util.function.Supplier;
 
 public final class DomainValidate {

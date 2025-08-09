@@ -1,0 +1,17 @@
+package com.kachnic.rtchats.libs.exceptions;
+
+import java.io.Serial;
+
+public class DomainException extends RuntimeException {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    public DomainException(final String message) {
+        super(message);
+    }
+
+    public DomainException(final String message, final Throwable cause) {
+        super(message, cause);
+    }
+}

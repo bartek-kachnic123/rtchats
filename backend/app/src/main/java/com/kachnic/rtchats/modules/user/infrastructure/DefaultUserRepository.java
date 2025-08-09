@@ -1,12 +1,12 @@
 package com.kachnic.rtchats.modules.user.infrastructure;
 
-import com.kachnic.rtchats.modules.user.Email;
-import com.kachnic.rtchats.modules.user.UserEntity;
-import com.kachnic.rtchats.modules.user.UserId;
-import com.kachnic.rtchats.modules.user.UserRepository;
+import com.kachnic.rtchats.modules.user.application.UserDto;
+import com.kachnic.rtchats.modules.user.domain.UserEntity;
+import com.kachnic.rtchats.modules.user.domain.UserRepository;
+import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Email;
+import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserId;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -39,11 +39,5 @@ class DefaultUserRepository implements UserRepository {
     @Override
     public boolean existsByEmail(final Email email) {
         return userCrudRepo.existsByEmailIgnoreCase(email.value());
-    }
-
-    /* package */ interface UserCrudRepo extends CrudRepository<UserJpa, UUID> {
-        boolean existsByEmailIgnoreCase(String email);
-
-        Optional<UserJpa> findByEmailIgnoreCase(String email);
     }
 }
