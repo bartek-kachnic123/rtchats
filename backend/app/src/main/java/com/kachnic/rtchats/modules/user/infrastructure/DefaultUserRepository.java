@@ -13,11 +13,11 @@ import org.springframework.stereotype.Repository;
 class DefaultUserRepository implements UserRepository {
 
     private final UserCrudRepo userCrudRepo;
-    private final UserMapper userMapper;
+    private final UserJpaMapper mapper;
 
-    public DefaultUserRepository(final UserCrudRepo userCrudRepo, final UserMapper userMapper) {
+    public DefaultUserRepository(final UserCrudRepo userCrudRepo, final UserJpaMapper mapper) {
         this.userCrudRepo = userCrudRepo;
-        this.userMapper = userMapper;
+        this.mapper = mapper;
     }
 
     @Override
@@ -27,12 +27,12 @@ class DefaultUserRepository implements UserRepository {
 
     @Override
     public Optional<UserDto> findByEmail(final Email email) {
-        return userCrudRepo.findByEmailIgnoreCase(email.value()).map(userMapper::toDto);
+        return userCrudRepo.findByEmailIgnoreCase(email.value()).map(mapper::toDto);
     }
 
     @Override
     public void save(final UserEntity entity) {
-        final UserJpa userJpa = userMapper.toPersistence(entity);
+        final UserJpa userJpa = mapper.toPersistence(entity);
         userCrudRepo.save(userJpa);
     }
 
