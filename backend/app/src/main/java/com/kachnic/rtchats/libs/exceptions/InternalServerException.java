@@ -6,9 +6,9 @@ public class InternalServerException extends DomainException {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private static final String MESSAGE = "Internal Server Error";
+    private static final String MSG = "Internal Server Error";
 
     public InternalServerException(final Throwable cause) {
-        super(MESSAGE, cause);
+        super(MSG, cause);
     }
 }
