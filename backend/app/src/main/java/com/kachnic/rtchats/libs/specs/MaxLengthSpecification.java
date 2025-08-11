@@ -16,12 +16,15 @@ public final class MaxLengthSpecification implements Specification<String> {
 
     @Override
     public void check(final String candidate, final String paramName) {
-        DomainValidate.ifTrue(exceedsMaxLength(candidate))
-                .thenThrow(() -> new ArgumentOutOfRangeException(
-                        "%s must be at most %d characters long.".formatted(paramName, maxLength)));
+        DomainValidate.assertTrue(
+                isWithinMaxLength(candidate), () -> new ArgumentOutOfRangeException(getFormattedMessage(paramName)));
     }
 
-    private boolean exceedsMaxLength(final String value) {
-        return value.length() > maxLength;
+    private boolean isWithinMaxLength(final String value) {
+        return value.length() <= maxLength;
+    }
+
+    private String getFormattedMessage(final String paramName) {
+        return "%s must be at most %d characters long.".formatted(paramName, maxLength);
     }
 }

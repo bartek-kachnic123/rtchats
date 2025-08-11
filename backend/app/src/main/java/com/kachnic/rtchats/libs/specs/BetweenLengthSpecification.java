@@ -18,13 +18,16 @@ public final class BetweenLengthSpecification implements Specification<String> {
 
     @Override
     public void check(final String candidate, final String paramName) {
-        DomainValidate.ifTrue(!isLengthBetween(candidate))
-                .thenThrow(() -> new ArgumentOutOfRangeException(
-                        "%s must be between %d and %d characters long.".formatted(paramName, minLength, maxLength)));
+        DomainValidate.assertTrue(
+                isLengthBetween(candidate), () -> new ArgumentOutOfRangeException(getFormattedMessage(paramName)));
     }
 
     private boolean isLengthBetween(final String value) {
         final int length = value.length();
         return length >= minLength && length <= maxLength;
+    }
+
+    private String getFormattedMessage(final String paramName) {
+        return "%s must be between %d and %d characters long.".formatted(paramName, minLength, maxLength);
     }
 }

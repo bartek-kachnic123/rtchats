@@ -1,6 +1,5 @@
 package com.kachnic.rtchats.libs.ddd;
 
-import com.kachnic.rtchats.libs.exceptions.MissingArgumentException;
 import java.lang.reflect.ParameterizedType;
 import java.util.Objects;
 
@@ -8,11 +7,11 @@ public class BaseEntity<T> {
     protected final T entityId;
 
     protected BaseEntity(final T entityId) {
-        DomainValidate.ifNull(entityId)
-                .thenThrow(() -> new MissingArgumentException(
-                        ((ParameterizedType) getClass().getGenericSuperclass())
-                                .getActualTypeArguments()[0].getTypeName()));
-        this.entityId = entityId;
+        this.entityId = DomainValidate.requireNonNull(entityId, this::getEntityIdName);
+    }
+
+    private String getEntityIdName() {
+        return ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0].getTypeName();
     }
 
     public T getEntityId() {

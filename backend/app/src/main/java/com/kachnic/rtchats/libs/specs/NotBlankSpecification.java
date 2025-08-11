@@ -1,7 +1,6 @@
 package com.kachnic.rtchats.libs.specs;
 
 import com.kachnic.rtchats.libs.ddd.DomainValidate;
-import com.kachnic.rtchats.libs.exceptions.MissingArgumentException;
 
 public enum NotBlankSpecification implements Specification<String> {
     INSTANCE;
@@ -12,6 +11,6 @@ public enum NotBlankSpecification implements Specification<String> {
 
     @Override
     public void check(final String candidate, final String paramName) {
-        DomainValidate.ifBlank(candidate).thenThrow(() -> new MissingArgumentException(paramName));
+        DomainValidate.assertNotBlank(candidate, paramName);
     }
 }
