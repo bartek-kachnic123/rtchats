@@ -18,13 +18,13 @@ public final class MatchesFormatSpecification implements Specification<String> {
 
     @Override
     public void check(final String candidate, final String paramName) {
-        DomainValidate.ifTrue(isInvalidFormat(candidate))
-                .thenThrow(() -> new ArgumentInvalidFormatException(paramName, candidate));
+        DomainValidate.assertTrue(
+                isValidFormat(candidate), () -> new ArgumentInvalidFormatException(paramName, candidate));
     }
 
-    private boolean isInvalidFormat(final String value) {
+    private boolean isValidFormat(final String value) {
         final CharSequence sequence = new InterruptibleCharSequence(value);
-        return !pattern.matcher(sequence).matches();
+        return pattern.matcher(sequence).matches();
     }
 
     private record InterruptibleCharSequence(CharSequence inner) implements CharSequence {
