@@ -6,9 +6,9 @@ public class ArgumentInvalidFormatException extends DomainException {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private static final String MESSAGE_PREFIX = "Invalid format for argument: ";
+    private static final String MSG_PREFIX = "Invalid format for argument: ";
 
     public ArgumentInvalidFormatException(final String parameterName, final String invalidValue) {
-        super(MESSAGE_PREFIX + parameterName + " = " + invalidValue);
+        super(MSG_PREFIX + parameterName + " = " + invalidValue);
     }
 }
