@@ -18,7 +18,10 @@ public class AsyncCommand<R> implements Command<R> {
     public R getResult() {
         try {
             return future.get();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new InternalServerException(e);
+        } catch (ExecutionException e) {
             throw new InternalServerException(e);
         }
     }
