@@ -4,7 +4,7 @@ import com.kachnic.rtchats.libs.specs.*;
 import java.util.regex.Pattern;
 
 final class EmailSpecification {
-    private static final int MAX_LENGTH = 128;
+    private static final int MAX_LENGTH = 255;
     private static final Pattern VALID_PATTERN = Pattern.compile(
             """
             (?x)            # Enable COMMENTS mode (ignore whitespace and allow comments)
