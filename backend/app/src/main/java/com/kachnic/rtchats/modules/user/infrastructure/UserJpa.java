@@ -1,8 +1,7 @@
 package com.kachnic.rtchats.modules.user.infrastructure;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.Locale;
 import java.util.UUID;
 import lombok.*;
 
@@ -11,7 +10,6 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 class UserJpa {
 
     @Id
@@ -19,7 +17,15 @@ class UserJpa {
 
     private String email;
 
+    private String normalizedEmail;
+
     private String username;
 
     private String password;
+
+    @PrePersist
+    @PreUpdate
+    /* package */ void normalizeEmail() {
+        normalizedEmail = email.toLowerCase(Locale.ROOT);
+    }
 }

@@ -5,7 +5,7 @@ import java.util.UUID;
 import org.springframework.data.repository.CrudRepository;
 
 interface UserCrudRepo extends CrudRepository<UserJpa, UUID> {
-    boolean existsByEmailIgnoreCase(String email);
+    boolean existsByNormalizedEmail(String normalizedEmail);
 
-    Optional<UserJpa> findByEmailIgnoreCase(String email);
+    Optional<UserJpa> findByNormalizedEmail(String normalizedEmail);
 }

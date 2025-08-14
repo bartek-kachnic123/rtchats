@@ -5,6 +5,7 @@ import com.kachnic.rtchats.modules.user.domain.UserEntity;
 import com.kachnic.rtchats.modules.user.domain.UserRepository;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Email;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserId;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,8 @@ class DefaultUserRepository implements UserRepository {
 
     @Override
     public Optional<UserDto> findByEmail(final Email email) {
-        return userCrudRepo.findByEmailIgnoreCase(email.value()).map(mapper::toDto);
+        final String normalizedEmail = email.value().toLowerCase(Locale.ROOT);
+        return userCrudRepo.findByNormalizedEmail(normalizedEmail).map(mapper::toDto);
     }
 
     @Override
@@ -34,6 +36,7 @@ class DefaultUserRepository implements UserRepository {
 
     @Override
     public boolean existsByEmail(final Email email) {
-        return userCrudRepo.existsByEmailIgnoreCase(email.value());
+        final String normalizedEmail = email.value().toLowerCase(Locale.ROOT);
+        return userCrudRepo.existsByNormalizedEmail(normalizedEmail);
     }
 }
