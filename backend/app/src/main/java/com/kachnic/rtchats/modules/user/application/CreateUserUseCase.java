@@ -1,42 +1,39 @@
 package com.kachnic.rtchats.modules.user.application;
 
+import com.kachnic.rtchats.libs.ddd.UseCaseExecutor;
 import com.kachnic.rtchats.libs.spring.UseCase;
+import com.kachnic.rtchats.modules.user.domain.UserCredentialService;
 import com.kachnic.rtchats.modules.user.domain.UserEntity;
 import com.kachnic.rtchats.modules.user.domain.UserRepository;
 import com.kachnic.rtchats.modules.user.domain.exceptions.EmailAlreadyTakenException;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.*;
-import org.springframework.context.event.EventListener;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import com.kachnic.rtchats.modules.user.infrastructure.RandomTimed;
+import lombok.AllArgsConstructor;
 
+@AllArgsConstructor
 @UseCase
-class CreateUserUseCase {
-
+class CreateUserUseCase implements UseCaseExecutor<UserEntity, CreateUserCommand> {
     private final UserRepository users;
-    private final PasswordEncoder passwordEncoder;
-    private final UserEntityMapper mapper;
+    private final UserCredentialService userCredService;
 
-    /* package */ CreateUserUseCase(
-            final UserRepository users, final PasswordEncoder passwordEncoder, final UserEntityMapper mapper) {
-        this.users = users;
-        this.passwordEncoder = passwordEncoder;
-        this.mapper = mapper;
+    @RandomTimed(
+            minMs = 125,
+            maxMs = 150,
+            delayOn = {EmailAlreadyTakenException.class})
+    @Override
+    public UserEntity execute(final CreateUserCommand command) {
+        final UserId userId = users.nextId();
+        final UserInfo userInfo = createUserInfo(command);
+        final UserEntity user = UserEntity.create(userId, userInfo);
+
+        users.save(user);
+        return user;
     }
 
-    @EventListener
-    /* package */ void handle(final CreateUserCommand command) {
-        final Email email = Email.of(command.getEmail());
-        if (users.existsByEmail(email)) {
-            throw new EmailAlreadyTakenException(email.value());
-        }
-
-        final UserId userId = users.nextId();
-        final Password password = Password.of(passwordEncoder.encode(command.getPassword()));
-        final UserInfo userInfo = UserInfo.of(email, Username.of(command.getUsername()), password);
-
-        final UserEntity user = UserEntity.create(userId, userInfo);
-        users.save(user);
-
-        final UserDto dto = mapper.toDto(user);
-        command.complete(dto);
+    private UserInfo createUserInfo(final CreateUserCommand command) {
+        final Email email = userCredService.createNewEmail(command.getEmail());
+        final Password password =
+                userCredService.createNewPassword(command.getPassword(), StrongPasswordSpecification.getDefault());
+        return UserInfo.of(email, Username.of(command.getUsername()), password);
     }
 }

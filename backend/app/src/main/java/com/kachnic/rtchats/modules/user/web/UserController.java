@@ -3,6 +3,7 @@ package com.kachnic.rtchats.modules.user.web;
 import com.kachnic.rtchats.libs.application.CommandBus;
 import com.kachnic.rtchats.modules.user.application.CreateUserCommand;
 import com.kachnic.rtchats.modules.user.application.UserDto;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +22,7 @@ class UserController {
     }
 
     @PostMapping
-    /* package */ ResponseEntity<UserDto> create(final @RequestBody CreateUserRequest request) {
+    /* package */ ResponseEntity<UserDto> create(final @Valid @RequestBody CreateUserRequest request) {
         final CreateUserCommand command =
                 new CreateUserCommand(request.email(), request.username(), request.password());
         final UserDto result = commandBus.execute(command);
