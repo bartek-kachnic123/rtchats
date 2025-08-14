@@ -7,18 +7,14 @@ import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Email;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserId;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@AllArgsConstructor
 class DefaultUserRepository implements UserRepository {
-
     private final UserCrudRepo userCrudRepo;
     private final UserJpaMapper mapper;
-
-    public DefaultUserRepository(final UserCrudRepo userCrudRepo, final UserJpaMapper mapper) {
-        this.userCrudRepo = userCrudRepo;
-        this.mapper = mapper;
-    }
 
     @Override
     public UserId nextId() {
