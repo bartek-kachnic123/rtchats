@@ -33,6 +33,8 @@ interface UserMapper extends UserEntityMapper, UserJpaMapper {
 interface UserJpaMapper {
     @Mapping(source = "entityId", target = "userId")
     @Mapping(source = "userInfo", target = ".")
+    @Mapping(target = "normalizedEmail", ignore = true)
+    @Mapping(target = "version", ignore = true)
     UserJpa toPersistence(UserEntity entity);
 
     UserDto toDto(UserJpa userJpa);
