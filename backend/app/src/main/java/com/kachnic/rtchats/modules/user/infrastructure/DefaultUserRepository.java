@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,6 +17,11 @@ import org.springframework.stereotype.Repository;
 class DefaultUserRepository implements UserRepository {
     private final UserCrudRepo userCrudRepo;
     private final UserJpaMapper mapper;
+    private final JdbcTemplate jdbcTemplate;
+
+    @SuppressWarnings("PMD.LongVariable")
+    private static final String SQL_EXISTS_BY_NORMALIZED_EMAIL =
+            "SELECT EXISTS (SELECT 1 FROM users WHERE normalized_email = ?)";
 
     @Override
     public UserId nextId() {
@@ -37,6 +43,8 @@ class DefaultUserRepository implements UserRepository {
     @Override
     public boolean existsByEmail(final Email email) {
         final String normalizedEmail = email.value().toLowerCase(Locale.ROOT);
-        return userCrudRepo.existsByNormalizedEmail(normalizedEmail);
+        final Boolean result =
+                jdbcTemplate.queryForObject(SQL_EXISTS_BY_NORMALIZED_EMAIL, Boolean.class, normalizedEmail);
+        return Boolean.TRUE.equals(result);
     }
 }
