@@ -7,14 +7,14 @@ import jakarta.validation.Payload;
 import java.lang.annotation.*;
 import java.util.Objects;
 
-@PasswordMatch
+@PasswordsMatch
 public record CreateUserRequest(String email, String username, String password, String confirmPassword) {}
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = PasswordMatchValidator.class)
 @Documented
-@interface PasswordMatch {
+@interface PasswordsMatch {
     String message() default "Passwords do not match";
 
     Class<?>[] groups() default {};
@@ -22,7 +22,7 @@ public record CreateUserRequest(String email, String username, String password, 
     Class<? extends Payload>[] payload() default {};
 }
 
-class PasswordMatchValidator implements ConstraintValidator<PasswordMatch, CreateUserRequest> {
+class PasswordMatchValidator implements ConstraintValidator<PasswordsMatch, CreateUserRequest> {
     @Override
     public boolean isValid(final CreateUserRequest request, final ConstraintValidatorContext context) {
         return Objects.equals(request.password(), request.confirmPassword());

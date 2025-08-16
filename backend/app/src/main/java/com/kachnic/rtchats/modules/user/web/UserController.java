@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/users")
 class UserController {
-
     private final CommandBus commandBus;
 
     public UserController(final CommandBus commandBus) {
