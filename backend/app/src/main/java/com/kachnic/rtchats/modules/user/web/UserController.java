@@ -4,6 +4,7 @@ import com.kachnic.rtchats.libs.application.CommandBus;
 import com.kachnic.rtchats.modules.user.application.CreateUserCommand;
 import com.kachnic.rtchats.modules.user.application.UserDto;
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,12 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@AllArgsConstructor
 class UserController {
     private final CommandBus commandBus;
-
-    public UserController(final CommandBus commandBus) {
-        this.commandBus = commandBus;
-    }
 
     @PostMapping
     /* package */ ResponseEntity<UserDto> create(final @Valid @RequestBody CreateUserRequest request) {

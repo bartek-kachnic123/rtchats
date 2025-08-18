@@ -15,7 +15,7 @@ public record CreateUserRequest(String email, String username, String password, 
 @Constraint(validatedBy = PasswordMatchValidator.class)
 @Documented
 @interface PasswordsMatch {
-    String message() default "Passwords do not match";
+    String message() default "{user.passwords.match}";
 
     Class<?>[] groups() default {};
 
