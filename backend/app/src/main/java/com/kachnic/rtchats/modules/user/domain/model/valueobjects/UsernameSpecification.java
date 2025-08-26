@@ -1,11 +1,13 @@
 package com.kachnic.rtchats.modules.user.domain.model.valueobjects;
 
 import com.kachnic.rtchats.libs.specs.*;
+import com.kachnic.rtchats.modules.user.domain.exceptions.UserErrorCode;
 import java.util.regex.Pattern;
 
 final class UsernameSpecification {
     private static final int MIN_LENGTH = 3;
     private static final int MAX_LENGTH = 32;
+
     private static final Pattern VALID_PATTERN = Pattern.compile(
             """
             (?x)              # Enable COMMENTS mode
@@ -18,7 +20,8 @@ final class UsernameSpecification {
 
     private static final Specification<String> DEFAULT = NotBlankSpecification.of()
             .and(BetweenLengthSpecification.of(MIN_LENGTH, MAX_LENGTH))
-            .and(TimeLimitSpecification.of(MatchesFormatSpecification.of(VALID_PATTERN), TIME_LIMIT_MS));
+            .and(TimeLimitSpecification.of(
+                    MatchesFormatSpecification.of(VALID_PATTERN, UserErrorCode.INVALID_USERNAME), TIME_LIMIT_MS));
 
     private UsernameSpecification() {}
 

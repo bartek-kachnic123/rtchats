@@ -8,7 +8,6 @@ import java.util.concurrent.*;
 public final class TimeLimitSpecification<T> implements Specification<T> {
     private final Specification<T> wrappedSpec;
     private final long timeLimitMs;
-    private static final String MESSAGE_PREFIX = "Timeout exceeded for: ";
 
     private TimeLimitSpecification(final Specification<T> wrappedSpec, final long timeLimitMs) {
         this.wrappedSpec = wrappedSpec;
@@ -29,6 +28,8 @@ public final class TimeLimitSpecification<T> implements Specification<T> {
             return null;
         });
 
+        final long startTime = System.nanoTime();
+
         try {
             specFuture.get(timeLimitMs, TimeUnit.MILLISECONDS);
         } catch (InterruptedException exc) {
@@ -36,7 +37,7 @@ public final class TimeLimitSpecification<T> implements Specification<T> {
         } catch (ExecutionException exc) {
             handleExecution(exc);
         } catch (TimeoutException exc) {
-            handleTimeout(specFuture, paramName);
+            handleTimeout(specFuture, paramName, wrappedSpec.getClass().getSimpleName(), startTime);
         }
     }
 
@@ -54,8 +55,10 @@ public final class TimeLimitSpecification<T> implements Specification<T> {
         throw new InternalServerException(cause);
     }
 
-    private void handleTimeout(final Future<Void> specFuture, final String paramName) {
+    private void handleTimeout(
+            final Future<Void> specFuture, final String paramName, final String operation, final long startTime) {
         specFuture.cancel(true);
-        throw new TimeLimitExceededException(MESSAGE_PREFIX + paramName);
+        final long durationMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
+        throw new TimeLimitExceededException(paramName, operation, durationMs);
     }
 }

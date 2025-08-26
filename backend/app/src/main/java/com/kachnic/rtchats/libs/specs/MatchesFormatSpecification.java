@@ -2,24 +2,27 @@ package com.kachnic.rtchats.libs.specs;
 
 import com.kachnic.rtchats.libs.ddd.DomainValidate;
 import com.kachnic.rtchats.libs.exceptions.ArgumentInvalidFormatException;
-import com.kachnic.rtchats.libs.exceptions.TimeLimitExceededException;
+import com.kachnic.rtchats.libs.exceptions.service.ErrorCode;
+import java.util.concurrent.CancellationException;
 import java.util.regex.Pattern;
 
 public final class MatchesFormatSpecification implements Specification<String> {
     private final Pattern pattern;
+    private final ErrorCode errorCode;
 
-    private MatchesFormatSpecification(final Pattern pattern) {
+    private MatchesFormatSpecification(final Pattern pattern, final ErrorCode errorCode) {
         this.pattern = pattern;
+        this.errorCode = errorCode;
     }
 
-    public static MatchesFormatSpecification of(final Pattern pattern) {
-        return new MatchesFormatSpecification(pattern);
+    public static MatchesFormatSpecification of(final Pattern pattern, final ErrorCode errorCode) {
+        return new MatchesFormatSpecification(pattern, errorCode);
     }
 
     @Override
     public void check(final String candidate, final String paramName) {
         DomainValidate.assertTrue(
-                isValidFormat(candidate), () -> new ArgumentInvalidFormatException(paramName, candidate));
+                isValidFormat(candidate), () -> new ArgumentInvalidFormatException(errorCode, paramName, candidate));
     }
 
     private boolean isValidFormat(final String value) {
@@ -39,7 +42,7 @@ public final class MatchesFormatSpecification implements Specification<String> {
         @Override
         public char charAt(final int index) {
             if (Thread.currentThread().isInterrupted()) {
-                throw new TimeLimitExceededException(TIMEOUT_MESSAGE);
+                throw new CancellationException(TIMEOUT_MESSAGE);
             }
 
             return inner.charAt(index);

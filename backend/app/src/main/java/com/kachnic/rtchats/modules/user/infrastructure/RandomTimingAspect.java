@@ -33,14 +33,14 @@ public class RandomTimingAspect {
         return System.nanoTime();
     }
 
-    private void enforceDelay(final long startNano, final int minMs, final int maxMs) {
+    private void enforceDelay(final long startNano, final long minMs, final long maxMs) {
         final long targetMs = calculateRandomDelay(minMs, maxMs);
         final long elapsedMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNano);
         sleepIfNeeded(targetMs - elapsedMs);
     }
 
-    private long calculateRandomDelay(final int minMs, final int maxMs) {
-        return minMs + ThreadLocalRandom.current().nextInt(maxMs - minMs + 1);
+    private long calculateRandomDelay(final long minMs, final long maxMs) {
+        return (minMs > maxMs) ? 0L : ThreadLocalRandom.current().nextLong(minMs, maxMs + 1);
     }
 
     private void sleepIfNeeded(final long delayMs) {

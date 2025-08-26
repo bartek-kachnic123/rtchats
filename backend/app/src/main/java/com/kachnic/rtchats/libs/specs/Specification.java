@@ -6,7 +6,7 @@ public interface Specification<T> {
 
     default Specification<T> and(final Specification<T> other) {
         return (candidate, paramName) -> {
-            check(candidate, paramName);
+            this.check(candidate, paramName);
             other.check(candidate, paramName);
         };
     }

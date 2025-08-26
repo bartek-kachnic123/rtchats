@@ -1,6 +1,7 @@
 package com.kachnic.rtchats.modules.user.domain.model.valueobjects;
 
 import com.kachnic.rtchats.libs.specs.*;
+import com.kachnic.rtchats.modules.user.domain.exceptions.UserErrorCode;
 import java.util.regex.Pattern;
 
 final class EmailSpecification {
@@ -21,7 +22,8 @@ final class EmailSpecification {
 
     private static final Specification<String> DEFAULT = NotBlankSpecification.of()
             .and(MaxLengthSpecification.of(MAX_LENGTH))
-            .and(TimeLimitSpecification.of(MatchesFormatSpecification.of(VALID_PATTERN), TIME_LIMIT_MS));
+            .and(TimeLimitSpecification.of(
+                    MatchesFormatSpecification.of(VALID_PATTERN, UserErrorCode.INVALID_EMAIL), TIME_LIMIT_MS));
 
     private EmailSpecification() {}
 

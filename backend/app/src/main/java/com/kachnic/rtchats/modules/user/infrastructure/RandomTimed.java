@@ -9,9 +9,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RandomTimed {
-    int minMs() default 50;
+    long minMs() default 50L;
 
-    int maxMs() default 100;
+    long maxMs() default 100L;
 
     Class<? extends DomainException>[] delayOn() default {};
 }

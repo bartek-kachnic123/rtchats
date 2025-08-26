@@ -1,7 +1,7 @@
 package com.kachnic.rtchats.libs.specs;
 
 import com.kachnic.rtchats.libs.ddd.DomainValidate;
-import com.kachnic.rtchats.libs.exceptions.ArgumentOutOfRangeException;
+import com.kachnic.rtchats.libs.exceptions.ArgumentMaxValueException;
 
 public final class MaxLengthSpecification implements Specification<String> {
     private final int maxLength;
@@ -16,15 +16,13 @@ public final class MaxLengthSpecification implements Specification<String> {
 
     @Override
     public void check(final String candidate, final String paramName) {
+        final int candidateLength = candidate.length();
         DomainValidate.assertTrue(
-                isWithinMaxLength(candidate), () -> new ArgumentOutOfRangeException(getFormattedMessage(paramName)));
+                isWithinMaxLength(candidateLength),
+                () -> new ArgumentMaxValueException(paramName, candidateLength, maxLength));
     }
 
-    private boolean isWithinMaxLength(final String value) {
-        return value.length() <= maxLength;
-    }
-
-    private String getFormattedMessage(final String paramName) {
-        return "%s must be at most %d characters long.".formatted(paramName, maxLength);
+    private boolean isWithinMaxLength(final int length) {
+        return length <= maxLength;
     }
 }
