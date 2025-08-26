@@ -1,6 +1,7 @@
 package com.kachnic.rtchats.libs.spring;
 
 import com.kachnic.rtchats.libs.exceptions.LocalizableMessage;
+import com.kachnic.rtchats.libs.exceptions.service.OperationErrorCode;
 import java.util.Locale;
 import java.util.Optional;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,6 @@ import org.springframework.validation.ObjectError;
 @Component
 @AllArgsConstructor
 public final class MessageSourceResolver extends AbstractMessageResolver {
-    private static final String NO_SUCH_MSG_CODE = "global.errors.no-such-message";
     private static final String FALLBACK_MESSAGE = "Global Message is missing";
 
     private final MessageSource messageSource;
@@ -19,7 +19,8 @@ public final class MessageSourceResolver extends AbstractMessageResolver {
     @Override
     public Optional<String> resolve(final LocalizableMessage message, final Locale locale) {
 
-        return Optional.ofNullable(messageSource.getMessage(message.getCode(), message.getArgs(), null, locale));
+        return Optional.ofNullable(
+                messageSource.getMessage(message.getCode(), message.getArgs().toArray(), null, locale));
     }
 
     @Override
@@ -34,6 +35,6 @@ public final class MessageSourceResolver extends AbstractMessageResolver {
 
     @Override
     public String defaultMessage(final Locale locale) {
-        return messageSource.getMessage(NO_SUCH_MSG_CODE, null, FALLBACK_MESSAGE, locale);
+        return messageSource.getMessage(OperationErrorCode.NO_SUCH_MESSAGE.getValue(), null, FALLBACK_MESSAGE, locale);
     }
 }

@@ -1,12 +1,14 @@
 package com.kachnic.rtchats.libs.exceptions;
 
+import com.kachnic.rtchats.libs.exceptions.service.ErrorCode;
 import java.io.Serial;
+import java.util.List;
 
 public class MissingArgumentException extends DomainException {
     @Serial
     private static final long serialVersionUID = 1L;
 
-    public MissingArgumentException(final String message) {
-        super(message);
+    public MissingArgumentException(final ErrorCode code, final String paramName) {
+        super(code, List.of(paramName));
     }
 }

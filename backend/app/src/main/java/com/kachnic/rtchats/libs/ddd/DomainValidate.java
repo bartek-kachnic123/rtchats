@@ -2,40 +2,39 @@ package com.kachnic.rtchats.libs.ddd;
 
 import com.kachnic.rtchats.libs.exceptions.DomainException;
 import com.kachnic.rtchats.libs.exceptions.MissingArgumentException;
+import com.kachnic.rtchats.libs.exceptions.service.ArgumentErrorCode;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public final class DomainValidate {
-
-    private static final String NULL_MSG_SUFFIX = " must not be null";
-    private static final String BLANK_MSG_SUFFIX = " must not be blank";
+    private static final String SPACE = " ";
 
     private DomainValidate() {}
 
     public static <T> void assertNonNull(final T obj, final String paramName) {
         if (obj == null) {
-            throw new MissingArgumentException(paramName + NULL_MSG_SUFFIX);
+            throw new MissingArgumentException(ArgumentErrorCode.MISSING_NULL, paramName);
         }
     }
 
-    public static void assertNonNull(final Object obj, final Supplier<String> paramNameSupplier) {
+    public static <T> void assertNonNull(final T obj, final Supplier<String> paramNameSupplier) {
         if (obj == null) {
-            throw new MissingArgumentException(paramNameSupplier.get() + NULL_MSG_SUFFIX);
+            throw new MissingArgumentException(ArgumentErrorCode.MISSING_NULL, paramNameSupplier.get());
         }
     }
 
     public static void assertNotBlank(final String str, final String paramName) {
         assertNonNull(str, paramName);
         if (str.isBlank()) {
-            throw new MissingArgumentException(paramName + BLANK_MSG_SUFFIX);
+            throw new MissingArgumentException(ArgumentErrorCode.MISSING_BLANK, paramName);
         }
     }
 
     public static void assertNotBlank(final String str, final Supplier<String> paramNameSupplier) {
         assertNonNull(str, paramNameSupplier);
         if (str.isBlank()) {
-            throw new MissingArgumentException(paramNameSupplier.get() + BLANK_MSG_SUFFIX);
+            throw new MissingArgumentException(ArgumentErrorCode.MISSING_BLANK, paramNameSupplier.get());
         }
     }
 
@@ -70,13 +69,13 @@ public final class DomainValidate {
         final List<Pair<?>> pairs =
                 List.of(new Pair<>(value1, name1), new Pair<>(value2, name2), new Pair<>(value3, name3));
 
-        final String errorMessage = pairs.stream()
+        final String nullFieldNames = pairs.stream()
                 .filter(pair -> pair.value() == null)
-                .map(pair -> pair.name() + NULL_MSG_SUFFIX)
-                .collect(Collectors.joining(System.lineSeparator()));
+                .map(Pair::name)
+                .collect(Collectors.joining(SPACE));
 
-        if (!errorMessage.isEmpty()) {
-            throw new MissingArgumentException(errorMessage);
+        if (!nullFieldNames.isEmpty()) {
+            throw new MissingArgumentException(ArgumentErrorCode.MISSING_NULL, nullFieldNames);
         }
     }
 
