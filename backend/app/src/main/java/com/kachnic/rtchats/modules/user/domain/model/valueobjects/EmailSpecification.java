@@ -5,6 +5,7 @@ import com.kachnic.rtchats.modules.user.domain.exceptions.UserErrorCode;
 import java.util.regex.Pattern;
 
 final class EmailSpecification {
+
     private static final int MAX_LENGTH = 255;
     private static final Pattern VALID_PATTERN = Pattern.compile(
             """

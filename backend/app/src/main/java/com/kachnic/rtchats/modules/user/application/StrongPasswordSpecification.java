@@ -5,6 +5,7 @@ import com.kachnic.rtchats.libs.specs.*;
 import java.util.regex.Pattern;
 
 final class StrongPasswordSpecification {
+
     private static final int MIN_LENGTH = 8;
     private static final int MAX_LENGTH = 255;
     private static final Pattern SPECIAL = Pattern.compile("[!@#$%^&*()\\-_=+\\[\\]{}|;:'\",.<>?/`~]");

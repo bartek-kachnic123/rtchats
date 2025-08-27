@@ -6,6 +6,7 @@ import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Email;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Password;
 
 public class DefaultUserCredentialService implements UserCredentialService {
+
     private final UserRepository users;
     private final PasswordHasher passwordHasher;
 

@@ -4,6 +4,7 @@ import com.kachnic.rtchats.libs.ddd.DomainValidate;
 import com.kachnic.rtchats.libs.exceptions.ArgumentOutOfRangeException;
 
 public final class BetweenLengthSpecification implements Specification<String> {
+
     private final int minLength;
     private final int maxLength;
 

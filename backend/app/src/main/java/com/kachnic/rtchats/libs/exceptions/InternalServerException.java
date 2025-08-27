@@ -4,6 +4,7 @@ import com.kachnic.rtchats.libs.exceptions.service.OperationErrorCode;
 import java.io.Serial;
 
 public class InternalServerException extends DomainException {
+
     @Serial
     private static final long serialVersionUID = 1L;
 

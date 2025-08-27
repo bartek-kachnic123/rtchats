@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AggregateRoot<T> extends BaseEntity<T> {
+
     private final List<DomainEvent> domainEvents;
 
     protected AggregateRoot(final T entityId) {

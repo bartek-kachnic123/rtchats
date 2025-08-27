@@ -7,6 +7,7 @@ import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserId;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserInfo;
 
 public final class UserEntity extends AggregateRoot<UserId> {
+
     private final UserInfo userInfo;
 
     public static UserEntity create(final UserId userId, final UserInfo userInfo) {

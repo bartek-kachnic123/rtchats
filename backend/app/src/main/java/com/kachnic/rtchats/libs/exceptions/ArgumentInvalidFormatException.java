@@ -4,6 +4,7 @@ import com.kachnic.rtchats.libs.exceptions.service.ErrorCode;
 import java.io.Serial;
 
 public class ArgumentInvalidFormatException extends DomainException {
+
     @Serial
     private static final long serialVersionUID = 1L;
 

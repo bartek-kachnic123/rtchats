@@ -4,6 +4,7 @@ import com.kachnic.rtchats.libs.ddd.DomainValidate;
 import com.kachnic.rtchats.libs.exceptions.ArgumentMaxValueException;
 
 public final class MaxLengthSpecification implements Specification<String> {
+
     private final int maxLength;
 
     private MaxLengthSpecification(final int maxLength) {

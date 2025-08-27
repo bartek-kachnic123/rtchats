@@ -8,6 +8,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public final class DomainValidate {
+
     private static final String SPACE = " ";
 
     private DomainValidate() {}

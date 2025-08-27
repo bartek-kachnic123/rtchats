@@ -23,6 +23,7 @@ public record CreateUserRequest(String email, String username, String password, 
 }
 
 class PasswordMatchValidator implements ConstraintValidator<PasswordsMatch, CreateUserRequest> {
+
     @Override
     public boolean isValid(final CreateUserRequest request, final ConstraintValidatorContext context) {
         return Objects.equals(request.password(), request.confirmPassword());

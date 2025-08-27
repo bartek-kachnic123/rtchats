@@ -9,6 +9,7 @@ import org.springframework.context.event.EventListener;
 @CommandHandler
 @AllArgsConstructor
 class CreateUserCommandHandler {
+
     private final UseCaseExecutor<UserEntity, CreateUserCommand> useCase;
     private final UserEntityMapper mapper;
 

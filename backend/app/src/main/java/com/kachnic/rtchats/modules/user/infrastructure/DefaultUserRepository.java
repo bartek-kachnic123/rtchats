@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 @AllArgsConstructor
 class DefaultUserRepository implements UserRepository {
+
     private final UserCrudRepo userCrudRepo;
     private final UserJpaMapper mapper;
     private final JdbcTemplate jdbcTemplate;

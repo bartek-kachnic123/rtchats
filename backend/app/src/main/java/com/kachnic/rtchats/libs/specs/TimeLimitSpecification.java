@@ -6,6 +6,7 @@ import com.kachnic.rtchats.libs.exceptions.TimeLimitExceededException;
 import java.util.concurrent.*;
 
 public final class TimeLimitSpecification<T> implements Specification<T> {
+
     private final Specification<T> wrappedSpec;
     private final long timeLimitMs;
 

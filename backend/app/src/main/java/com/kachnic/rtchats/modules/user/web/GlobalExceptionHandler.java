@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @AllArgsConstructor
 class GlobalExceptionHandler {
+
     private static final String DEFAULT_CODE = "default";
     private final MessageResolver messageResolver;
 

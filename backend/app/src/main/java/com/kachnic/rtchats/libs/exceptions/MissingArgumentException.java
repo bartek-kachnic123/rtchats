@@ -5,6 +5,7 @@ import java.io.Serial;
 import java.util.List;
 
 public class MissingArgumentException extends DomainException {
+
     @Serial
     private static final long serialVersionUID = 1L;
 

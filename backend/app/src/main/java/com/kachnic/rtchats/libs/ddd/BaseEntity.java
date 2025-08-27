@@ -4,6 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.Objects;
 
 public class BaseEntity<T> {
+
     protected final T entityId;
 
     protected BaseEntity(final T entityId) {
