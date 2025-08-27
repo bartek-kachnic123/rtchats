@@ -7,7 +7,6 @@ import com.kachnic.rtchats.modules.user.domain.UserEntity;
 import com.kachnic.rtchats.modules.user.domain.UserRepository;
 import com.kachnic.rtchats.modules.user.domain.exceptions.EmailAlreadyTakenException;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.*;
-import com.kachnic.rtchats.modules.user.infrastructure.RandomTimed;
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
@@ -25,6 +24,7 @@ class CreateUserUseCase implements UseCaseExecutor<UserEntity, CreateUserCommand
     public UserEntity execute(final CreateUserCommand command) {
         final UserId userId = users.nextId();
         final UserInfo userInfo = createUserInfo(command);
+
         final UserEntity user = UserEntity.create(userId, userInfo);
 
         users.save(user);
@@ -33,8 +33,9 @@ class CreateUserUseCase implements UseCaseExecutor<UserEntity, CreateUserCommand
 
     private UserInfo createUserInfo(final CreateUserCommand command) {
         final Email email = userCredService.createNewEmail(command.getEmail());
-        final Password password =
-                userCredService.createNewPassword(command.getPassword(), StrongPasswordSpecification.getDefault());
+
+        final Password password = userCredService.createNewPassword(command.getPassword());
+
         return UserInfo.of(email, Username.of(command.getUsername()), password);
     }
 }

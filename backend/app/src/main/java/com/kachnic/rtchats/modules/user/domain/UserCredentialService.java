@@ -7,5 +7,7 @@ import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Password;
 public interface UserCredentialService {
     Email createNewEmail(String value);
 
+    Password createNewPassword(String value);
+
     Password createNewPassword(String value, Specification<String> passwordSpec);
 }
