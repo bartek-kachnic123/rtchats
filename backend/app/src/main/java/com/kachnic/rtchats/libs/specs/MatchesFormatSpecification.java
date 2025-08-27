@@ -7,6 +7,7 @@ import java.util.concurrent.CancellationException;
 import java.util.regex.Pattern;
 
 public final class MatchesFormatSpecification implements Specification<String> {
+
     private final Pattern pattern;
     private final ErrorCode errorCode;
 

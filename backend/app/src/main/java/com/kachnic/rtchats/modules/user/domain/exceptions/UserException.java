@@ -6,6 +6,7 @@ import java.io.Serial;
 import java.util.List;
 
 class UserException extends DomainException {
+
     @Serial
     private static final long serialVersionUID = 1L;
 

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.validation.ObjectError;
 
 abstract class AbstractMessageResolver implements MessageResolver {
+
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     @Override

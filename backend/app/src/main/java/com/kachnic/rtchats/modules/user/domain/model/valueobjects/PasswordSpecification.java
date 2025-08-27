@@ -5,6 +5,7 @@ import com.kachnic.rtchats.libs.specs.NotBlankSpecification;
 import com.kachnic.rtchats.libs.specs.Specification;
 
 final class PasswordSpecification {
+
     private static final int MAX_LENGTH = 255;
     private static final Specification<String> DEFAULT =
             NotBlankSpecification.of().and(MaxLengthSpecification.of(MAX_LENGTH));

@@ -5,6 +5,7 @@ import com.kachnic.rtchats.modules.user.domain.exceptions.UserErrorCode;
 import java.util.regex.Pattern;
 
 final class UsernameSpecification {
+
     private static final int MIN_LENGTH = 3;
     private static final int MAX_LENGTH = 32;
 

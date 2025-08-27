@@ -7,6 +7,7 @@ import com.kachnic.rtchats.libs.exceptions.service.MissingCharacterErrorCode;
 import java.util.regex.Pattern;
 
 public final class ContainsSpecification implements Specification<String> {
+
     private final Pattern pattern;
     private final ErrorCode errorCode;
 

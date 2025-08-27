@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice(assignableTypes = UserController.class)
 @AllArgsConstructor
 class UserExceptionHandler {
+
     private final MessageResolver messageResolver;
 
     @ExceptionHandler(EmailAlreadyTakenException.class)

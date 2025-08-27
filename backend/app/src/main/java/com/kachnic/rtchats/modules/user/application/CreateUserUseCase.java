@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @UseCase
 class CreateUserUseCase implements UseCaseExecutor<UserEntity, CreateUserCommand> {
+
     private final UserRepository users;
     private final UserCredentialService userCredService;
 

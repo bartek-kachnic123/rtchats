@@ -1,5 +1,11 @@
 spotless {
 	java {
 		palantirJavaFormat(libs.versions.palantirJavaFormat.get())
+
+		replaceRegex(
+				"newline-after-class-step",
+				"(.*class\\s+\\w+.*\\{)(?!\\n\\n)",  // matches a line that contains 'class ClassName {'
+				"\$0\n\n"                        	// adds a blank line after the class declaration
+		)											// for better readability
 	}
 }

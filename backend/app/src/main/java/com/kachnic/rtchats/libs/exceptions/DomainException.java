@@ -5,6 +5,7 @@ import java.io.Serial;
 import java.util.*;
 
 public abstract class DomainException extends RuntimeException implements LocalizableMessage {
+
     @Serial
     private static final long serialVersionUID = 1L;
 

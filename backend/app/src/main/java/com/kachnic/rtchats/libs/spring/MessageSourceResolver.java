@@ -12,6 +12,7 @@ import org.springframework.validation.ObjectError;
 @Component
 @AllArgsConstructor
 public final class MessageSourceResolver extends AbstractMessageResolver {
+
     private static final String FALLBACK_MESSAGE = "Global Message is missing";
 
     private final MessageSource messageSource;
