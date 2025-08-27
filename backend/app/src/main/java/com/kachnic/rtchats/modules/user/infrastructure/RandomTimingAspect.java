@@ -1,6 +1,7 @@
 package com.kachnic.rtchats.modules.user.infrastructure;
 
 import com.kachnic.rtchats.libs.exceptions.DomainException;
+import com.kachnic.rtchats.modules.user.application.RandomTimed;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -11,10 +12,10 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class RandomTimingAspect {
+class RandomTimingAspect {
 
     @Around("@annotation(randomTimed)")
-    public Object enforceRandomTiming(final ProceedingJoinPoint joinPoint, final RandomTimed randomTimed)
+    /* package */ Object enforceRandomTiming(final ProceedingJoinPoint joinPoint, final RandomTimed randomTimed)
             throws Throwable {
         final long start = startTime();
         try {

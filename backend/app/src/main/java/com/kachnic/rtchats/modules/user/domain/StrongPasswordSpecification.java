@@ -1,4 +1,4 @@
-package com.kachnic.rtchats.modules.user.application;
+package com.kachnic.rtchats.modules.user.domain;
 
 import com.kachnic.rtchats.libs.exceptions.service.MissingCharacterErrorCode;
 import com.kachnic.rtchats.libs.specs.*;

@@ -16,18 +16,27 @@ public class DefaultUserCredentialService implements UserCredentialService {
     }
 
     @Override
-    public Email createNewEmail(final String newEmail) {
-        final Email email = Email.of(newEmail);
+    public Email createNewEmail(final String value) {
+        final Email email = Email.of(value);
+
         if (users.existsByEmail(email)) {
-            throw new EmailAlreadyTakenException(newEmail);
+            throw new EmailAlreadyTakenException(value);
         }
+
         return email;
     }
 
     @Override
-    public Password createNewPassword(final String rawPassword, final Specification<String> passwordSpec) {
-        passwordSpec.check(rawPassword, Password.class.getSimpleName());
-        final String hashedValue = passwordHasher.hash(rawPassword);
+    public Password createNewPassword(final String value) {
+        return createNewPassword(value, StrongPasswordSpecification.getDefault());
+    }
+
+    @Override
+    public Password createNewPassword(final String value, final Specification<String> passwordSpec) {
+        passwordSpec.check(value, Password.class.getSimpleName());
+
+        final String hashedValue = passwordHasher.hash(value);
+
         return Password.of(hashedValue);
     }
 }

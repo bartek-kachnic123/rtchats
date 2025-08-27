@@ -1,4 +1,4 @@
-package com.kachnic.rtchats.modules.user.infrastructure;
+package com.kachnic.rtchats.modules.user.application;
 
 import com.kachnic.rtchats.libs.exceptions.DomainException;
 import java.lang.annotation.ElementType;
