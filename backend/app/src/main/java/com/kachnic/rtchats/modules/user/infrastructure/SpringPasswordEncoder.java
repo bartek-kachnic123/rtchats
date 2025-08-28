@@ -1,9 +1,11 @@
 package com.kachnic.rtchats.modules.user.infrastructure;
 
-import com.kachnic.rtchats.modules.user.domain.PasswordHasher;
-import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import com.kachnic.rtchats.modules.user.domain.PasswordHasher;
+
+import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 @Component

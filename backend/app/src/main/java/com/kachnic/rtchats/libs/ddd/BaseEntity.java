@@ -8,7 +8,7 @@ public class BaseEntity<T> {
     protected final T entityId;
 
     protected BaseEntity(final T entityId) {
-        this.entityId = DomainValidate.requireNonNull(entityId, this::getEntityIdName);
+        this.entityId = DomainValidator.requireNonNull(entityId, this::getEntityIdName);
     }
 
     private String getEntityIdName() {

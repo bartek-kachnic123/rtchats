@@ -1,17 +1,18 @@
 package com.kachnic.rtchats.libs.ddd;
 
-import com.kachnic.rtchats.libs.exceptions.DomainException;
-import com.kachnic.rtchats.libs.exceptions.MissingArgumentException;
-import com.kachnic.rtchats.libs.exceptions.codes.ArgumentErrorCode;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
-public final class DomainValidate {
+import com.kachnic.rtchats.libs.exceptions.DomainException;
+import com.kachnic.rtchats.libs.exceptions.MissingArgumentException;
+import com.kachnic.rtchats.libs.exceptions.codes.ArgumentErrorCode;
+
+public final class DomainValidator {
 
     private static final String SPACE = " ";
 
-    private DomainValidate() {}
+    private DomainValidator() {}
 
     public static <T> void assertNonNull(final T obj, final String paramName) {
         if (obj == null) {

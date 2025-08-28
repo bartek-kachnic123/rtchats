@@ -1,6 +1,6 @@
 package com.kachnic.rtchats.libs.specs;
 
-import com.kachnic.rtchats.libs.ddd.DomainValidate;
+import com.kachnic.rtchats.libs.ddd.DomainValidator;
 import com.kachnic.rtchats.libs.exceptions.ArgumentMaxValueException;
 
 public final class MaxLengthSpecification implements Specification<String> {
@@ -18,7 +18,7 @@ public final class MaxLengthSpecification implements Specification<String> {
     @Override
     public void check(final String candidate, final String paramName) {
         final int candidateLength = candidate.length();
-        DomainValidate.assertTrue(
+        DomainValidator.assertTrue(
                 isWithinMaxLength(candidateLength),
                 () -> new ArgumentMaxValueException(paramName, candidateLength, maxLength));
     }

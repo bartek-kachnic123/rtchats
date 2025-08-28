@@ -1,8 +1,9 @@
 package com.kachnic.rtchats.modules.user.infrastructure;
 
-import jakarta.persistence.*;
 import java.util.Locale;
 import java.util.UUID;
+
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity

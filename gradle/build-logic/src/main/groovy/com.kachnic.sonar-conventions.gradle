@@ -1,43 +1,43 @@
 plugins {
-    id 'org.sonarqube'
+	id 'org.sonarqube'
 }
 
 tasks.named('sonar') {
-    dependsOn subprojects.collectMany { it.tasks.withType(Test) + it.tasks.withType(JacocoReport) }
+	dependsOn subprojects.collectMany { it.tasks.withType(Test) + it.tasks.withType(JacocoReport) }
 }
 
 sonar {
-    properties {
-        def reportFile = file('build/reports/jacoco/test/jacocoTestReport.xml')
-        def org = System.getenv('SONAR_ORGANIZATION')
+	properties {
+		def reportFile = file('build/reports/jacoco/test/jacocoTestReport.xml')
+		def org = System.getenv('SONAR_ORGANIZATION')
 
-        property 'sonar.coverage.jacoco.xmlReportPaths', reportFile.exists() ? reportFile.absolutePath : ''
-        property 'sonar.organization', org
-        property 'sonar.projectKey', "${org}_${project.name}"
-    }
+		property 'sonar.coverage.jacoco.xmlReportPaths', reportFile.exists() ? reportFile.absolutePath : ''
+		property 'sonar.organization', org
+		property 'sonar.projectKey', "${org}_${project.name}"
+	}
 }
 
 static def collectDirs(File baseDir, String subDirName) {
-    def dirs = []
-    baseDir.eachDir { dir ->
-        def candidate = new File(dir, subDirName)
-        if (candidate.exists()) {
-            dirs << candidate.path
-        }
-    }
-    return dirs.join(',')
+	def dirs = []
+	baseDir.eachDir { dir ->
+		def candidate = new File(dir, subDirName)
+		if (candidate.exists()) {
+			dirs << candidate.path
+		}
+	}
+	return dirs.join(',')
 }
 
 project(':frontend') {
-    sonar {
-        properties {
-            def frontendDir = file('.')
-            def lcovReports = fileTree(frontendDir) {
-                include '**/coverage/lcov.info'
-            }.files*.absolutePath.join(',')
+	sonar {
+		properties {
+			def frontendDir = file('.')
+			def lcovReports = fileTree(frontendDir) {
+				include '**/coverage/lcov.info'
+			}.files*.absolutePath.join(',')
 
-            property 'sonar.javascript.lcov.reportPaths', lcovReports
-            property 'sonar.sources', collectDirs(frontendDir, 'src')
-            property 'sonar.tests', collectDirs(frontendDir, 'tests')
-        }
-    }}
+			property 'sonar.javascript.lcov.reportPaths', lcovReports
+			property 'sonar.sources', collectDirs(frontendDir, 'src')
+			property 'sonar.tests', collectDirs(frontendDir, 'tests')
+		}
+	}}

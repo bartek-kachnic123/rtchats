@@ -1,13 +1,16 @@
 package com.kachnic.rtchats.modules.user.web;
 
-import com.kachnic.rtchats.libs.spring.MessageResolver;
-import com.kachnic.rtchats.modules.user.domain.exceptions.EmailAlreadyTakenException;
 import java.util.Locale;
-import lombok.AllArgsConstructor;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.kachnic.rtchats.libs.spring.MessageResolver;
+import com.kachnic.rtchats.modules.user.domain.exceptions.EmailAlreadyTakenException;
+
+import lombok.AllArgsConstructor;
 
 @RestControllerAdvice(assignableTypes = UserController.class)
 @AllArgsConstructor

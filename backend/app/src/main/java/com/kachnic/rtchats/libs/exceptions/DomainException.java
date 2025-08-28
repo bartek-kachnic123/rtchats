@@ -1,9 +1,10 @@
 package com.kachnic.rtchats.libs.exceptions;
 
-import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
+
+import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
 
 public abstract class DomainException extends RuntimeException implements LocalizableMessage {
 

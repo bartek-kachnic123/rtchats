@@ -1,6 +1,7 @@
 package com.kachnic.rtchats.modules.user.application;
 
 import com.kachnic.rtchats.libs.ddd.AsyncCommand;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

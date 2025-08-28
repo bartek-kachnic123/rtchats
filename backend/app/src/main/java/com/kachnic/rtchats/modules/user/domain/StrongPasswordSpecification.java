@@ -1,8 +1,9 @@
 package com.kachnic.rtchats.modules.user.domain;
 
+import java.util.regex.Pattern;
+
 import com.kachnic.rtchats.libs.exceptions.codes.MissingCharacterErrorCode;
 import com.kachnic.rtchats.libs.specs.*;
-import java.util.regex.Pattern;
 
 final class StrongPasswordSpecification {
 

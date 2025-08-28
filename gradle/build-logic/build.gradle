@@ -1,13 +1,13 @@
 plugins {
-    alias(libs.plugins.groovy.gradle)
+	alias(libs.plugins.groovy.gradle)
 }
 
 repositories {
-    gradlePluginPortal()
+	gradlePluginPortal()
 }
 
 dependencies {
-    implementation libs.spotless.gradle
-    implementation libs.spotbugs.gradle
-    implementation libs.sonarqube.gradle
+	implementation libs.spotless.gradle
+	implementation libs.spotbugs.gradle
+	implementation libs.sonarqube.gradle
 }

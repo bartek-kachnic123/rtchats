@@ -1,13 +1,13 @@
 plugins {
-    id 'java'
+	id 'java'
 }
 
 repositories {
-    mavenCentral()
+	mavenCentral()
 }
 
 java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(libs.versions.javaVersion.get())
-    }
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(libs.versions.javaVersion.get())
+	}
 }

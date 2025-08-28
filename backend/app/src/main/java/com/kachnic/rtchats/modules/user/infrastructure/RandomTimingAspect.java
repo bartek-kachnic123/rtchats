@@ -1,16 +1,18 @@
 package com.kachnic.rtchats.modules.user.infrastructure;
 
-import com.kachnic.rtchats.libs.exceptions.DomainException;
-import com.kachnic.rtchats.libs.utils.SystemTimer;
-import com.kachnic.rtchats.libs.utils.Timer;
-import com.kachnic.rtchats.modules.user.application.RandomTimed;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
+
+import com.kachnic.rtchats.libs.exceptions.DomainException;
+import com.kachnic.rtchats.libs.utils.SystemTimer;
+import com.kachnic.rtchats.libs.utils.Timer;
+import com.kachnic.rtchats.modules.user.application.RandomTimed;
 
 @Aspect
 @Component

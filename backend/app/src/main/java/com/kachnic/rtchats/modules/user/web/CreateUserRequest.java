@@ -1,11 +1,12 @@
 package com.kachnic.rtchats.modules.user.web;
 
+import java.lang.annotation.*;
+import java.util.Objects;
+
 import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.Payload;
-import java.lang.annotation.*;
-import java.util.Objects;
 
 @PasswordsMatch
 public record CreateUserRequest(String email, String username, String password, String confirmPassword) {}

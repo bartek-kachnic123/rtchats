@@ -1,10 +1,11 @@
 package com.kachnic.rtchats.libs.specs;
 
-import com.kachnic.rtchats.libs.ddd.DomainValidate;
+import java.util.regex.Pattern;
+
+import com.kachnic.rtchats.libs.ddd.DomainValidator;
 import com.kachnic.rtchats.libs.exceptions.MissingCharacterException;
 import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
 import com.kachnic.rtchats.libs.exceptions.codes.MissingCharacterErrorCode;
-import java.util.regex.Pattern;
 
 public final class ContainsSpecification implements Specification<String> {
 
@@ -38,7 +39,7 @@ public final class ContainsSpecification implements Specification<String> {
 
     @Override
     public void check(final String candidate, final String paramName) {
-        DomainValidate.assertTrue(
+        DomainValidator.assertTrue(
                 containsPattern(candidate), () -> new MissingCharacterException(errorCode, paramName, candidate));
     }
 
