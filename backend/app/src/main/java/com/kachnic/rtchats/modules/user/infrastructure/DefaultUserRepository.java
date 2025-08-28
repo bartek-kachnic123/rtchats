@@ -20,10 +20,6 @@ class DefaultUserRepository implements UserRepository {
     private final UserJpaMapper mapper;
     private final JdbcTemplate jdbcTemplate;
 
-    @SuppressWarnings("PMD.LongVariable")
-    private static final String SQL_EXISTS_BY_NORMALIZED_EMAIL =
-            "SELECT EXISTS (SELECT 1 FROM users WHERE normalized_email = ?)";
-
     @Override
     public UserId nextId() {
         return UserId.of(UUID.randomUUID());
@@ -44,8 +40,13 @@ class DefaultUserRepository implements UserRepository {
     @Override
     public boolean existsByEmail(final Email email) {
         final String normalizedEmail = email.value().toLowerCase(Locale.ROOT);
-        final Boolean result =
-                jdbcTemplate.queryForObject(SQL_EXISTS_BY_NORMALIZED_EMAIL, Boolean.class, normalizedEmail);
+        final Boolean result = jdbcTemplate.queryForObject(ExistsBy.NORMALIZED_EMAIL, Boolean.class, normalizedEmail);
         return Boolean.TRUE.equals(result);
+    }
+
+    private enum ExistsBy {
+        ;
+
+        public static final String NORMALIZED_EMAIL = "SELECT EXISTS (SELECT 1 FROM users WHERE normalized_email = ?)";
     }
 }
