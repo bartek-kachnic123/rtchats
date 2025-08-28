@@ -1,13 +1,18 @@
 spotless {
 	java {
+		target 'src/*/java/**/*.java'
+
 		palantirJavaFormat(libs.versions.palantirJavaFormat.get())
+
+		// Order: Java, third-party, project, other, project static, other static
+		importOrder('java|javax', 'com|org', 'com.kachnic', '', '\\#com.kachnic', '\\#')
 
 		/*
 		Matches lines containing 'class ClassName {'
 		and adds a blank line after the class declaration for better readability.
 		*/
 		replaceRegex(
-				"newline-after-class-step",
+				"NewLineAfterClassDeclaration",
 				"(.*class\\s+\\w+.*\\{)(?!\\n\\n)",
 				"\$0\n\n"
 		)

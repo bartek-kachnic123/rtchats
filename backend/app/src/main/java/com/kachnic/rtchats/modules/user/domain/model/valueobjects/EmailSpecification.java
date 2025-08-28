@@ -1,8 +1,9 @@
 package com.kachnic.rtchats.modules.user.domain.model.valueobjects;
 
+import java.util.regex.Pattern;
+
 import com.kachnic.rtchats.libs.specs.*;
 import com.kachnic.rtchats.modules.user.domain.exceptions.UserErrorCode;
-import java.util.regex.Pattern;
 
 final class EmailSpecification {
 

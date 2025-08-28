@@ -1,12 +1,14 @@
 package com.kachnic.rtchats.libs.spring;
 
-import com.kachnic.rtchats.libs.exceptions.LocalizableMessage;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.ObjectError;
+
+import com.kachnic.rtchats.libs.exceptions.LocalizableMessage;
 
 abstract class AbstractMessageResolver implements MessageResolver {
 

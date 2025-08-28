@@ -1,6 +1,6 @@
 package com.kachnic.rtchats.libs.specs;
 
-import com.kachnic.rtchats.libs.ddd.DomainValidate;
+import com.kachnic.rtchats.libs.ddd.DomainValidator;
 
 public enum NotBlankSpecification implements Specification<String> {
     INSTANCE;
@@ -11,6 +11,6 @@ public enum NotBlankSpecification implements Specification<String> {
 
     @Override
     public void check(final String candidate, final String paramName) {
-        DomainValidate.assertNotBlank(candidate, paramName);
+        DomainValidator.assertNotBlank(candidate, paramName);
     }
 }

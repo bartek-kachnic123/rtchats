@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.root.conventions)
+	alias(libs.plugins.root.conventions)
 }
 
 version = '0.0.1'

@@ -1,10 +1,11 @@
 package com.kachnic.rtchats.modules.user.domain.exceptions;
 
-import com.kachnic.rtchats.libs.exceptions.DomainException;
-import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
+
+import com.kachnic.rtchats.libs.exceptions.DomainException;
+import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
 
 class UserException extends DomainException {
 

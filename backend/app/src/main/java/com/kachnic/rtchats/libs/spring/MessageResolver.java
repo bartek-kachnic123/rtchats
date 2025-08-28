@@ -1,9 +1,11 @@
 package com.kachnic.rtchats.libs.spring;
 
-import com.kachnic.rtchats.libs.exceptions.LocalizableMessage;
 import java.util.Locale;
 import java.util.Optional;
+
 import org.springframework.validation.ObjectError;
+
+import com.kachnic.rtchats.libs.exceptions.LocalizableMessage;
 
 public interface MessageResolver {
     Optional<String> resolve(LocalizableMessage message, Locale locale);

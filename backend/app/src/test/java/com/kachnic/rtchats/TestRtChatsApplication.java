@@ -1,7 +1,8 @@
 package com.kachnic.rtchats;
 
-import com.kachnic.rtchats.config.TestcontainersConfiguration;
 import org.springframework.boot.SpringApplication;
+
+import com.kachnic.rtchats.config.TestcontainersConfiguration;
 
 public class TestRtChatsApplication {
 

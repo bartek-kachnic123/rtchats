@@ -1,7 +1,8 @@
 package com.kachnic.rtchats.libs.exceptions;
 
-import com.kachnic.rtchats.libs.exceptions.codes.OperationErrorCode;
 import java.io.Serial;
+
+import com.kachnic.rtchats.libs.exceptions.codes.OperationErrorCode;
 
 public class TimeLimitExceededException extends DomainException {
 

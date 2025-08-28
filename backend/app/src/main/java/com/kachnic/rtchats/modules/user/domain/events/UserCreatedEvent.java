@@ -1,9 +1,10 @@
 package com.kachnic.rtchats.modules.user.domain.events;
 
+import java.util.UUID;
+
 import com.kachnic.rtchats.libs.ddd.AbstractDomainEvent;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Email;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserId;
-import java.util.UUID;
 
 public final class UserCreatedEvent extends AbstractDomainEvent {
 

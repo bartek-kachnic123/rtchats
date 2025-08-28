@@ -1,8 +1,9 @@
 package com.kachnic.rtchats.libs.ddd;
 
-import com.kachnic.rtchats.libs.exceptions.InternalServerException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+
+import com.kachnic.rtchats.libs.exceptions.InternalServerException;
 
 public class AsyncCommand<R> implements Command<R> {
 

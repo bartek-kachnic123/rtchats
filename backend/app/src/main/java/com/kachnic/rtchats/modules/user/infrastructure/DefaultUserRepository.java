@@ -1,16 +1,19 @@
 package com.kachnic.rtchats.modules.user.infrastructure;
 
+import java.util.Locale;
+import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
+
 import com.kachnic.rtchats.modules.user.application.UserDto;
 import com.kachnic.rtchats.modules.user.domain.UserEntity;
 import com.kachnic.rtchats.modules.user.domain.UserRepository;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Email;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserId;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.UUID;
+
 import lombok.AllArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Repository;
 
 @Repository
 @AllArgsConstructor

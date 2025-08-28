@@ -1,13 +1,8 @@
 package com.kachnic.rtchats.modules.user.web;
 
-import com.kachnic.rtchats.libs.exceptions.ArgumentInvalidFormatException;
-import com.kachnic.rtchats.libs.exceptions.DomainException;
-import com.kachnic.rtchats.libs.exceptions.InternalServerException;
-import com.kachnic.rtchats.libs.exceptions.TimeLimitExceededException;
-import com.kachnic.rtchats.libs.spring.MessageResolver;
 import java.util.*;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -18,6 +13,14 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.kachnic.rtchats.libs.exceptions.ArgumentInvalidFormatException;
+import com.kachnic.rtchats.libs.exceptions.DomainException;
+import com.kachnic.rtchats.libs.exceptions.InternalServerException;
+import com.kachnic.rtchats.libs.exceptions.TimeLimitExceededException;
+import com.kachnic.rtchats.libs.spring.MessageResolver;
+
+import lombok.AllArgsConstructor;
 
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)

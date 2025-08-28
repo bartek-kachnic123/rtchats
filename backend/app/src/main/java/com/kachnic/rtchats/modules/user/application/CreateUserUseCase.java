@@ -7,6 +7,7 @@ import com.kachnic.rtchats.modules.user.domain.UserEntity;
 import com.kachnic.rtchats.modules.user.domain.UserRepository;
 import com.kachnic.rtchats.modules.user.domain.exceptions.EmailAlreadyTakenException;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.*;
+
 import lombok.AllArgsConstructor;
 
 @AllArgsConstructor

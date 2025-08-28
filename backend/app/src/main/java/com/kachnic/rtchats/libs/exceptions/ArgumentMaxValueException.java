@@ -1,8 +1,9 @@
 package com.kachnic.rtchats.libs.exceptions;
 
-import com.kachnic.rtchats.libs.exceptions.codes.ArgumentErrorCode;
 import java.io.Serial;
 import java.util.List;
+
+import com.kachnic.rtchats.libs.exceptions.codes.ArgumentErrorCode;
 
 public class ArgumentMaxValueException extends DomainException {
 

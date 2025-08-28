@@ -1,6 +1,7 @@
 package com.kachnic.rtchats.libs.spring;
 
 import java.lang.annotation.*;
+
 import org.springframework.stereotype.Component;
 
 @Target(ElementType.TYPE)

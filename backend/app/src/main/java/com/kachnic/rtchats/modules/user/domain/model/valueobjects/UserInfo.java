@@ -1,10 +1,10 @@
 package com.kachnic.rtchats.modules.user.domain.model.valueobjects;
 
-import com.kachnic.rtchats.libs.ddd.DomainValidate;
+import com.kachnic.rtchats.libs.ddd.DomainValidator;
 
 public record UserInfo(Email email, Username username, Password password) {
     public UserInfo {
-        DomainValidate.assertAllNotNull(
+        DomainValidator.assertAllNotNull(
                 email,
                 Email.class.getSimpleName(),
                 username,

@@ -1,7 +1,7 @@
 package com.kachnic.rtchats.modules.user.domain;
 
 import com.kachnic.rtchats.libs.ddd.AggregateRoot;
-import com.kachnic.rtchats.libs.ddd.DomainValidate;
+import com.kachnic.rtchats.libs.ddd.DomainValidator;
 import com.kachnic.rtchats.modules.user.domain.events.UserCreatedEvent;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserId;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserInfo;
@@ -18,7 +18,7 @@ public final class UserEntity extends AggregateRoot<UserId> {
 
     public UserEntity(final UserId userId, final UserInfo userInfo) {
         super(userId);
-        this.userInfo = DomainValidate.requireNonNull(userInfo, UserInfo.class.getSimpleName());
+        this.userInfo = DomainValidator.requireNonNull(userInfo, UserInfo.class.getSimpleName());
     }
 
     public UserInfo getUserInfo() {
