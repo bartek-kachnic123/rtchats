@@ -1,7 +1,8 @@
 package com.kachnic.rtchats.libs.exceptions;
 
-import com.kachnic.rtchats.libs.exceptions.service.ErrorCode;
+import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
 import java.io.Serial;
+import java.io.Serializable;
 import java.util.*;
 
 public abstract class DomainException extends RuntimeException implements LocalizableMessage {
@@ -10,7 +11,7 @@ public abstract class DomainException extends RuntimeException implements Locali
     private static final long serialVersionUID = 1L;
 
     private final ErrorCode errorCode;
-    private final List<Object> args;
+    private final List<Serializable> args;
 
     protected DomainException(final ErrorCode errorCode) {
         this(errorCode, List.of(), null);
@@ -20,14 +21,16 @@ public abstract class DomainException extends RuntimeException implements Locali
         this(errorCode, List.of(), cause);
     }
 
-    protected DomainException(final ErrorCode errorCode, final List<Object> args) {
+    protected DomainException(final ErrorCode errorCode, final List<Serializable> args) {
         this(errorCode, args, null);
     }
 
-    protected DomainException(final ErrorCode errorCode, final List<Object> args, final Throwable cause) {
+    protected DomainException(final ErrorCode errorCode, final List<Serializable> args, final Throwable cause) {
         super("[" + errorCode.getValue() + "] args=" + args, cause);
         this.errorCode = errorCode;
-        this.args = args;
+
+        // Use ArrayList to ensure the list is serializable
+        this.args = Collections.unmodifiableList(new ArrayList<>(args));
     }
 
     @Override

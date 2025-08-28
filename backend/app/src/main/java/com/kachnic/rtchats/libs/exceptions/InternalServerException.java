@@ -1,6 +1,6 @@
 package com.kachnic.rtchats.libs.exceptions;
 
-import com.kachnic.rtchats.libs.exceptions.service.OperationErrorCode;
+import com.kachnic.rtchats.libs.exceptions.codes.OperationErrorCode;
 import java.io.Serial;
 
 public class InternalServerException extends DomainException {

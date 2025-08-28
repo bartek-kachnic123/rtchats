@@ -2,8 +2,8 @@ package com.kachnic.rtchats.libs.specs;
 
 import com.kachnic.rtchats.libs.ddd.DomainValidate;
 import com.kachnic.rtchats.libs.exceptions.MissingCharacterException;
-import com.kachnic.rtchats.libs.exceptions.service.ErrorCode;
-import com.kachnic.rtchats.libs.exceptions.service.MissingCharacterErrorCode;
+import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
+import com.kachnic.rtchats.libs.exceptions.codes.MissingCharacterErrorCode;
 import java.util.regex.Pattern;
 
 public final class ContainsSpecification implements Specification<String> {

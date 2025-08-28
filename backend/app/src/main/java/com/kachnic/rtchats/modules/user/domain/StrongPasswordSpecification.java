@@ -1,6 +1,6 @@
 package com.kachnic.rtchats.modules.user.domain;
 
-import com.kachnic.rtchats.libs.exceptions.service.MissingCharacterErrorCode;
+import com.kachnic.rtchats.libs.exceptions.codes.MissingCharacterErrorCode;
 import com.kachnic.rtchats.libs.specs.*;
 import java.util.regex.Pattern;
 

@@ -1,6 +1,6 @@
 package com.kachnic.rtchats.libs.exceptions;
 
-import com.kachnic.rtchats.libs.exceptions.service.ErrorCode;
+import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
 import java.io.Serial;
 
 public class ArgumentInvalidFormatException extends DomainException {

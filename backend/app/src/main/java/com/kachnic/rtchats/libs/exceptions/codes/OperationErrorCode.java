@@ -1,4 +1,4 @@
-package com.kachnic.rtchats.libs.exceptions.service;
+package com.kachnic.rtchats.libs.exceptions.codes;
 
 public enum OperationErrorCode implements ErrorCode {
     INTERNAL_SERVER,

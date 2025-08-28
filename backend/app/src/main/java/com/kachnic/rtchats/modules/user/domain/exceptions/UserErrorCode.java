@@ -1,6 +1,6 @@
 package com.kachnic.rtchats.modules.user.domain.exceptions;
 
-import com.kachnic.rtchats.libs.exceptions.service.ErrorCode;
+import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
 
 public enum UserErrorCode implements ErrorCode {
     EMAIL_TAKEN("email.email-taken"),
