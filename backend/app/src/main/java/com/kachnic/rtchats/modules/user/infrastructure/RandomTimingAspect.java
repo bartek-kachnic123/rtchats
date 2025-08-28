@@ -1,6 +1,8 @@
 package com.kachnic.rtchats.modules.user.infrastructure;
 
 import com.kachnic.rtchats.libs.exceptions.DomainException;
+import com.kachnic.rtchats.libs.utils.SystemTimer;
+import com.kachnic.rtchats.libs.utils.Timer;
 import com.kachnic.rtchats.modules.user.application.RandomTimed;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
@@ -17,26 +19,24 @@ class RandomTimingAspect {
     @Around("@annotation(randomTimed)")
     /* package */ Object enforceRandomTiming(final ProceedingJoinPoint joinPoint, final RandomTimed randomTimed)
             throws Throwable {
-        final long start = startTime();
+        final Timer timer = new SystemTimer();
+        timer.start();
+
         try {
             final Object result = joinPoint.proceed();
-            enforceDelay(start, randomTimed.minMs(), randomTimed.maxMs());
+            enforceDelay(timer, randomTimed.minMs(), randomTimed.maxMs());
             return result;
         } catch (DomainException e) {
             if (shouldDelay(e, randomTimed.delayOn())) {
-                enforceDelay(start, randomTimed.minMs(), randomTimed.maxMs());
+                enforceDelay(timer, randomTimed.minMs(), randomTimed.maxMs());
             }
             throw e;
         }
     }
 
-    private long startTime() {
-        return System.nanoTime();
-    }
-
-    private void enforceDelay(final long startNano, final long minMs, final long maxMs) {
+    private void enforceDelay(final Timer timer, final long minMs, final long maxMs) {
         final long targetMs = calculateRandomDelay(minMs, maxMs);
-        final long elapsedMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startNano);
+        final long elapsedMs = timer.getElapsedTime(TimeUnit.MILLISECONDS);
         sleepIfNeeded(targetMs - elapsedMs);
     }
 

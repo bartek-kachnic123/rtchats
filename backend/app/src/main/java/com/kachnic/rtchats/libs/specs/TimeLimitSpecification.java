@@ -3,16 +3,20 @@ package com.kachnic.rtchats.libs.specs;
 import com.kachnic.rtchats.libs.exceptions.DomainException;
 import com.kachnic.rtchats.libs.exceptions.InternalServerException;
 import com.kachnic.rtchats.libs.exceptions.TimeLimitExceededException;
+import com.kachnic.rtchats.libs.utils.SystemTimer;
+import com.kachnic.rtchats.libs.utils.Timer;
 import java.util.concurrent.*;
 
 public final class TimeLimitSpecification<T> implements Specification<T> {
 
     private final Specification<T> wrappedSpec;
     private final long timeLimitMs;
+    private final Timer timer;
 
     private TimeLimitSpecification(final Specification<T> wrappedSpec, final long timeLimitMs) {
         this.wrappedSpec = wrappedSpec;
         this.timeLimitMs = timeLimitMs;
+        this.timer = new SystemTimer();
     }
 
     public static <T> Specification<T> of(final Specification<T> wrappedSpec, final long timeLimitMs) {
@@ -29,7 +33,7 @@ public final class TimeLimitSpecification<T> implements Specification<T> {
             return null;
         });
 
-        final long startTime = System.nanoTime();
+        timer.start();
 
         try {
             specFuture.get(timeLimitMs, TimeUnit.MILLISECONDS);
@@ -38,7 +42,8 @@ public final class TimeLimitSpecification<T> implements Specification<T> {
         } catch (ExecutionException exc) {
             handleExecution(exc);
         } catch (TimeoutException exc) {
-            handleTimeout(specFuture, paramName, wrappedSpec.getClass().getSimpleName(), startTime);
+            final long durationMs = timer.getElapsedTime(TimeUnit.MILLISECONDS);
+            handleTimeout(specFuture, paramName, wrappedSpec.getClass().getSimpleName(), durationMs);
         }
     }
 
@@ -57,9 +62,8 @@ public final class TimeLimitSpecification<T> implements Specification<T> {
     }
 
     private void handleTimeout(
-            final Future<Void> specFuture, final String paramName, final String operation, final long startTime) {
+            final Future<Void> specFuture, final String paramName, final String operation, final long durationMs) {
         specFuture.cancel(true);
-        final long durationMs = TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startTime);
         throw new TimeLimitExceededException(paramName, operation, durationMs);
     }
 }
