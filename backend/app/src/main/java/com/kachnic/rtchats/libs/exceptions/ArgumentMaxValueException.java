@@ -1,6 +1,6 @@
 package com.kachnic.rtchats.libs.exceptions;
 
-import com.kachnic.rtchats.libs.exceptions.service.ArgumentErrorCode;
+import com.kachnic.rtchats.libs.exceptions.codes.ArgumentErrorCode;
 import java.io.Serial;
 import java.util.List;
 

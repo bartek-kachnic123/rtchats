@@ -1,7 +1,7 @@
 package com.kachnic.rtchats.libs.spring;
 
 import com.kachnic.rtchats.libs.exceptions.LocalizableMessage;
-import com.kachnic.rtchats.libs.exceptions.service.OperationErrorCode;
+import com.kachnic.rtchats.libs.exceptions.codes.OperationErrorCode;
 import java.util.Locale;
 import java.util.Optional;
 import lombok.AllArgsConstructor;

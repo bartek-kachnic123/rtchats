@@ -2,7 +2,7 @@ package com.kachnic.rtchats.libs.ddd;
 
 import com.kachnic.rtchats.libs.exceptions.DomainException;
 import com.kachnic.rtchats.libs.exceptions.MissingArgumentException;
-import com.kachnic.rtchats.libs.exceptions.service.ArgumentErrorCode;
+import com.kachnic.rtchats.libs.exceptions.codes.ArgumentErrorCode;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;

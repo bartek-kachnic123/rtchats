@@ -2,7 +2,7 @@ package com.kachnic.rtchats.libs.specs;
 
 import com.kachnic.rtchats.libs.ddd.DomainValidate;
 import com.kachnic.rtchats.libs.exceptions.ArgumentInvalidFormatException;
-import com.kachnic.rtchats.libs.exceptions.service.ErrorCode;
+import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
 import java.util.concurrent.CancellationException;
 import java.util.regex.Pattern;
 

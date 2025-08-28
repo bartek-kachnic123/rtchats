@@ -1,9 +1,10 @@
-package com.kachnic.rtchats.libs.exceptions.service;
+package com.kachnic.rtchats.libs.exceptions.codes;
 
+import java.io.Serializable;
 import java.util.Locale;
 
 @FunctionalInterface
-public interface ErrorCode {
+public interface ErrorCode extends Serializable {
     char ENUM_SEPARATOR = '_';
     char CODE_SEPARATOR = '-';
 
