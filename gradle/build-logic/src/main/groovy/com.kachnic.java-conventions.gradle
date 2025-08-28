@@ -23,9 +23,10 @@ tasks.named('pmdTest') {
 	group = 'verification'
 }
 
-tasks.register('formatAndAnalyze') {
+tasks.register('lintAndFormat') {
 	group = 'verification'
-	description = 'Apply Spotless formatting and run PMD and SpotBugs analysis.'
+	description = 'Run PMD and SpotBugs analysis, then apply Spotless formatting'
 
-	dependsOn 'spotlessApply', 'pmdMain', 'pmdTest', 'spotbugsMain', 'spotbugsTest'
+	dependsOn 'pmdMain', 'pmdTest', 'spotbugsMain', 'spotbugsTest'
+	finalizedBy 'spotlessApply'
 }
