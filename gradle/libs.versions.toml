@@ -10,7 +10,7 @@ spotbugs = "6.2.1"
 spotless = "7.0.4"
 
 # Frameworks
-springBoot = "3.4.7"
+springBoot = "3.4.9"
 springDependencyManagement = "1.1.7"
 
 # Testing
