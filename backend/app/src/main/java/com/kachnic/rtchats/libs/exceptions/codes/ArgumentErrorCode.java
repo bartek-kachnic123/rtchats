@@ -4,7 +4,8 @@ public enum ArgumentErrorCode implements ErrorCode {
     MISSING_NULL,
     MISSING_BLANK,
     MAX_VALUE,
-    OUT_OF_RANGE;
+    OUT_OF_RANGE,
+    MULTI_ERRORS;
 
     private static final String PREFIX = "global.arg.";
     private final String value;

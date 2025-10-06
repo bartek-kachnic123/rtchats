@@ -3,12 +3,14 @@ package com.kachnic.rtchats.libs.ddd;
 import java.lang.reflect.ParameterizedType;
 import java.util.Objects;
 
+import com.kachnic.rtchats.libs.utils.ObjectGuard;
+
 public class BaseEntity<T> {
 
     protected final T entityId;
 
     protected BaseEntity(final T entityId) {
-        this.entityId = DomainValidator.requireNonNull(entityId, this::getEntityIdName);
+        this.entityId = ObjectGuard.requireNotNull(entityId, this::getEntityIdName);
     }
 
     private String getEntityIdName() {

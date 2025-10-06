@@ -8,8 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kachnic.rtchats.modules.user.application.UserDto;
-import com.kachnic.rtchats.modules.user.domain.UserEntity;
-import com.kachnic.rtchats.modules.user.domain.UserRepository;
+import com.kachnic.rtchats.modules.user.domain.model.UserEntity;
+import com.kachnic.rtchats.modules.user.domain.model.UserRepository;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Email;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserId;
 

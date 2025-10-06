@@ -7,7 +7,7 @@ import org.mapstruct.Mapping;
 
 import com.kachnic.rtchats.modules.user.application.UserDto;
 import com.kachnic.rtchats.modules.user.application.UserEntityMapper;
-import com.kachnic.rtchats.modules.user.domain.UserEntity;
+import com.kachnic.rtchats.modules.user.domain.model.UserEntity;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Email;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Password;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserId;

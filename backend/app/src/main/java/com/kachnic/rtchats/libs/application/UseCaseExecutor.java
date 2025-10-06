@@ -1,4 +1,4 @@
-package com.kachnic.rtchats.libs.ddd;
+package com.kachnic.rtchats.libs.application;
 
 @FunctionalInterface
 public interface UseCaseExecutor<R, C extends Command<?>> {

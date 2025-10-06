@@ -1,4 +1,4 @@
-package com.kachnic.rtchats.modules.user.domain;
+package com.kachnic.rtchats.modules.user.domain.service;
 
 @FunctionalInterface
 public interface PasswordHasher {

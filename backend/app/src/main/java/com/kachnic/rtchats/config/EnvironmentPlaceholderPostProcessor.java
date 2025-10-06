@@ -21,17 +21,14 @@ class EnvironmentPlaceholderPostProcessor implements EnvironmentPostProcessor {
     @Override
     public void postProcessEnvironment(final ConfigurableEnvironment environment, SpringApplication application) {
         final Set<String> propertyNames = getAllPropertyNames(environment.getPropertySources());
-
         validateEnvPlaceholders(environment, propertyNames);
     }
 
     private Set<String> getAllPropertyNames(final MutablePropertySources propertySources) {
         final Set<String> propertyNames = new LinkedHashSet<>();
-
         for (final PropertySource<?> propertySource : propertySources) {
             storePropertyNames(propertySource, propertyNames);
         }
-
         return propertyNames;
     }
 
@@ -44,7 +41,6 @@ class EnvironmentPlaceholderPostProcessor implements EnvironmentPostProcessor {
     private void validateEnvPlaceholders(final ConfigurableEnvironment environment, final Set<String> propertyNames) {
         final StringBuilder errorMessages = new StringBuilder();
         String message;
-
         for (final String propName : propertyNames) {
             try {
                 environment.getProperty(propName);

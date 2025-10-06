@@ -1,7 +1,6 @@
 spotless {
 	java {
 		target 'src/*/java/**/*.java'
-
 		palantirJavaFormat(libs.versions.palantirJavaFormat.get())
 
 		// Order: Java, third-party, project, other, project static, other static
@@ -16,5 +15,11 @@ spotless {
 				"(.*class\\s+\\w+.*\\{)(?!\\n\\n)",
 				"\$0\n\n"
 		)
+
+		custom("Refuse wildcard imports", {
+			if (it =~ /\nimport .*\*;/) {
+				throw new IllegalStateException("Do not use wildcard imports")
+			}
+		} as Closure<String>)
 	}
 }
