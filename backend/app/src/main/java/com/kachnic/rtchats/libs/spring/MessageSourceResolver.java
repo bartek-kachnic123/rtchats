@@ -22,7 +22,6 @@ public final class MessageSourceResolver extends AbstractMessageResolver {
 
     @Override
     public Optional<String> resolve(final LocalizableMessage message, final Locale locale) {
-
         return Optional.ofNullable(
                 messageSource.getMessage(message.getCode(), message.getArgs().toArray(), null, locale));
     }

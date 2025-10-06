@@ -2,45 +2,61 @@ package com.kachnic.rtchats.libs.exceptions;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
 
-public abstract class DomainException extends RuntimeException implements LocalizableMessage {
+public class DomainException extends RuntimeException implements LocalizableMessage {
 
     @Serial
     private static final long serialVersionUID = 1L;
 
-    private final ErrorCode errorCode;
+    private final ErrorCode code;
     private final List<Serializable> args;
 
-    protected DomainException(final ErrorCode errorCode) {
-        this(errorCode, List.of(), null);
+    public DomainException(final String message, final ErrorCode code) {
+        this(message, code, List.of());
     }
 
-    protected DomainException(final ErrorCode errorCode, final Throwable cause) {
-        this(errorCode, List.of(), cause);
+    public DomainException(final String message, final ErrorCode code, final List<Serializable> args) {
+        this(message, code, args, null);
     }
 
-    protected DomainException(final ErrorCode errorCode, final List<Serializable> args) {
-        this(errorCode, args, null);
+    public DomainException(final ErrorCode code, final Throwable cause) {
+        this(code, List.of(), cause);
     }
 
-    protected DomainException(final ErrorCode errorCode, final List<Serializable> args, final Throwable cause) {
-        super("[" + errorCode.getValue() + "] args=" + args, cause);
-        this.errorCode = errorCode;
+    public DomainException(final ErrorCode code, final List<Serializable> args, final Throwable cause) {
+        this(null, code, args, cause);
+    }
 
-        // Use ArrayList to ensure the list is serializable
-        this.args = Collections.unmodifiableList(new ArrayList<>(args));
+    public DomainException(
+            final String message, final ErrorCode code, final List<Serializable> args, final Throwable cause) {
+        super(message, cause);
+        this.code = code;
+        this.args = makeListSerializable(args);
+    }
+
+    protected <E> List<E> makeListSerializable(final List<E> list) {
+        return new ArrayList<>(list);
+    }
+
+    public String getName() {
+        final String className = this.getClass().getSimpleName();
+        return className.endsWith("Exception")
+                ? className.substring(0, className.length() - "Exception".length())
+                : className;
     }
 
     @Override
     public final String getCode() {
-        return errorCode.getValue();
+        return code.getValue();
     }
 
     @Override
     public final List<Object> getArgs() {
-        return List.copyOf(args);
+        return Collections.unmodifiableList(args);
     }
 }

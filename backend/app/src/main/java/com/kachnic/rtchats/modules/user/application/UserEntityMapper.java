@@ -2,7 +2,7 @@ package com.kachnic.rtchats.modules.user.application;
 
 import org.mapstruct.Mapping;
 
-import com.kachnic.rtchats.modules.user.domain.UserEntity;
+import com.kachnic.rtchats.modules.user.domain.model.UserEntity;
 
 @FunctionalInterface
 public interface UserEntityMapper {

@@ -2,9 +2,9 @@ package com.kachnic.rtchats.modules.user.application;
 
 import org.springframework.context.event.EventListener;
 
-import com.kachnic.rtchats.libs.ddd.UseCaseExecutor;
+import com.kachnic.rtchats.libs.application.UseCaseExecutor;
 import com.kachnic.rtchats.libs.spring.CommandHandler;
-import com.kachnic.rtchats.modules.user.domain.UserEntity;
+import com.kachnic.rtchats.modules.user.domain.model.UserEntity;
 
 import lombok.AllArgsConstructor;
 
