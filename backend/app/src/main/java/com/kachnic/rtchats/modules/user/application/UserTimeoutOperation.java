@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public enum UserTimeoutOperation implements TimeoutOperation {
-    USER_INFO_CREATE(100, TimeUnit.MILLISECONDS);
+    USER_INFO_CREATE(400, TimeUnit.MILLISECONDS);
 
     private final long duration;
     private final TimeUnit unit;

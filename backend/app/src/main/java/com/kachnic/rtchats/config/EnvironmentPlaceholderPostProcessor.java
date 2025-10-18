@@ -46,11 +46,9 @@ class EnvironmentPlaceholderPostProcessor implements EnvironmentPostProcessor {
                 environment.getProperty(propName);
             } catch (PlaceholderResolutionException exc) {
                 message = String.format("\t%s: %s%n", propName, exc.getMessage());
-
                 errorMessages.append(message);
             }
         }
-
         if (!errorMessages.isEmpty()) {
             throw new IllegalStateException(UNRESOLVED_PREFIX + errorMessages);
         }

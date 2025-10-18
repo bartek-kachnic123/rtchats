@@ -8,29 +8,29 @@ public final class ObjectGuard {
 
     private ObjectGuard() {}
 
-    public static <T> T requireNotNull(T candidate, String paramName) {
+    public static <T> T requireNotNull(final T candidate, final String paramName) {
         assertNotNull(candidate, paramName);
         return candidate;
     }
 
-    public static <T> void assertNotNull(T candidate, String paramName) {
+    public static <T> void assertNotNull(final T candidate, final String paramName) {
         if (candidate == null) {
             throwNullArgument(paramName);
         }
     }
 
-    public static <T> T requireNotNull(T candidate, Supplier<String> paramNameSupplier) {
+    public static <T> T requireNotNull(final T candidate, final Supplier<String> paramNameSupplier) {
         assertNotNull(candidate, paramNameSupplier);
         return candidate;
     }
 
-    public static <T> void assertNotNull(T candidate, Supplier<String> paramNameSupplier) {
+    public static <T> void assertNotNull(final T candidate, final Supplier<String> paramNameSupplier) {
         if (candidate == null) {
             throwNullArgument(paramNameSupplier.get());
         }
     }
 
-    private static void throwNullArgument(String paramName) {
+    private static void throwNullArgument(final String paramName) {
         throw new MissingArgumentException("Argument '" + paramName + "' is null");
     }
 }

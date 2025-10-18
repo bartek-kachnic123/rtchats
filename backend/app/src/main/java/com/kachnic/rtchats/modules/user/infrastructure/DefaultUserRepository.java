@@ -29,7 +29,7 @@ class DefaultUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<UserDto> findByEmail(final Email email) {
+    public Optional<UserDto> findBy(final Email email) {
         final String normalizedEmail = email.value().toLowerCase(Locale.ROOT);
         return userCrudRepo.findByNormalizedEmail(normalizedEmail).map(mapper::toDto);
     }
@@ -41,7 +41,7 @@ class DefaultUserRepository implements UserRepository {
     }
 
     @Override
-    public boolean existsByEmail(final Email email) {
+    public boolean existsBy(final Email email) {
         final String normalizedEmail = email.value().toLowerCase(Locale.ROOT);
         final Boolean result = jdbcTemplate.queryForObject(ExistsBy.NORMALIZED_EMAIL, Boolean.class, normalizedEmail);
         return Boolean.TRUE.equals(result);

@@ -14,20 +14,19 @@ class WebSecurityConfig {
 
     @SuppressWarnings("PMD.SignatureDeclareThrowsException")
     @Bean
-    /* package */ SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
+    SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth.requestMatchers("/api-docs/**", "/error")
                         .permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/users")
+                        .requestMatchers(HttpMethod.POST, "/v1/users")
                         .permitAll()
                         .anyRequest()
                         .authenticated());
-
         return http.build();
     }
 
     @Bean
-    /* package */ PasswordEncoder passwordEncoder() {
+    PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }

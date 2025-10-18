@@ -3,15 +3,13 @@ package com.kachnic.rtchats.modules.user.domain.exceptions;
 import com.kachnic.rtchats.libs.exceptions.codes.ErrorCode;
 
 public enum UserErrorCode implements ErrorCode {
-    EMAIL_TAKEN("email.email-taken"),
-    INVALID_EMAIL("email.invalid-email"),
-    INVALID_USERNAME("email.invalid-username");
+    EMAIL_TAKEN;
 
     private static final String PREFIX = "user.";
     private final String value;
 
-    UserErrorCode(final String suffix) {
-        this.value = PREFIX + suffix;
+    UserErrorCode() {
+        this.value = ErrorCode.format(PREFIX, name());
     }
 
     @Override

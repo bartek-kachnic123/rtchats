@@ -9,9 +9,9 @@ import com.kachnic.rtchats.modules.user.domain.model.valueobjects.UserId;
 public interface UserRepository {
     UserId nextId();
 
-    Optional<UserDto> findByEmail(Email email);
+    Optional<UserDto> findBy(Email email);
 
     void save(UserEntity entity);
 
-    boolean existsByEmail(Email email);
+    boolean existsBy(Email email);
 }

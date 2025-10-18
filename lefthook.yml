@@ -17,7 +17,7 @@ pre-commit:
       stage_fixed: true
 
     gradle-format-analyze:
-      run: './gradlew lintAndFormat :spotlessMiscApply :spotlessBuildLogicApply'
+      run: './gradlew formatAndAnalyze :spotlessMiscApply :spotlessBuildLogicApply'
       stage_fixed: true
 
 pre-push:

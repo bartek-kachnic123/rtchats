@@ -6,7 +6,6 @@ import java.util.regex.Pattern;
 import com.kachnic.rtchats.libs.exceptions.ArgumentInvalidFormatException;
 import com.kachnic.rtchats.libs.exceptions.ArgumentOutOfRangeException;
 import com.kachnic.rtchats.libs.exceptions.MissingArgumentException;
-import com.kachnic.rtchats.libs.exceptions.MissingCharacterException;
 
 public final class StringGuard {
 
@@ -20,8 +19,8 @@ public final class StringGuard {
     }
 
     public static void assertLengthInRange(final String candidate, final String paramName, final Range range) {
-        int actualLength = candidate.length();
-        if (!range.containsInclusive(actualLength)) {
+        final int actualLength = candidate.length();
+        if (!range.contains(actualLength)) {
             final String message = String.format(
                     "Argument '%s' length is %d, but must be between %d and %d",
                     paramName, actualLength, range.min(), range.max());
@@ -29,25 +28,17 @@ public final class StringGuard {
         }
     }
 
-    public static void assertContains(final String candidate, final PatternRule... rules) {
-        for (PatternRule rule : rules) {
-            final Matcher matcher = getMatcher(candidate, rule);
-            if (!matcher.find()) {
-                throw new MissingCharacterException(rule.getPatternText());
-            }
+    public static void assertMatches(final String candidate, final PatternRule... rules) {
+        for (final PatternRule rule : rules) {
+            verifyRule(candidate, rule.getPattern(), rule.getPatternText());
         }
     }
 
-    public static void assertMatches(final String candidate, final PatternRule rule) {
-        final Matcher matcher = getMatcher(candidate, rule);
-        if (!matcher.matches()) {
-            throw new ArgumentInvalidFormatException(rule.getPatternText());
-        }
-    }
-
-    private static Matcher getMatcher(final String candidate, final PatternRule rule) {
+    private static void verifyRule(final String candidate, final Pattern pattern, final String patternText) {
         final CharSequence sequence = new InterruptibleCharSequence(candidate);
-        final Pattern pattern = rule.getPattern();
-        return pattern.matcher(sequence);
+        final Matcher matcher = pattern.matcher(sequence);
+        if (!matcher.matches()) {
+            throw new ArgumentInvalidFormatException(patternText);
+        }
     }
 }
