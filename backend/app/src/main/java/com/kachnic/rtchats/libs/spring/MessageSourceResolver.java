@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.ObjectError;
 
 import com.kachnic.rtchats.libs.exceptions.LocalizableMessage;
 import com.kachnic.rtchats.libs.exceptions.codes.OperationErrorCode;
@@ -24,16 +23,6 @@ public final class MessageSourceResolver extends AbstractMessageResolver {
     public Optional<String> resolve(final LocalizableMessage message, final Locale locale) {
         return Optional.ofNullable(
                 messageSource.getMessage(message.getCode(), message.getArgs().toArray(), null, locale));
-    }
-
-    @Override
-    public Optional<String> resolve(final ObjectError error, final Locale locale) {
-        final String message = messageSource.getMessage(error, locale);
-        return isPlaceholder(message) ? Optional.empty() : Optional.of(message);
-    }
-
-    private boolean isPlaceholder(final String message) {
-        return message.startsWith("{") && message.endsWith("}");
     }
 
     @Override

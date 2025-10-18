@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.kachnic.rtchats.libs.application.LogEventBus;
-import com.kachnic.rtchats.libs.exceptions.DomainException;
 import com.kachnic.rtchats.libs.spring.MessageResolver;
+import com.kachnic.rtchats.libs.spring.logging.DomainLogEvent;
 import com.kachnic.rtchats.modules.user.domain.exceptions.EmailAlreadyTakenException;
-import com.kachnic.rtchats.modules.user.web.logging.ExceptionLogEvent;
 
 import lombok.AllArgsConstructor;
 
@@ -23,8 +22,8 @@ class UserExceptionHandler {
     private final LogEventBus logBus;
 
     @ExceptionHandler(EmailAlreadyTakenException.class)
-    ProblemDetail handleEmailValidation(final EmailAlreadyTakenException exception, final Locale locale) {
-        logBus.publish(new ExceptionLogEvent<DomainException>(exception));
+    ProblemDetail handle(final EmailAlreadyTakenException exception, final Locale locale) {
+        logBus.publish(new DomainLogEvent(exception));
         final String message = messageResolver.resolveOrDefault(exception, locale);
         return ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, message);
     }

@@ -3,7 +3,7 @@ package com.kachnic.rtchats.libs.application;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import com.kachnic.rtchats.libs.exceptions.InternalDomainException;
+import com.kachnic.rtchats.libs.exceptions.InternalException;
 
 public class AsyncCommand<R> implements Command<R> {
 
@@ -21,9 +21,9 @@ public class AsyncCommand<R> implements Command<R> {
             return future.get();
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            throw new InternalDomainException(e);
+            throw new InternalException(e);
         } catch (ExecutionException e) {
-            throw new InternalDomainException(e);
+            throw new InternalException(e);
         }
     }
 }

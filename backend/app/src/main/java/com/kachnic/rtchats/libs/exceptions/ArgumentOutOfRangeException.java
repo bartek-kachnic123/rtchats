@@ -2,7 +2,7 @@ package com.kachnic.rtchats.libs.exceptions;
 
 import java.io.Serial;
 
-public class ArgumentOutOfRangeException extends InternalDomainException {
+public class ArgumentOutOfRangeException extends InternalException {
 
     @Serial
     private static final long serialVersionUID = 1L;

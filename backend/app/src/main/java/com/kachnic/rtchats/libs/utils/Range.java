@@ -1,17 +1,13 @@
 package com.kachnic.rtchats.libs.utils;
 
-public record Range(int min, int max) {
-    public Range {
-        if (min > max) {
-            throw new IllegalArgumentException("Range min cannot be greater than max");
-        }
-    }
+public interface Range {
+    boolean contains(int length);
 
-    public boolean containsInclusive(int value) {
-        return value >= min && value <= max;
-    }
+    int min();
 
-    public static Range of(int min, int max) {
-        return new Range(min, max);
+    int max();
+
+    static Range ofInclusive(final int min, final int max) {
+        return new RangeInclusive(min, max);
     }
 }

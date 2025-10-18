@@ -2,7 +2,7 @@ package com.kachnic.rtchats.libs.exceptions;
 
 import java.io.Serial;
 
-public class MissingArgumentException extends InternalDomainException {
+public class MissingArgumentException extends InternalException {
 
     @Serial
     private static final long serialVersionUID = 1L;

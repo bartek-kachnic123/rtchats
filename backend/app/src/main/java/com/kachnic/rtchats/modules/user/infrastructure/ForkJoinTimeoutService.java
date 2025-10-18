@@ -10,8 +10,8 @@ import java.util.concurrent.TimeoutException;
 
 import org.springframework.stereotype.Service;
 
-import com.kachnic.rtchats.libs.exceptions.DomainException;
-import com.kachnic.rtchats.libs.exceptions.InternalDomainException;
+import com.kachnic.rtchats.libs.exceptions.ExceptionBase;
+import com.kachnic.rtchats.libs.exceptions.InternalException;
 import com.kachnic.rtchats.libs.exceptions.TimeLimitExceededException;
 import com.kachnic.rtchats.libs.utils.SystemTimer;
 import com.kachnic.rtchats.libs.utils.Timer;
@@ -42,20 +42,21 @@ final class ForkJoinTimeoutService implements TimeoutService {
         }
     }
 
-    private InternalDomainException handleInterruptedException(final Future<?> future, final InterruptedException exc) {
+    private InternalException handleInterruptedException(final Future<?> future, final InterruptedException exc) {
         Thread.currentThread().interrupt();
         future.cancel(true);
-        return new InternalDomainException(exc);
+        return new InternalException(exc);
     }
 
-    private DomainException handleExecutionException(final ExecutionException exc) {
+    private ExceptionBase handleExecutionException(final ExecutionException exc) {
         final Throwable cause = exc.getCause();
-        return (cause instanceof DomainException) ? (DomainException) cause : new InternalDomainException(cause);
+        return (cause instanceof ExceptionBase) ? (ExceptionBase) cause : new InternalException(cause);
     }
 
     private TimeLimitExceededException handleTimeoutException(
             final Future<?> future, final String operation, final long durationMs, final Throwable cause) {
         future.cancel(true);
-        return new TimeLimitExceededException(operation, durationMs, cause);
+        final String message = String.format("%s took %d", operation, durationMs);
+        return new TimeLimitExceededException(message, cause);
     }
 }
