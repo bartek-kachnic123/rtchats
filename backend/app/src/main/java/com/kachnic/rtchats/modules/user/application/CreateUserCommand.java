@@ -1,15 +1,5 @@
 package com.kachnic.rtchats.modules.user.application;
 
-import com.kachnic.rtchats.libs.application.AsyncCommand;
+import com.kachnic.rtchats.libs.application.Command;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-@AllArgsConstructor
-public final class CreateUserCommand extends AsyncCommand<UserDto> {
-
-    private final String email;
-    private final String username;
-    private final String password;
-}
+public record CreateUserCommand(String email, String username, String password) implements Command {}
