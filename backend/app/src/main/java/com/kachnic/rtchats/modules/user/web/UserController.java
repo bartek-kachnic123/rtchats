@@ -15,7 +15,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping("${api.paths.users}")
 @AllArgsConstructor
 class UserController {
 
