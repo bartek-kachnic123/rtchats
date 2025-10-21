@@ -5,14 +5,14 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.kachnic.rtchats.libs.exceptions.DomainException;
+import com.kachnic.rtchats.libs.exceptions.ExceptionBase;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RandomTimed {
-    long minMs() default 50L;
+    long minMillis() default 50L;
 
-    long maxMs() default 100L;
+    long maxMillis() default 100L;
 
-    Class<? extends DomainException>[] delayOn() default {};
+    Class<? extends ExceptionBase>[] delayOn() default {};
 }
