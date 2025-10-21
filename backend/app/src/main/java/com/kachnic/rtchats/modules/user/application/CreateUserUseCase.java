@@ -18,7 +18,7 @@ import lombok.AllArgsConstructor;
 class CreateUserUseCase implements UseCaseExecutor<UserEntity, CreateUserCommand> {
 
     private final UserRepository users;
-    private final UserCredentialService userCredService;
+    private final UserCredentialService credentialService;
 
     @Override
     public UserEntity execute(final CreateUserCommand command) {
@@ -30,8 +30,8 @@ class CreateUserUseCase implements UseCaseExecutor<UserEntity, CreateUserCommand
     }
 
     private UserInfo createUserInfo(final CreateUserCommand command) {
-        final Email email = userCredService.createNewEmail(command.email());
-        final Password password = userCredService.createNewPassword(command.password());
+        final Email email = credentialService.createNewEmail(command.email());
+        final Password password = credentialService.createNewPassword(command.password());
         return UserInfo.of(email, Username.of(command.username()), password);
     }
 }

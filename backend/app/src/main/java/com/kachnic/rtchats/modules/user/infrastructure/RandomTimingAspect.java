@@ -19,8 +19,7 @@ import com.kachnic.rtchats.modules.user.application.RandomTimed;
 class RandomTimingAspect {
 
     @Around("@annotation(randomTimed)")
-    /* package */ Object enforceRandomTiming(final ProceedingJoinPoint joinPoint, final RandomTimed randomTimed)
-            throws Throwable {
+    Object enforceRandomTiming(final ProceedingJoinPoint joinPoint, final RandomTimed randomTimed) throws Throwable {
         final Timer timer = new SystemTimer();
         timer.start();
 

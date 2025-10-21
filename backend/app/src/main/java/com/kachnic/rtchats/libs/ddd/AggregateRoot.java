@@ -12,7 +12,7 @@ public abstract class AggregateRoot<T> extends BaseEntity<T> {
         this.domainEvents = new ArrayList<>();
     }
 
-    protected List<DomainEvent> getDomainEvents() {
+    public List<DomainEvent> getDomainEvents() {
         return List.copyOf(domainEvents);
     }
 

@@ -21,7 +21,7 @@ import lombok.Setter;
 @Entity
 @Table(
         name = "users",
-        indexes = {@Index(name = "users_idx_normalized__email", columnList = "normalized_email")})
+        indexes = {@Index(name = "users_idx_normalized_email", columnList = "normalized_email")})
 @Getter
 @Setter
 @NoArgsConstructor

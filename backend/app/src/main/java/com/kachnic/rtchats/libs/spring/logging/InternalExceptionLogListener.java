@@ -7,10 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
-class InternalExceptionListener {
+class InternalExceptionLogListener {
 
     @EventListener
-    public void handleInternal(final InternalLogEvent event) {
+    public void handleInternal(final InternalExceptionLogEvent event) {
         log.atError().log(event::toString);
         log.atError().log(event::getStackTrace);
     }
