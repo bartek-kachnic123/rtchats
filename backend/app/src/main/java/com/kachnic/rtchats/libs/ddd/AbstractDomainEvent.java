@@ -5,8 +5,8 @@ import java.util.UUID;
 
 public class AbstractDomainEvent implements DomainEvent {
 
-    protected final Instant occurredAt = Instant.now();
-    protected final UUID eventId = UUID.randomUUID();
+    private final Instant occurredAt = Instant.now();
+    private final UUID eventId = UUID.randomUUID();
 
     @Override
     public Instant getOccurredAt() {

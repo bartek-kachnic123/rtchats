@@ -5,16 +5,14 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StopWatch;
 
 import com.kachnic.rtchats.libs.exceptions.ExceptionBase;
 import com.kachnic.rtchats.libs.exceptions.InternalException;
 import com.kachnic.rtchats.libs.exceptions.TimeLimitExceededException;
-import com.kachnic.rtchats.libs.utils.SystemTimer;
-import com.kachnic.rtchats.libs.utils.Timer;
 import com.kachnic.rtchats.modules.user.application.TimeoutOperation;
 import com.kachnic.rtchats.modules.user.application.TimeoutService;
 
@@ -25,11 +23,9 @@ final class ForkJoinTimeoutService implements TimeoutService {
 
     @Override
     public <T> T executeWithTimeout(final Callable<T> task, final TimeoutOperation operation) {
-        final Timer timer = new SystemTimer();
+        final StopWatch stopWatch = new StopWatch();
         final Future<T> future = executor.submit(task);
-
-        timer.start();
-
+        stopWatch.start();
         try {
             return future.get(operation.getDuration(), operation.getUnit());
         } catch (InterruptedException exc) {
@@ -37,8 +33,8 @@ final class ForkJoinTimeoutService implements TimeoutService {
         } catch (ExecutionException exc) {
             throw handleExecutionException(exc);
         } catch (TimeoutException exc) {
-            final long durationMs = timer.getElapsedTime(TimeUnit.MILLISECONDS);
-            throw handleTimeoutException(future, operation.name(), durationMs, exc);
+            final long durationMillis = stopWatch.getTotalTimeMillis();
+            throw handleTimeoutException(future, operation.name(), durationMillis, exc);
         }
     }
 
@@ -54,9 +50,9 @@ final class ForkJoinTimeoutService implements TimeoutService {
     }
 
     private TimeLimitExceededException handleTimeoutException(
-            final Future<?> future, final String operation, final long durationMs, final Throwable cause) {
+            final Future<?> future, final String operation, final long durationMillis, final Throwable cause) {
         future.cancel(true);
-        final String message = String.format("%s took %d", operation, durationMs);
+        final String message = String.format("%s took %d", operation, durationMillis);
         return new TimeLimitExceededException(message, cause);
     }
 }

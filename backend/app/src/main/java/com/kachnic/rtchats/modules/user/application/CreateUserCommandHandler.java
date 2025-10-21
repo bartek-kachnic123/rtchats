@@ -1,28 +1,24 @@
 package com.kachnic.rtchats.modules.user.application;
 
-import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Service;
 
+import com.kachnic.rtchats.libs.application.CommandHandler;
 import com.kachnic.rtchats.libs.application.UseCaseExecutor;
-import com.kachnic.rtchats.libs.spring.CommandHandler;
 import com.kachnic.rtchats.modules.user.domain.model.UserEntity;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
-@CommandHandler
+@Service
 @AllArgsConstructor
-class CreateUserCommandHandler {
+class CreateUserCommandHandler implements CommandHandler<CreateUserCommand> {
 
     private final UseCaseExecutor<UserEntity, CreateUserCommand> useCase;
-    private final UserEntityMapper mapper;
+    private final TimeoutService timeoutService;
 
-    @EventListener
-    /* package */ void handle(final CreateUserCommand command) {
-        final UserEntity user = useCase.execute(command);
-        completeCommand(user, command);
-    }
-
-    private void completeCommand(final UserEntity user, final CreateUserCommand command) {
-        final UserDto dto = mapper.toDto(user);
-        command.complete(dto);
+    @Transactional
+    @Override
+    public void handle(final CreateUserCommand command) {
+        timeoutService.executeWithTimeout(() -> useCase.execute(command), UserTimeoutOperation.USER_CREATE);
     }
 }

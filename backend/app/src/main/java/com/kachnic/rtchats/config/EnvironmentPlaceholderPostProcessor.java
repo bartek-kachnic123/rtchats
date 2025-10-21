@@ -1,56 +1,56 @@
 package com.kachnic.rtchats.config;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.env.EnvironmentPostProcessor;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.EnumerablePropertySource;
-import org.springframework.core.env.MutablePropertySources;
-import org.springframework.core.env.PropertySource;
+import org.springframework.core.env.PropertySources;
 import org.springframework.util.PlaceholderResolutionException;
 
 @Order
 class EnvironmentPlaceholderPostProcessor implements EnvironmentPostProcessor {
 
-    private static final String UNRESOLVED_PREFIX = "Unresolved placeholders found in properties:\n";
+    private static final String UNRESOLVED_PREFIX = "Unresolved placeholders found in properties:";
 
     @Override
     public void postProcessEnvironment(final ConfigurableEnvironment environment, SpringApplication application) {
         final Set<String> propertyNames = getAllPropertyNames(environment.getPropertySources());
-        validateEnvPlaceholders(environment, propertyNames);
+        validateEnvironmentPlaceholders(environment, propertyNames);
     }
 
-    private Set<String> getAllPropertyNames(final MutablePropertySources propertySources) {
-        final Set<String> propertyNames = new LinkedHashSet<>();
-        for (final PropertySource<?> propertySource : propertySources) {
-            storePropertyNames(propertySource, propertyNames);
-        }
-        return propertyNames;
+    private Set<String> getAllPropertyNames(final PropertySources sources) {
+        return sources.stream()
+                .filter(source -> source instanceof EnumerablePropertySource<?>)
+                .map(source -> ((EnumerablePropertySource<?>) source).getPropertyNames())
+                .flatMap(Arrays::stream)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
     }
 
-    private void storePropertyNames(final PropertySource<?> propertySource, final Set<String> propertyNames) {
-        if (propertySource instanceof EnumerablePropertySource<?> eps) {
-            Collections.addAll(propertyNames, eps.getPropertyNames());
-        }
-    }
-
-    private void validateEnvPlaceholders(final ConfigurableEnvironment environment, final Set<String> propertyNames) {
-        final StringBuilder errorMessages = new StringBuilder();
-        String message;
-        for (final String propName : propertyNames) {
+    private void validateEnvironmentPlaceholders(
+            final ConfigurableEnvironment environment, final Set<String> propertyNames) {
+        final List<String> errorMessages = new ArrayList<>();
+        for (final String propertyName : propertyNames) {
             try {
-                environment.getProperty(propName);
-            } catch (PlaceholderResolutionException exc) {
-                message = String.format("\t%s: %s%n", propName, exc.getMessage());
-                errorMessages.append(message);
+                environment.getProperty(propertyName);
+            } catch (PlaceholderResolutionException exception) {
+                errorMessages.add(String.format("\t%s: %s%n", propertyName, exception.getMessage()));
             }
         }
+        failIfAny(errorMessages);
+    }
+
+    private void failIfAny(final List<String> errorMessages) {
         if (!errorMessages.isEmpty()) {
-            throw new IllegalStateException(UNRESOLVED_PREFIX + errorMessages);
+            throw new IllegalStateException(
+                    UNRESOLVED_PREFIX + System.lineSeparator() + String.join(System.lineSeparator(), errorMessages));
         }
     }
 }

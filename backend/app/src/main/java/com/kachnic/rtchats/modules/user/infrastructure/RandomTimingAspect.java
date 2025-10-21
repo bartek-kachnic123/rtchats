@@ -2,16 +2,14 @@ package com.kachnic.rtchats.modules.user.infrastructure;
 
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StopWatch;
 
-import com.kachnic.rtchats.libs.exceptions.DomainException;
-import com.kachnic.rtchats.libs.utils.SystemTimer;
-import com.kachnic.rtchats.libs.utils.Timer;
+import com.kachnic.rtchats.libs.exceptions.ExceptionBase;
 import com.kachnic.rtchats.modules.user.application.RandomTimed;
 
 @Aspect
@@ -19,37 +17,35 @@ import com.kachnic.rtchats.modules.user.application.RandomTimed;
 class RandomTimingAspect {
 
     @Around("@annotation(randomTimed)")
-    /* package */ Object enforceRandomTiming(final ProceedingJoinPoint joinPoint, final RandomTimed randomTimed)
-            throws Throwable {
-        final Timer timer = new SystemTimer();
-        timer.start();
-
+    Object enforceRandomTiming(final ProceedingJoinPoint joinPoint, final RandomTimed randomTimed) throws Throwable {
+        final StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
         try {
             final Object result = joinPoint.proceed();
-            enforceDelay(timer, randomTimed.minMs(), randomTimed.maxMs());
+            enforceDelay(stopWatch, randomTimed.minMillis(), randomTimed.maxMillis());
             return result;
-        } catch (DomainException e) {
-            if (shouldDelay(e, randomTimed.delayOn())) {
-                enforceDelay(timer, randomTimed.minMs(), randomTimed.maxMs());
+        } catch (ExceptionBase exception) {
+            if (shouldDelay(exception, randomTimed.delayOn())) {
+                enforceDelay(stopWatch, randomTimed.minMillis(), randomTimed.maxMillis());
             }
-            throw e;
+            throw exception;
         }
     }
 
-    private void enforceDelay(final Timer timer, final long minMs, final long maxMs) {
-        final long targetMs = calculateRandomDelay(minMs, maxMs);
-        final long elapsedMs = timer.getElapsedTime(TimeUnit.MILLISECONDS);
-        sleepIfNeeded(targetMs - elapsedMs);
+    private void enforceDelay(final StopWatch stopWatch, final long minMillis, final long maxMillis) {
+        final long targetMillis = calculateRandomDelay(minMillis, maxMillis);
+        final long elapsedMillis = stopWatch.getTotalTimeMillis();
+        sleepIfNeeded(targetMillis - elapsedMillis);
     }
 
-    private long calculateRandomDelay(final long minMs, final long maxMs) {
-        return (minMs > maxMs) ? 0L : ThreadLocalRandom.current().nextLong(minMs, maxMs + 1);
+    private long calculateRandomDelay(final long minMillis, final long maxMillis) {
+        return (minMillis > maxMillis) ? 0L : ThreadLocalRandom.current().nextLong(minMillis, maxMillis + 1);
     }
 
-    private void sleepIfNeeded(final long delayMs) {
-        if (delayMs > 0) {
+    private void sleepIfNeeded(final long delayMillis) {
+        if (delayMillis > 0) {
             try {
-                Thread.sleep(delayMs);
+                Thread.sleep(delayMillis);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
@@ -58,8 +54,8 @@ class RandomTimingAspect {
 
     @SafeVarargs
     private boolean shouldDelay(
-            final DomainException exc, final Class<? extends DomainException>... delayOnExceptions) {
-        final Class<? extends DomainException> excClass = exc.getClass();
-        return Arrays.stream(delayOnExceptions).anyMatch(cls -> cls == excClass);
+            final ExceptionBase exception, final Class<? extends ExceptionBase>... delayOnExceptions) {
+        final Class<? extends ExceptionBase> exceptionClass = exception.getClass();
+        return Arrays.stream(delayOnExceptions).anyMatch(cls -> cls == exceptionClass);
     }
 }

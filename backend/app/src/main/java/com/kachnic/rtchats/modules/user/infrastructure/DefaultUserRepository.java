@@ -19,7 +19,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 class DefaultUserRepository implements UserRepository {
 
-    private final UserCrudRepo userCrudRepo;
+    private final UserJpaRepository userJpaRepository;
     private final UserJpaMapper mapper;
     private final JdbcTemplate jdbcTemplate;
 
@@ -31,13 +31,13 @@ class DefaultUserRepository implements UserRepository {
     @Override
     public Optional<UserDto> findBy(final Email email) {
         final String normalizedEmail = email.value().toLowerCase(Locale.ROOT);
-        return userCrudRepo.findByNormalizedEmail(normalizedEmail).map(mapper::toDto);
+        return userJpaRepository.findByNormalizedEmail(normalizedEmail).map(mapper::toDto);
     }
 
     @Override
     public void save(final UserEntity entity) {
         final UserJpa userJpa = mapper.toPersistence(entity);
-        userCrudRepo.save(userJpa);
+        userJpaRepository.save(userJpa);
     }
 
     @Override

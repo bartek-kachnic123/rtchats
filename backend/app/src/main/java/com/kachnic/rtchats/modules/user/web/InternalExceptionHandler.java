@@ -11,7 +11,7 @@ import com.kachnic.rtchats.libs.application.LogEventBus;
 import com.kachnic.rtchats.libs.exceptions.InternalException;
 import com.kachnic.rtchats.libs.exceptions.TimeLimitExceededException;
 import com.kachnic.rtchats.libs.spring.MessageResolver;
-import com.kachnic.rtchats.libs.spring.logging.InternalLogEvent;
+import com.kachnic.rtchats.libs.spring.logging.InternalExceptionLogEvent;
 
 import lombok.AllArgsConstructor;
 
@@ -24,14 +24,14 @@ class InternalExceptionHandler {
 
     @ExceptionHandler(InternalException.class)
     ProblemDetail handle(final InternalException exception, final Locale locale) {
-        logBus.publish(new InternalLogEvent(exception));
+        logBus.publish(new InternalExceptionLogEvent(exception));
         final String localizedMessage = messageResolver.resolveOrDefault(exception, locale);
         return ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, localizedMessage);
     }
 
     @ExceptionHandler(TimeLimitExceededException.class)
     ProblemDetail handle(final TimeLimitExceededException exception, final Locale locale) {
-        logBus.publish(new InternalLogEvent(exception));
+        logBus.publish(new InternalExceptionLogEvent(exception));
         final String localizedMessage = messageResolver.resolveOrDefault(exception, locale);
         return ProblemDetail.forStatusAndDetail(HttpStatus.REQUEST_TIMEOUT, localizedMessage);
     }

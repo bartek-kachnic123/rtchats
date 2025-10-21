@@ -9,13 +9,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.kachnic.rtchats.libs.application.CommandBus;
 import com.kachnic.rtchats.modules.user.application.CreateUserCommand;
-import com.kachnic.rtchats.modules.user.application.UserDto;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("/v1/users")
+@RequestMapping("${api.paths.users}")
 @AllArgsConstructor
 class UserController {
 
@@ -23,9 +22,9 @@ class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    UserDto create(final @Valid @RequestBody CreateUserRequest request) {
+    void create(final @Valid @RequestBody CreateUserRequest request) {
         final CreateUserCommand command =
                 new CreateUserCommand(request.email(), request.username(), request.password());
-        return commandBus.execute(command);
+        commandBus.execute(command);
     }
 }
