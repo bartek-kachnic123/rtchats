@@ -10,21 +10,26 @@ import org.springframework.stereotype.Component;
 import com.kachnic.rtchats.libs.application.Command;
 import com.kachnic.rtchats.libs.application.CommandBus;
 import com.kachnic.rtchats.libs.application.CommandHandler;
+import com.kachnic.rtchats.libs.exceptions.CommandHandlerNotFoundException;
 
 @Component
+@SuppressWarnings({"unchecked", "rawtypes"})
 class SynchronousCommandBus implements CommandBus {
 
-    private final Map<Class<? extends Command>, CommandHandler<? extends Command>> handlerMap;
+    private final Map<Class<? extends Command>, CommandHandler> handlerMap;
 
-    SynchronousCommandBus(final List<CommandHandler<? extends Command>> commandHandlers) {
+    SynchronousCommandBus(final List<CommandHandler> commandHandlers) {
         this.handlerMap = commandHandlers.stream()
                 .collect(Collectors.toMap(CommandHandler::getCommandClass, Function.identity()));
     }
 
     @Override
-    public <C extends Command> void execute(final C command) {
-        @SuppressWarnings("unchecked")
-        final CommandHandler<C> handler = (CommandHandler<C>) handlerMap.get(command.getClass());
+    public void execute(final Command command) {
+        final CommandHandler handler = handlerMap.get(command.getClass());
+        if (handler == null) {
+            throw new CommandHandlerNotFoundException(
+                    "No handler found for command: " + command.getClass().getSimpleName());
+        }
         handler.handle(command);
     }
 }
