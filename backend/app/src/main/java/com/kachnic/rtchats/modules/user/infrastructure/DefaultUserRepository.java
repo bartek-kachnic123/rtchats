@@ -7,7 +7,6 @@ import java.util.UUID;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kachnic.rtchats.modules.user.application.UserDto;
 import com.kachnic.rtchats.modules.user.domain.model.UserEntity;
 import com.kachnic.rtchats.modules.user.domain.model.UserRepository;
 import com.kachnic.rtchats.modules.user.domain.model.valueobjects.Email;
@@ -29,9 +28,9 @@ class DefaultUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<UserDto> findBy(final Email email) {
+    public Optional<UserEntity> findBy(final Email email) {
         final String normalizedEmail = email.value().toLowerCase(Locale.ROOT);
-        return userJpaRepository.findByNormalizedEmail(normalizedEmail).map(mapper::toDto);
+        return userJpaRepository.findByNormalizedEmail(normalizedEmail).map(mapper::toEntity);
     }
 
     @Override

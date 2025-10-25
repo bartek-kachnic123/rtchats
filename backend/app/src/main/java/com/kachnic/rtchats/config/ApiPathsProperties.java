@@ -1,16 +1,16 @@
 package com.kachnic.rtchats.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 
-@Configuration(proxyBeanMethods = false)
 @ConfigurationProperties(prefix = "api.paths")
 @Getter
-@Setter
-class ApiPathsProperties {
+@AllArgsConstructor
+final class ApiPathsProperties {
 
-    private String users;
+    private final String users;
+    private final String login;
+    private final String logout;
 }

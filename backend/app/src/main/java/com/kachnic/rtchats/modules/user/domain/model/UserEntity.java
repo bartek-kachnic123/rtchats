@@ -16,7 +16,7 @@ public final class UserEntity extends AggregateRoot<UserId> {
         return user;
     }
 
-    private UserEntity(final UserId userId, final UserInfo userInfo) {
+    public UserEntity(final UserId userId, final UserInfo userInfo) {
         super(userId);
         this.userInfo = ObjectGuard.requireNotNull(userInfo, UserInfo.class.getSimpleName());
     }
