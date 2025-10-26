@@ -40,4 +40,14 @@ class UserPrincipal implements UserDetails, CredentialsContainer {
     public void eraseCredentials() {
         password = CLEARED_PASSWORD;
     }
+
+    @Override
+    public boolean equals(final Object obj) {
+        return obj instanceof UserPrincipal user && user.getUsername().equals(this.email);
+    }
+
+    @Override
+    public int hashCode() {
+        return email.hashCode();
+    }
 }
