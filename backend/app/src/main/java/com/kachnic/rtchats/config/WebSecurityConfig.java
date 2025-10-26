@@ -3,13 +3,15 @@ package com.kachnic.rtchats.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import jakarta.servlet.http.HttpServletResponse;
 
 @Configuration(proxyBeanMethods = false)
 class WebSecurityConfig {
@@ -23,21 +25,21 @@ class WebSecurityConfig {
                 .authorizeHttpRequests(auth -> auth.requestMatchers(
                                 "/api-docs", "/api-docs/swagger-ui/*", "/api-docs/swagger-config", "/error")
                         .permitAll()
-                        .requestMatchers(HttpMethod.POST, apiPaths.getUsers())
+                        .requestMatchers(
+                                HttpMethod.POST, apiPaths.getUsers(), apiPaths.getLogin(), apiPaths.getLogout())
                         .permitAll()
                         .anyRequest()
                         .authenticated())
-                .exceptionHandling(handler -> handler.authenticationEntryPoint(new RestAuthenticationEntryPoint()))
-                .formLogin(login -> login.usernameParameter("email")
-                        .loginProcessingUrl(apiPaths.getLogin())
-                        .successHandler(
-                                (request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK))
-                        .failureHandler((request, response, authentication) ->
-                                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED)))
-                .logout(logout -> logout.logoutUrl(apiPaths.getLogout())
-                        .logoutSuccessHandler(
-                                (request, response, authentication) -> response.setStatus(HttpServletResponse.SC_OK)));
+                .exceptionHandling(handler -> handler.authenticationEntryPoint(new ApiAuthenticationEntryPoint()));
         return http.build();
+    }
+
+    @Bean
+    AuthenticationManager authenticationManager(
+            final PasswordEncoder passwordEncoder, final UserDetailsService userService) {
+        final DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(passwordEncoder);
+        authProvider.setUserDetailsService(userService);
+        return new ProviderManager(authProvider);
     }
 
     @Bean
