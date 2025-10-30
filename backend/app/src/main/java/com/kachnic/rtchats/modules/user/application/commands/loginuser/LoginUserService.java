@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Service
-public class LoginUserService implements CommandHandler<LoginUserCommand> {
+class LoginUserService implements CommandHandler<LoginUserCommand> {
 
     private final SecurityContextRepository contextRepository;
     private final AuthenticationManager authManager;

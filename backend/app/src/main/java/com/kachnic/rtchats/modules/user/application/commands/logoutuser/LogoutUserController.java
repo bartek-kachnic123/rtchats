@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("${api.paths.logout}")
-public class LogoutUserController {
+class LogoutUserController {
 
     final SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
