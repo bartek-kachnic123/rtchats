@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Field,
-  Heading,
-  Input,
-  Text,
-  VStack,
-} from '@chakra-ui/react';
+import { Text } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginUser } from '@src/features/auth/authSlice.js';
 import { loginSchema } from '@src/features/auth/loginSchema.js';

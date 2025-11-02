@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  HStack,
-  Spacer,
-  Stack,
-  Text,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Spacer, Stack, Text } from '@chakra-ui/react';
 import { Link } from 'react-router';
 
 function Navbar() {
