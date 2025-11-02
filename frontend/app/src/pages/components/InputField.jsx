@@ -1,7 +1,7 @@
 import { Field, Input } from '@chakra-ui/react';
 import React from 'react';
 
-const BaseFormField = React.forwardRef(function BaseFormField(props, ref) {
+const FieldBase = React.forwardRef(function BaseFormField(props, ref) {
   const {
     label,
     children,
@@ -27,7 +27,7 @@ const BaseFormField = React.forwardRef(function BaseFormField(props, ref) {
   );
 });
 
-function FormInput({
+function InputField({
   register,
   name,
   label,
@@ -37,7 +37,7 @@ function FormInput({
   ...rest
 }) {
   return (
-    <BaseFormField
+    <FieldBase
       label={label}
       invalid={!!error}
       errorText={error?.message}
@@ -55,8 +55,8 @@ function FormInput({
           boxShadow: '0 0 0 2px rgba(0, 122, 255, 0.3)',
         }}
       />
-    </BaseFormField>
+    </FieldBase>
   );
 }
 
-export { BaseFormField, FormInput };
+export { FieldBase, InputField };

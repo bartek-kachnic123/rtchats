@@ -3,7 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema } from '@src/features/registeruser/registerSchema.js';
 import { registerUser } from '@src/features/registeruser/registerSlice.js';
 import { Form } from '@src/pages/components/Form.jsx';
-import { FormInput } from '@src/pages/components/FormInput.jsx';
+import { InputField } from '@src/pages/components/InputField.jsx';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -56,7 +56,7 @@ function RegisterForm() {
           ))}
         </VStack>
       ))}
-      <FormInput
+      <InputField
         name="email"
         type="email"
         label="Email"
@@ -66,7 +66,7 @@ function RegisterForm() {
         minH="90px"
         required
       />
-      <FormInput
+      <InputField
         name="username"
         type="text"
         label="Username"
@@ -76,7 +76,7 @@ function RegisterForm() {
         minH="90px"
         required
       />
-      <FormInput
+      <InputField
         name="password"
         type="password"
         label="Password"
@@ -86,7 +86,7 @@ function RegisterForm() {
         minH="90px"
         required
       />
-      <FormInput
+      <InputField
         name="passwordConfirm"
         type="password"
         label="Password"
