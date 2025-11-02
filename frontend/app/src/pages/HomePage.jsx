@@ -1,6 +1,7 @@
 import { Button } from '@chakra-ui/react';
 import api from '@src/api/api.js';
 import { loggedOut } from '@src/features/auth/authSlice.js';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 function HomePage() {
@@ -10,6 +11,9 @@ function HomePage() {
     await api.post('/logout');
     dispatch(loggedOut());
   };
+  useEffect(() => {
+    document.title = 'RtChats';
+  }, []);
 
   return (
     <>
