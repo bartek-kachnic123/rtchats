@@ -3,10 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { loginUser } from '@src/features/auth/authSlice.js';
 import { loginSchema } from '@src/features/auth/loginSchema.js';
 import { Form } from '@src/pages/components/Form.jsx';
-import {
-  EmailInput,
-  PasswordInput,
-} from '@src/pages/components/FormInputs.jsx';
+import { FormInput } from '@src/pages/components/FormInput.jsx';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -15,7 +12,7 @@ function LoginForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors: fieldErrors },
   } = useForm({
     resolver: zodResolver(loginSchema),
     mode: 'onSubmit',
@@ -48,17 +45,23 @@ function LoginForm() {
       >
         {error}
       </Text>
-      <EmailInput
-        register={register}
+      <FormInput
         name="email"
-        error={errors.email}
+        type="email"
+        label="Email"
+        placeholder="Enter your email"
+        register={register}
+        error={fieldErrors.email}
         minH="90px"
         required
       />
-      <PasswordInput
-        register={register}
+      <FormInput
         name="password"
-        error={errors.password}
+        type="password"
+        label="Password"
+        placeholder="Enter your password"
+        register={register}
+        error={fieldErrors.password}
         minH="90px"
         required
       />

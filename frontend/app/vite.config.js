@@ -19,10 +19,12 @@ export default defineConfig({
       '@src': path.resolve(__dirname, 'src'),
     },
   },
-  proxy: {
-    '/api': {
-      target: 'http://localhost:8080',
-      changeOrigin: true,
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
     },
   },
 });

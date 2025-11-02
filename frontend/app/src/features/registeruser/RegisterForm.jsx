@@ -3,11 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema } from '@src/features/registeruser/registerSchema.js';
 import { registerUser } from '@src/features/registeruser/registerSlice.js';
 import { Form } from '@src/pages/components/Form.jsx';
-import {
-  EmailInput,
-  PasswordInput,
-  TextInput,
-} from '@src/pages/components/FormInputs.jsx';
+import { FormInput } from '@src/pages/components/FormInput.jsx';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -60,34 +56,43 @@ function RegisterForm() {
           ))}
         </VStack>
       ))}
-      <EmailInput
-        register={register}
+      <FormInput
         name="email"
+        type="email"
+        label="Email"
+        placeholder="Enter your email"
+        register={register}
         error={fieldErrors.email}
         minH="90px"
         required
       />
-      <TextInput
-        register={register}
+      <FormInput
         name="username"
+        type="text"
         label="Username"
-        error={fieldErrors.username}
         placeholder="Enter your username"
+        register={register}
+        error={fieldErrors.username}
         minH="90px"
         required
       />
-      <PasswordInput
-        register={register}
+      <FormInput
         name="password"
+        type="password"
+        label="Password"
+        placeholder="Enter your password"
+        register={register}
         error={fieldErrors.password}
         minH="90px"
         required
       />
-      <PasswordInput
-        register={register}
+      <FormInput
         name="passwordConfirm"
+        type="password"
+        label="Password"
+        placeholder="Confirm your password"
+        register={register}
         error={fieldErrors.passwordConfirm}
-        placeholder="Confirm password"
         minH="90px"
         required
       />

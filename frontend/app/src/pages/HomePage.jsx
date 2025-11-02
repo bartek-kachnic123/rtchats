@@ -7,7 +7,7 @@ function HomePage() {
   const { isAuthenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const logout = async () => {
-    await api.post('v1/logout');
+    await api.post('/logout');
     dispatch(loggedOut());
   };
 
