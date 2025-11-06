@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +20,7 @@ class DefaultUserRepository implements UserRepository {
     private final UserJpaRepository userJpaRepository;
     private final UserMapper mapper;
     private final JdbcTemplate jdbcTemplate;
+    private final ApplicationEventPublisher publisher;
 
     @Override
     public UserId nextId() {
@@ -35,6 +37,7 @@ class DefaultUserRepository implements UserRepository {
     public void save(final UserEntity entity) {
         final UserJpa userJpa = mapper.toPersistence(entity);
         userJpaRepository.save(userJpa);
+        entity.getDomainEvents().forEach(publisher::publishEvent);
     }
 
     @Override
