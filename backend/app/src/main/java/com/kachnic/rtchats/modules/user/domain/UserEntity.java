@@ -17,7 +17,7 @@ public final class UserEntity extends AggregateRoot<UserId> {
     public static UserEntity create(
             final UserId userId, final Email email, final Username username, final Password password) {
         final UserEntity user = new UserEntity(userId, email, username, password);
-        user.addEvent(new UserCreatedEvent(user.getEntityId(), user.getEmail()));
+        user.addEvent(new UserCreatedEvent(user.getEntityId(), user.getEmail(), user.getUsername()));
         return user;
     }
 

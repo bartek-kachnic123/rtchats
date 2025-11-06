@@ -3,7 +3,7 @@ package com.kachnic.rtchats.libs.ddd;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AggregateRoot<T> extends BaseEntity<T> {
+public abstract class AggregateRoot<T> extends EntityBase<T> {
 
     private final List<DomainEvent> domainEvents;
 

@@ -5,11 +5,11 @@ import java.util.Objects;
 
 import com.kachnic.rtchats.libs.utils.ObjectGuard;
 
-public class BaseEntity<T> {
+public class EntityBase<T> {
 
     protected final T entityId;
 
-    protected BaseEntity(final T entityId) {
+    protected EntityBase(final T entityId) {
         this.entityId = ObjectGuard.requireNotNull(entityId, this::getEntityIdName);
     }
 
@@ -24,7 +24,7 @@ public class BaseEntity<T> {
     @Override
     public final boolean equals(final Object obj) {
         return obj == this
-                || (obj instanceof BaseEntity<?> other
+                || (obj instanceof EntityBase<?> other
                         && other.canEqual(this)
                         && Objects.equals(this.entityId, other.entityId));
     }
