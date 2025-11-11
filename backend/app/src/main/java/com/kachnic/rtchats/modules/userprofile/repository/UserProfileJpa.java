@@ -22,7 +22,9 @@ class UserProfileJpa {
     @Column(nullable = false, unique = true)
     private UUID ownerId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
+    private String displayName;
+
     private String avatar;
 
     @Column(nullable = false, unique = true)

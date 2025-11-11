@@ -1,6 +1,7 @@
 package com.kachnic.rtchats.modules.user.infrastructure.security;
 
-import org.springframework.security.core.userdetails.User;
+import java.util.List;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -12,17 +13,18 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-class SpringUserDetailsService implements UserDetailsService {
+class AppUserDetailsService implements UserDetailsService {
 
-    final UserRepository users;
+    private final UserRepository users;
 
     @Override
-    public UserDetails loadUserByUsername(final String username) {
-        return users.findByEmail(username)
-                .map(user -> User.builder()
-                        .username(user.getEmail().value())
-                        .password(user.getPassword().value())
-                        .build())
+    public UserDetails loadUserByUsername(final String email) {
+        return users.findByEmail(email)
+                .map(user -> new AppUser(
+                        user.getEntityId().value(),
+                        user.getEmail().value(),
+                        user.getPassword().value(),
+                        List.of()))
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
     }
 }

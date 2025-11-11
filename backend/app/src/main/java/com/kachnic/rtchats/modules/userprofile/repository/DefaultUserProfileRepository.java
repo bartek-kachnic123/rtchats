@@ -2,7 +2,7 @@ package com.kachnic.rtchats.modules.userprofile.repository;
 
 import java.util.UUID;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Repository;
 
 import com.kachnic.rtchats.modules.userprofile.domain.UserProfileEntity;
@@ -14,8 +14,9 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 class DefaultUserProfileRepository implements UserProfileRepository {
 
-    private final UserProfileJpaRepository profilesJpa;
+    private final UserProfileJpaRepository profiles;
     private final UserProfileMapper mapper;
+    private final ApplicationEventPublisher publisher;
 
     @Override
     public UserProfileId nextId() {
@@ -24,9 +25,8 @@ class DefaultUserProfileRepository implements UserProfileRepository {
 
     @Override
     public void save(final UserProfileEntity entity) {
-        final UserProfileJpa profileJpa = mapper.toPersistence(entity);
-        profilesJpa.save(profileJpa);
+        final UserProfileJpa profile = mapper.toPersistence(entity);
+        profiles.save(profile);
+        entity.getDomainEvents().forEach(publisher::publishEvent);
     }
 }
-
-interface UserProfileJpaRepository extends JpaRepository<UserProfileJpa, UUID> {}

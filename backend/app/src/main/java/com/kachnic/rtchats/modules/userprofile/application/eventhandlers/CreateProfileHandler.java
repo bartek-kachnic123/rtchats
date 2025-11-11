@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.kachnic.rtchats.modules.user.domain.events.UserCreatedEvent;
 import com.kachnic.rtchats.modules.userprofile.domain.UserProfileEntity;
 import com.kachnic.rtchats.modules.userprofile.domain.valueobjects.Avatar;
+import com.kachnic.rtchats.modules.userprofile.domain.valueobjects.DisplayName;
 import com.kachnic.rtchats.modules.userprofile.domain.valueobjects.OwnerId;
 import com.kachnic.rtchats.modules.userprofile.domain.valueobjects.ProfileLink;
 import com.kachnic.rtchats.modules.userprofile.domain.valueobjects.UserProfileId;
@@ -21,16 +22,16 @@ class CreateProfileHandler {
 
     private final UserProfileRepository profiles;
 
-    private static final String DEFAULT_AVATAR = "profile.png";
-
     @EventListener
     void createProfile(final UserCreatedEvent event) {
         final UserProfileId profileId = profiles.nextId();
-        final OwnerId ownerId = new OwnerId(event.getUserId());
-        final String slug = event.getUsername().toLowerCase(Locale.ROOT);
-        final ProfileLink profileLink = new ProfileLink(slug);
-        final Avatar avatar = new Avatar(DEFAULT_AVATAR);
-        final UserProfileEntity entity = UserProfileEntity.create(profileId, ownerId, avatar, profileLink);
+        final OwnerId ownerId = OwnerId.of(event.getUserId());
+        final String username = event.getUsername();
+        final DisplayName displayName = DisplayName.of(username);
+        final Avatar avatar = Avatar.empty();
+        final String slug = username.toLowerCase(Locale.ROOT);
+        final ProfileLink profileLink = ProfileLink.of(slug);
+        final UserProfileEntity entity = UserProfileEntity.create(profileId, ownerId, displayName, avatar, profileLink);
         profiles.save(entity);
     }
 }

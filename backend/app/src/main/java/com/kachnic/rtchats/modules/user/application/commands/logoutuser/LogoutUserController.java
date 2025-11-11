@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("${api.paths.logout}")
 class LogoutUserController {
 
-    final SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
+    private final SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
