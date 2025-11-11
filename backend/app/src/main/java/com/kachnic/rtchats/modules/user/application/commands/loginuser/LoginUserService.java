@@ -11,6 +11,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -33,11 +34,12 @@ class LoginUserService implements CommandHandler<LoginUserCommand> {
     }
 
     @Autowired
-    public LoginUserService(final AuthenticationManager authManager) {
+    LoginUserService(final AuthenticationManager authManager) {
         this(authManager, new HttpSessionSecurityContextRepository());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public void handle(final LoginUserCommand command) {
         final UsernamePasswordAuthenticationToken token =
                 UsernamePasswordAuthenticationToken.unauthenticated(command.email(), command.password());

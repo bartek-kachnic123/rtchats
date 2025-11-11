@@ -17,7 +17,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 class LoginUserController {
 
-    final CommandBus commandBus;
+    private final CommandBus commandBus;
 
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
