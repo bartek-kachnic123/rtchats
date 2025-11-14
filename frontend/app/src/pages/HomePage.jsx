@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 function HomePage() {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { authenticated } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const logout = async () => {
     await api.post('/logout');
@@ -18,7 +18,7 @@ function HomePage() {
   return (
     <>
       <h2>Home Page</h2>
-      {isAuthenticated && (
+      {authenticated && (
         <div>
           <h3>Logged in</h3>
           <Button onClick={logout}>Log out</Button>

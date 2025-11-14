@@ -16,14 +16,13 @@ import { Link } from 'react-router';
 function Navbar() {
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.profile);
-  const { isAuthenticated } = useSelector((state) => state.auth);
-  console.log(profile);
+  const { authenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (authenticated) {
       dispatch(fetchMyProfile());
     }
-  }, [isAuthenticated, dispatch]);
+  }, [authenticated, dispatch]);
 
   return (
     <Box bg="white" px={8} py={4} boxShadow="sm">
@@ -40,7 +39,7 @@ function Navbar() {
           <Button as={Link} to="/" variant="ghost" colorScheme="blue">
             Home
           </Button>
-          {isAuthenticated ? (
+          {authenticated ? (
             <>
               {profile && (
                 <Button
