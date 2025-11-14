@@ -1,7 +1,13 @@
 import api from '@src/api/api.js';
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { loginFailed, loginRequested, loginSucceeded } from './authSlice';
+import {
+  loggedOut,
+  loginFailed,
+  loginRequested,
+  loginSucceeded,
+  logoutRequested,
+} from './authSlice';
 
 function* loginSaga(action) {
   try {
@@ -16,6 +22,15 @@ function* loginSaga(action) {
   }
 }
 
+function* logoutSaga() {
+  yield call(api.post, '/logout');
+  yield put(loggedOut());
+}
+
 export function* watchLogin() {
   yield takeLatest(loginRequested.type, loginSaga);
+}
+
+export function* watchLogout() {
+  yield takeLatest(logoutRequested.type, logoutSaga);
 }

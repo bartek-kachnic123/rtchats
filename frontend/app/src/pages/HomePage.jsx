@@ -1,16 +1,6 @@
-import { Button } from '@chakra-ui/react';
-import api from '@src/api/api.js';
-import { loggedOut } from '@src/features/auth/authSlice.js';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 function HomePage() {
-  const { authenticated } = useSelector((state) => state.auth);
-  const dispatch = useDispatch();
-  const logout = async () => {
-    await api.post('/logout');
-    dispatch(loggedOut());
-  };
   useEffect(() => {
     document.title = 'RtChats';
   }, []);
@@ -18,12 +8,6 @@ function HomePage() {
   return (
     <>
       <h2>Home Page</h2>
-      {authenticated && (
-        <div>
-          <h3>Logged in</h3>
-          <Button onClick={logout}>Log out</Button>
-        </div>
-      )}
     </>
   );
 }

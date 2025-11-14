@@ -2,12 +2,12 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
   Flex,
   Spacer,
   Stack,
   Text,
 } from '@chakra-ui/react';
+import { logoutRequested } from '@src/features/auth/authSlice.js';
 import { fetchMyProfile } from '@src/features/profile/profileSlice.js';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -23,6 +23,10 @@ function Navbar() {
       dispatch(fetchMyProfile());
     }
   }, [authenticated, dispatch]);
+
+  const logout = () => {
+    dispatch(logoutRequested());
+  };
 
   return (
     <Box bg="white" px={8} py={4} boxShadow="sm">
@@ -57,6 +61,10 @@ function Navbar() {
                   </Avatar.Root>
                 </Button>
               )}
+              <div>
+                <h3>Logged in</h3>
+                <Button onClick={logout}>Log out</Button>
+              </div>
             </>
           ) : (
             <>

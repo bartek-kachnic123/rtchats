@@ -24,6 +24,10 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    logoutRequested(state) {
+      state.loading = true;
+      state.error = '';
+    },
     loggedOut(state) {
       state.authenticated = false;
       state.loading = false;
@@ -32,7 +36,12 @@ const authSlice = createSlice({
   },
 });
 
-export const { loginRequested, loginSucceeded, loginFailed, loggedOut } =
-  authSlice.actions;
+export const {
+  loginRequested,
+  loginSucceeded,
+  loginFailed,
+  logoutRequested,
+  loggedOut,
+} = authSlice.actions;
 
 export default authSlice.reducer;
