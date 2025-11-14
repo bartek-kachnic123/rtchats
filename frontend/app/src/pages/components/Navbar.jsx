@@ -8,7 +8,10 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { logoutRequested } from '@src/features/auth/authSlice.js';
-import { fetchMyProfile } from '@src/features/profile/profileSlice.js';
+import {
+  fetchMyProfileRequested,
+  myProfileCleared,
+} from '@src/features/profile/profileSlice.js';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router';
@@ -20,12 +23,13 @@ function Navbar() {
 
   useEffect(() => {
     if (authenticated) {
-      dispatch(fetchMyProfile());
+      dispatch(fetchMyProfileRequested());
     }
   }, [authenticated, dispatch]);
 
   const logout = () => {
     dispatch(logoutRequested());
+    dispatch(myProfileCleared());
   };
 
   return (
