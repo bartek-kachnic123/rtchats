@@ -2,13 +2,16 @@ import {
   Avatar,
   Box,
   Button,
-  Card,
   Flex,
   Spacer,
   Stack,
   Text,
 } from '@chakra-ui/react';
-import { fetchMyProfile } from '@src/features/profile/profileSlice.js';
+import { logoutRequested } from '@src/features/auth/authSlice.js';
+import {
+  fetchMyProfileRequested,
+  myProfileCleared,
+} from '@src/features/profile/profileSlice.js';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router';
@@ -16,14 +19,18 @@ import { Link } from 'react-router';
 function Navbar() {
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state.profile);
-  const { isAuthenticated } = useSelector((state) => state.auth);
-  console.log(profile);
+  const { authenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(fetchMyProfile());
+    if (authenticated) {
+      dispatch(fetchMyProfileRequested());
     }
-  }, [isAuthenticated, dispatch]);
+  }, [authenticated, dispatch]);
+
+  const logout = () => {
+    dispatch(logoutRequested());
+    dispatch(myProfileCleared());
+  };
 
   return (
     <Box bg="white" px={8} py={4} boxShadow="sm">
@@ -40,7 +47,7 @@ function Navbar() {
           <Button as={Link} to="/" variant="ghost" colorScheme="blue">
             Home
           </Button>
-          {isAuthenticated ? (
+          {authenticated ? (
             <>
               {profile && (
                 <Button
@@ -58,6 +65,10 @@ function Navbar() {
                   </Avatar.Root>
                 </Button>
               )}
+              <div>
+                <h3>Logged in</h3>
+                <Button onClick={logout}>Log out</Button>
+              </div>
             </>
           ) : (
             <>

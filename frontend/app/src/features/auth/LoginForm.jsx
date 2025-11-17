@@ -1,9 +1,10 @@
 import { Text } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginUser } from '@src/features/auth/authSlice.js';
+import { loginRequested } from '@src/features/auth/authSlice.js';
 import { loginSchema } from '@src/features/auth/loginSchema.js';
 import { Form } from '@src/pages/components/Form.jsx';
 import { InputField } from '@src/pages/components/InputField.jsx';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -18,15 +19,18 @@ function LoginForm() {
     mode: 'onSubmit',
     criteriaMode: 'all',
   });
-  const { loading, error } = useSelector((state) => state.auth);
+  const { authenticated, loading, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const onSubmit = async (data) => {
-    const resultAction = await dispatch(loginUser(data));
-    if (loginUser.fulfilled.match(resultAction)) {
+  const onSubmit = (data) => {
+    dispatch(loginRequested(data));
+  };
+
+  useEffect(() => {
+    if (authenticated) {
       navigate('/');
     }
-  };
+  }, [authenticated]);
 
   return (
     <Form

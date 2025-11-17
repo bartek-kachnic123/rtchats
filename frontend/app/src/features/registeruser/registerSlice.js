@@ -1,52 +1,41 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import api from '@src/api/api.js';
-
-const registerUser = createAsyncThunk(
-  'register/registerUser',
-  async (userData, { rejectWithValue }) => {
-    try {
-      await api.post('/users', userData);
-    } catch (error) {
-      const data = error.response?.data;
-      return rejectWithValue(
-        data?.errors
-          ? data.errors
-          : [
-              {
-                field: null,
-                defaultMessage: data?.detail || data?.title || error.message,
-              },
-            ],
-      );
-    }
-  },
-);
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   loading: false,
   errors: [],
+  status: 'idle',
 };
 
 const registerSlice = createSlice({
   name: 'register',
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {
-    builder
-      .addCase(registerUser.pending, (state) => {
-        state.loading = true;
-        state.errors = [];
-      })
-      .addCase(registerUser.fulfilled, (state) => {
-        state.loading = false;
-        state.errors = [];
-      })
-      .addCase(registerUser.rejected, (state, action) => {
-        state.loading = false;
-        state.errors = action.payload;
-      });
+  reducers: {
+    registerRequested(state) {
+      state.loading = true;
+      state.errors = [];
+      state.status = 'loading';
+    },
+    registerSucceeded(state) {
+      state.loading = false;
+      state.errors = [];
+      state.status = 'succeeded';
+    },
+    registerFailed(state, action) {
+      state.loading = false;
+      state.errors = action.payload;
+      state.status = 'failed';
+    },
+    registerResetted(state) {
+      state.status = 'idle';
+    },
   },
 });
 
-export { registerUser };
+export const {
+  registerRequested,
+  registerSucceeded,
+  registerFailed,
+  registerReset,
+} = registerSlice.actions;
+
 export default registerSlice.reducer;

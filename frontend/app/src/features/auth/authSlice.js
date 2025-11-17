@@ -1,53 +1,47 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import api from '@src/api/api.js';
-
-const loginUser = createAsyncThunk(
-  'auth/loginUser',
-  async (data, { rejectWithValue }) => {
-    try {
-      await api.post('/login', data);
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        return rejectWithValue('Invalid credentials');
-      }
-      return rejectWithValue('Something went wrong. Please try again.');
-    }
-  },
-);
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  isAuthenticated: false,
+  authenticated: false,
   loading: false,
   error: '',
 };
+
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    loginRequested(state) {
+      state.loading = true;
+      state.error = '';
+    },
+    loginSucceeded(state) {
+      state.authenticated = true;
+      state.loading = false;
+      state.error = '';
+    },
+    loginFailed(state, action) {
+      state.authenticated = false;
+      state.loading = false;
+      state.error = action.payload;
+    },
+    logoutRequested(state) {
+      state.loading = true;
+      state.error = '';
+    },
     loggedOut(state) {
-      state.isAuthenticated = false;
+      state.authenticated = false;
       state.loading = false;
       state.error = '';
     },
   },
-  extraReducers: (builder) => {
-    builder
-      .addCase(loginUser.pending, (state) => {
-        state.loading = true;
-        state.error = '';
-      })
-      .addCase(loginUser.fulfilled, (state) => {
-        state.loading = false;
-        state.isAuthenticated = true;
-      })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.loading = false;
-        state.isAuthenticated = false;
-        state.error = action.payload;
-      });
-  },
 });
 
-export const { loggedOut } = authSlice.actions;
-export { loginUser };
+export const {
+  loginRequested,
+  loginSucceeded,
+  loginFailed,
+  logoutRequested,
+  loggedOut,
+} = authSlice.actions;
+
 export default authSlice.reducer;

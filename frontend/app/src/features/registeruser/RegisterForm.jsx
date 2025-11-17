@@ -1,16 +1,24 @@
 import { Text, VStack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema } from '@src/features/registeruser/registerSchema.js';
-import { registerUser } from '@src/features/registeruser/registerSlice.js';
+import {
+  registerRequested,
+  registerReset,
+} from '@src/features/registeruser/registerSlice.js';
 import { Form } from '@src/pages/components/Form.jsx';
 import { InputField } from '@src/pages/components/InputField.jsx';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 function RegisterForm() {
   const dispatch = useDispatch();
-  const { loading, errors: apiErrors } = useSelector((state) => state.register);
+  const {
+    loading,
+    errors: apiErrors,
+    status,
+  } = useSelector((state) => state.register);
   const {
     register,
     handleSubmit,
@@ -20,13 +28,19 @@ function RegisterForm() {
     mode: 'onSubmit',
     criteriaMode: 'all',
   });
+
   const navigate = useNavigate();
-  const onSubmit = async (data) => {
-    const resultAction = await dispatch(registerUser(data));
-    if (registerUser.fulfilled.match(resultAction)) {
+
+  const onSubmit = (data) => {
+    dispatch(registerRequested(data));
+  };
+
+  useEffect(() => {
+    if (status === 'succeeded') {
+      dispatch(registerReset());
       navigate('/login');
     }
-  };
+  }, [status, navigate]);
 
   const errorMap = apiErrors.reduce((acc, curr) => {
     const { field, defaultMessage } = curr;
