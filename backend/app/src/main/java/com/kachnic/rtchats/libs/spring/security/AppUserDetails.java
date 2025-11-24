@@ -6,4 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface AppUserDetails extends UserDetails {
     UUID getUserId();
+
+    String getEmail();
 }

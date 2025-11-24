@@ -1,6 +1,6 @@
 package com.kachnic.rtchats.modules.user.infrastructure.security;
 
-import java.util.List;
+import java.util.Collections;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,7 +24,7 @@ class AppUserDetailsService implements UserDetailsService {
                         user.getEntityId().value(),
                         user.getEmail().value(),
                         user.getPassword().value(),
-                        List.of()))
+                        Collections.emptyList()))
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
     }
 }
